@@ -1,0 +1,14 @@
+{
+  "name": "tuio-server",
+  "version": "0.1.0",
+  "description": "Server listening for TUIO events.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Daniele Paradiso",
+  "license": "ISC",
+  "dependencies": {
+    "ws": "^7.2.1"
+  }
+}
