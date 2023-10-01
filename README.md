@@ -23,3 +23,12 @@ cd ../tuo-simulator && java -jar TuioSimulator.jar
 Open browser on localhost:8601
 
 TBD reactivision
+
+## Supported blocks
+
+- [ ] Connect tuio
+- [ ] When cursor x enters/exits
+- [ ] Cursor x, y, angle
+- [ ] Cursor present
+- [ ] I due che espongono la lista dei marker attivi
+- [ ] la velocità (anche se in modo sperimentale)
