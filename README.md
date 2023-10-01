@@ -11,10 +11,14 @@ cd scratch-vm && yarn install && yarn link
 cd scratch-gui && yarn link scratch-vm && yarn install
 cd tuio-server && yarn install
 ```
+TBD tuio-client, reactivision
 
-# Run
+## Run
 ```
 cd scratch-gui && yarn start &
-node ../tuio-server/index.js
+node ../tuio-server/index.js &
+cd ../tuo-simulator && java -jar TuioSimulator.jar
 ```
 Open browser on localhost:8601
+
+TBD tuio-client, reactivision
