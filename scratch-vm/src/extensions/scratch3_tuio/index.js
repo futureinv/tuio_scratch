@@ -7,16 +7,16 @@ const formatMessage = require('format-message');
 //https://github.com/xcratch/xcx-example/blob/main/src/block/translations.json
 const transl = {
     "hr": { 
-        "tuioConnect": "Connect TUIO HR"
+        "tuio.connect": "Connect TUIO HR"
     },
     "it": {
-        "tuioConnect": "Connetti a TUIO"
+        "tuio.connect": "Connetti a TUIO"
     },
     "en": { 
-        "tuioConnect": "Connect TUIO"
+        "tuio.connect": "Connect TUIO"
     },
     "fr": { 
-        "tuioConnect": "Connect TUIO FR"
+        "tuio.connect": "Connect TUIO FR"
     }
 }
 
@@ -62,13 +62,153 @@ class Scratch3Tuio {
                     opcode: 'connect',
                     blockType: BlockType.COMMAND,
                     text: formatMessage({
-                        id: 'tuioConnect',
+                        id: 'tuio.connect',
                         default : 'connect TUIO',
                         description: 'connect to TUIO server'
                     }),
                     arguments: {}
+                },
+                {
+                    opcode: 'whenMarkerWithIDEnters',
+                    blockType: BlockType.HAT,
+                    text: formatMessage({
+                        id: 'tuio.whenMarkerWithIDEnters',
+                        default : 'when Marker [markerID] enters',
+                        description: 'fires when marker markerID enters'
+                    }),
+                    arguments: {
+                        markerID: {
+                            type: ArgumentType.NUMBER,
+                            menu: 'markerIDMenuWithAny'
+                        }
+                    }
+                },
+                {
+                    opcode: 'whenMarkerWithIDExits',
+                    blockType: BlockType.HAT,
+                    text: formatMessage({
+                        id: 'tuio.whenMarkerWithIDExits',
+                        default : 'when Marker [markerID] exits',
+                        description: 'fires when marker markerID exits'
+                    }),
+                    arguments: {
+                        markerID: {
+                            type: ArgumentType.NUMBER,
+                            menu: 'markerIDMenuWithAny'
+                        }
+                    }
+                },
+                {
+                    opcode: 'isMarkerWithIDPresent',
+                    blockType: BlockType.BOOLEAN,
+                    text: formatMessage({
+                        id: 'tuio.isMarkerWithIDPresent',
+                        default : 'Marker [markerID] is present',
+                        description: 'checks if Marker [markerID] is present'
+                    }),
+                    arguments: {
+                        markerID: {
+                            type: ArgumentType.NUMBER,
+                            menu: 'markerIDMenuWithoutAny'
+                        }
+                    }
+                },
+                {
+                    opcode: 'getMarkerX',
+                    blockType: BlockType.REPORTER,
+                    text: formatMessage({
+                        id: 'tuio.getMarkerX',
+                        default : 'Marker [markerID] X coordinate',
+                        description: 'returns X coordinate of Marker [markerID]'
+                    }),
+                    arguments: {
+                        markerID: {
+                            type: ArgumentType.NUMBER,
+                            menu: 'markerIDMenuWithoutAny'
+                        }
+                    }
+                },
+                {
+                    opcode: 'getMarkerY',
+                    blockType: BlockType.REPORTER,
+                    text: formatMessage({
+                        id: 'tuio.getMarkerY',
+                        default : 'Marker [markerID] Y coordinate',
+                        description: 'returns Y coordinate of Marker [markerID]'
+                    }),
+                    arguments: {
+                        markerID: {
+                            type: ArgumentType.NUMBER,
+                            menu: 'markerIDMenuWithoutAny'
+                        }
+                    }
+                },
+                {
+                    opcode: 'getMarkerAngle',
+                    blockType: BlockType.REPORTER,
+                    text: formatMessage({
+                        id: 'tuio.getMarkerAngle',
+                        default : 'Marker [markerID] rotation angle',
+                        description: 'returns rotation angle of Marker [markerID]'
+                    }),
+                    arguments: {
+                        markerID: {
+                            type: ArgumentType.NUMBER,
+                            menu: 'markerIDMenuWithoutAny'
+                        }
+                    }
+                },
+                {
+                    opcode: 'getMarkerXSpeed',
+                    blockType: BlockType.REPORTER,
+                    text: formatMessage({
+                        id: 'tuio.getMarkerXSpeed',
+                        default : 'Marker [markerID] X Speed',
+                        description: 'returns X Speed of Marker [markerID]'
+                    }),
+                    arguments: {
+                        markerID: {
+                            type: ArgumentType.NUMBER,
+                            menu: 'markerIDMenuWithoutAny'
+                        }
+                    }
+                },
+                {
+                    opcode: 'getMarkerYSpeed',
+                    blockType: BlockType.REPORTER,
+                    text: formatMessage({
+                        id: 'tuio.getMarkerYSpeed',
+                        default : 'Marker [markerID] Y Speed',
+                        description: 'returns Y Speed of Marker [markerID]'
+                    }),
+                    arguments: {
+                        markerID: {
+                            type: ArgumentType.NUMBER,
+                            menu: 'markerIDMenuWithoutAny'
+                        }
+                    }
+                },
+                {
+                    opcode: 'getMarkerAngleSpeed',
+                    blockType: BlockType.REPORTER,
+                    text: formatMessage({
+                        id: 'tuio.getMarkerAngleSpeed',
+                        default : 'Marker [markerID] angular velocity',
+                        description: 'returns angular velocity of Marker [markerID]'
+                    }),
+                    arguments: {
+                        markerID: {
+                            type: ArgumentType.NUMBER,
+                            menu: 'markerIDMenuWithoutAny'
+                        }
+                    }
                 }
-            ]
+            ],
+            menus :{
+                markerIDMenuWithAny : ['1','2','3','4', 'any'],
+                markerIDMenuWithoutAny : ['1','2','3','4']
+
+            }
         }
     }
 
@@ -79,6 +219,45 @@ class Scratch3Tuio {
         client.connect();
     }
 
-}
+    whenMarkerWithIDEnters() {
+       return false;
+    }
+
+    whenMarkerWithIDExits() {
+        return false;
+     }
+
+     isMarkerWithIDPresent() {
+        return false;
+     }
+
+     getMarkerX() {
+        return 0;
+     }
+
+     getMarkerY() {
+        return 0;
+     }
+
+     getMarkerAngle() {
+        return 0;
+     }
+
+     getMarkerXSpeed() {
+        return 0;
+     }
+
+     getMarkerYSpeed() {
+        return 0;
+     }
+
+     getMarkerAngleSpeed() {
+        return 0;
+     }
+    }
+
+
+    
+
 
 module.exports = Scratch3Tuio;
