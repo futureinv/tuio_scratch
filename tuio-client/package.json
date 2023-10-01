@@ -1,0 +1,31 @@
+{
+    "name": "tuio-client",
+    "version": "0.1.0",
+    "description": "npm package for using the TUIO protocol in modern javascript applications.",
+    "main": "index.js",
+    "scripts": {
+      "test": "npm run lint"
+    },
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/parsodyl/tuio-client.git"
+    },
+    "keywords": [
+      "tuio"
+    ],
+    "author": "Daniele Paradiso",
+    "license": "GPL-2.0",
+    "bugs": {
+      "url": "https://github.com/parsodyl/tuio-client/issues"
+    },
+    "homepage": "https://github.com/parsodyl/tuio-client#readme",
+    "dependencies": {
+      "tuio-extended": "^1.0.0"
+    },
+    "devDependencies": {
+      "eslint": "^6.0.0",
+      "eslint-config-prettier": "^6.0.0",
+      "eslint-plugin-prettier": "^3.0.1",
+      "prettier": "^1.17.0"
+    }
+  }
