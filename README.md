@@ -5,7 +5,12 @@ Scratch 3 extension for Tuio Markers
 - scratch-gui v. 3.0.5
 - scratch-vm 2.0.3
 
+## Prerequisites
+- Yarn `npm install --global yarn`
+
 ## Install
+
+
 ```
 cd tuio-client && yarn install && yarn link
 cd scratch-vm && yarn link tuio-client && yarn install && yarn link
@@ -18,7 +23,7 @@ TBD: reactivision
 ```
 cd scratch-gui && yarn start &
 node ../tuio-server/index.js &
-cd ../tuo-simulator && java -jar TuioSimulator.jar
+cd ../tuio-simulator && java -jar TuioSimulator.jar
 ```
 Open browser on localhost:8601
 
