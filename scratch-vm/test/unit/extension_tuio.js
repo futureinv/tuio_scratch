@@ -1,5 +1,5 @@
 const test = require('tap').test;
-// const Tuio = require('../../src/extensions/scratch3_tuio/index.js');
+const Tuio = require('../../src/extensions/scratch3_tuio/index.js');
 
 
 /* const fakeRuntime = {
@@ -7,7 +7,16 @@ const test = require('tap').test;
     on: () => {} // Stub out listener methods used in constructor.
 }; */
 
-test('a failing test', t => {
-    t.equal(0, 1);
+const tuio = new Tuio();
+
+// test('a failing test', t => {
+//    t.equal(0, 1);
+//    t.end();
+//});
+
+test('isConnected variable correctly describes state', t => {
+    t.equal(tuio.isConnected, 0);
+    tuio.connect();
+    t.equal(tuio.isConnected, 1);
     t.end();
 });

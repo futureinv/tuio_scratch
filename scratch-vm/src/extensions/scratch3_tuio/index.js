@@ -28,19 +28,11 @@ formatMessage.setup({
 
 const TuioClient = require('tuio-client');
 
-let isConnected = false;
-
-const client = new TuioClient({host: 'ws://localhost:8080'});
-client.on('connect', () => {
-    isConnected = true;
-    log.log('connected!');
-});
-
-
 class Scratch3Tuio {
+
     constructor (runtime){
         this.runtime = runtime;
-            
+        this.isConnected = false;
    
         /**
          * A toggle that alternates true and false each frame, so that an
@@ -53,6 +45,12 @@ class Scratch3Tuio {
         setInterval(() => {
             this.frameToggle = !this.frameToggle;
         }, this.runtime.currentStepTime);
+
+        this.client = new TuioClient({host: 'ws://localhost:8080'});
+        this.client.on('connect', () => {
+            this.isConnected = true;
+            log.log('connected!');
+        });
     }
 
     getInfo () {
@@ -215,10 +213,10 @@ class Scratch3Tuio {
     }
 
     connect () {
-        if (isConnected) {
+        if (this.isConnected) {
             return;
         }
-        client.connect();
+        this.client.connect();
     }
 
     whenMarkerWithIDEnters () {
