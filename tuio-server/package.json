@@ -4,11 +4,21 @@
   "description": "Server listening for TUIO events.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npm run lint",
+    "lint": "eslint . && format-message lint src/**/*.js"
   },
   "author": "Daniele Paradiso",
   "license": "ISC",
   "dependencies": {
     "ws": "^7.2.1"
+  },
+  "devDependencies": {
+    "@babel/eslint-parser": "7.22.15",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^8.51.0",
+    "eslint-config-scratch": "9.0.3",
+    "eslint-plugin-format-message": "^6.2.4",
+    "eslint-utils": "^3.0.0",
+    "format-message-cli": "^6.2.0"
   }
 }

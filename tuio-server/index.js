@@ -8,7 +8,7 @@ const args = process.argv.slice(2);
 if (args.length > 0) {
     const userPort = args[0];
     if (isNaN(userPort)) {
-        console.log("Usage example: node index.js 8080");
+        console.log('Usage example: node index.js 8080');
         process.exit();
     }
     port = userPort;
