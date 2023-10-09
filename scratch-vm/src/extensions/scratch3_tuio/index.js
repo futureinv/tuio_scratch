@@ -1,6 +1,6 @@
 const ArgumentType = require('../../extension-support/argument-type');
 const BlockType = require('../../extension-support/block-type');
-// const Cast = require('../../util/cast');
+const Cast = require('../../util/cast');
 const log = require('../../util/log');
 
 const formatMessage = require('format-message');
@@ -28,12 +28,46 @@ formatMessage.setup({
 
 const TuioClient = require('tuio-client');
 
+let isConnected = false;
+const markersEntered = new Array();
+const markerMap = new Map();
+let lastMarkerEntered = null;
+let aMarkerHasEntered = false;
+
+const _makeMarkerObject = function (marker) {
+    const x = marker.xPos;
+    const y = marker.yPos;
+    const angle = marker.angle;
+    const id = marker.symbolID;
+    return {id: id, x: x, y: y, angle: angle};
+};
+
+const client = new TuioClient({host: 'ws://localhost:8080'});
+client.on('connect', () => {
+    isConnected = true;
+    log.log('yeah, connected!');
+});
+
+client.on('addTuioObject', marker => {
+    const id = marker.symbolID;
+    markerMap.set(id, _makeMarkerObject(marker));
+    lastMarkerEntered = id;
+    markersEntered.push(id);
+    setTimeout(() => {
+        markersEntered.pop();
+    }, 400);
+    aMarkerHasEntered = true;
+    setTimeout(() => {
+        aMarkerHasEntered = false;
+    }, 1000);
+});
+
 class Scratch3Tuio {
 
     constructor (runtime){
         this.runtime = runtime;
-        this.isConnected = false;
-   
+        this.client = client;
+
         /**
          * A toggle that alternates true and false each frame, so that an
          * edge-triggered hat can trigger on every other frame.
@@ -42,17 +76,11 @@ class Scratch3Tuio {
         this.frameToggle = false;
 
         // Set an interval that toggles the frameToggle every frame.
-        setInterval(() => {
-            this.frameToggle = !this.frameToggle;
-        }, this.runtime.currentStepTime);
-
-        this.client = new TuioClient({host: 'ws://localhost:8080'});
-        this.client.on('connect', () => {
-            this.isConnected = true;
-            log.log('connected!');
-        });
+        // setInterval(() => {
+        //    this.frameToggle = !this.frameToggle;
+        // }, this.runtime.currentStepTime);
     }
-
+    
     getInfo () {
         return {
             id: 'tuio',
@@ -82,7 +110,7 @@ class Scratch3Tuio {
                             menu: 'markerIDMenuWithAny'
                         }
                     }
-                },
+                }/* ,
                 {
                     opcode: 'whenMarkerWithIDExits',
                     blockType: BlockType.HAT,
@@ -202,7 +230,7 @@ class Scratch3Tuio {
                             menu: 'markerIDMenuWithoutAny'
                         }
                     }
-                }
+                }*/
             ],
             menus: {
                 markerIDMenuWithAny: ['1', '2', '3', '4', 'any'],
@@ -218,11 +246,31 @@ class Scratch3Tuio {
         }
         this.client.connect();
     }
+    
+    isConnected () {
+        return isConnected;
+    }
 
-    whenMarkerWithIDEnters () {
+    whenMarkerWithIDEnters (args) {
+        const isNotEmpty = markersEntered.length > 0;
+        if (isNotEmpty) {
+            const id = markersEntered[0];
+            const markerId = Cast.toNumber(args.markerID);
+            if (id === markerId) {
+                markersEntered.pop();
+                return true;
+            }
+        }
         return false;
     }
 
+    getLastMarkerEntered () {
+        if (aMarkerHasEntered) {
+            return lastMarkerEntered;
+        }
+        return null;
+    }
+/*
     whenMarkerWithIDExits () {
         return false;
     }
@@ -254,6 +302,7 @@ class Scratch3Tuio {
     getMarkerAngleSpeed () {
         return 0;
     }
+    */
 }
 
 module.exports = Scratch3Tuio;
