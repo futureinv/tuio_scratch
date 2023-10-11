@@ -30,16 +30,22 @@ const TuioClient = require('tuio-client');
 
 let isConnected = false;
 const markersEntered = new Array();
+const markersExited = new Array();
 const markerMap = new Map();
 let lastMarkerEntered = null;
 let aMarkerHasEntered = false;
+let lastMarkerExited = null;
+let aMarkerHasExited = false;
 
 const _makeMarkerObject = function (marker) {
     const x = marker.xPos;
     const y = marker.yPos;
     const angle = marker.angle;
-    const id = marker.symbolID;
-    return {id: id, x: x, y: y, angle: angle};
+    const xspeed = marker.xSpeed;
+    const yspeed = marker.ySpeed;
+    const angularSpeed = marker.rotationSpeed;
+    const id = marker.symbolId;
+    return {id: id, x: x, y: y, angle: angle, xspeed: xspeed, yspeed: yspeed, angularSpeed: angularSpeed};
 };
 
 const client = new TuioClient({host: 'ws://localhost:8080'});
@@ -49,7 +55,7 @@ client.on('connect', () => {
 });
 
 client.on('addTuioObject', marker => {
-    const id = marker.symbolID;
+    const id = marker.symbolId;
     markerMap.set(id, _makeMarkerObject(marker));
     lastMarkerEntered = id;
     markersEntered.push(id);
@@ -61,6 +67,26 @@ client.on('addTuioObject', marker => {
         aMarkerHasEntered = false;
     }, 1000);
 });
+
+client.on('updateTuioObject', marker => {
+    const id = marker.symbolId;
+    markerMap.set(id, _makeMarkerObject(marker));
+});
+
+client.on('removeTuioObject', marker => {
+    const id = marker.symbolId;
+    markerMap.delete(id);
+    lastMarkerExited = id;
+    markersExited.push(id);
+    setTimeout(() => {
+        markersExited.pop();
+    }, 400);
+    aMarkerHasExited = true;
+    setTimeout(() => {
+        aMarkerHasExited = false;
+    }, 1000);
+});
+
 
 class Scratch3Tuio {
 
@@ -101,27 +127,27 @@ class Scratch3Tuio {
                     blockType: BlockType.HAT,
                     text: formatMessage({
                         id: 'tuio.whenMarkerWithIDEnters',
-                        default: 'when Marker [markerID] enters',
+                        default: 'when Marker [MARKER_ID] enters',
                         description: 'fires when marker markerID enters'
                     }),
                     arguments: {
-                        markerID: {
-                            type: ArgumentType.NUMBER,
+                        MARKER_ID: {
+                            type: ArgumentType.STRING,
                             menu: 'markerIDMenuWithAny'
                         }
                     }
-                }/* ,
+                },
                 {
                     opcode: 'whenMarkerWithIDExits',
                     blockType: BlockType.HAT,
                     text: formatMessage({
                         id: 'tuio.whenMarkerWithIDExits',
-                        default: 'when Marker [markerID] exits',
+                        default: 'when Marker [MARKER_ID] exits',
                         description: 'fires when marker markerID exits'
                     }),
                     arguments: {
-                        markerID: {
-                            type: ArgumentType.NUMBER,
+                        MARKER_ID: {
+                            type: ArgumentType.STRING,
                             menu: 'markerIDMenuWithAny'
                         }
                     }
@@ -131,12 +157,12 @@ class Scratch3Tuio {
                     blockType: BlockType.BOOLEAN,
                     text: formatMessage({
                         id: 'tuio.isMarkerWithIDPresent',
-                        default: 'Marker [markerID] is present',
+                        default: 'Marker [MARKER_ID] is present',
                         description: 'checks if Marker [markerID] is present'
                     }),
                     arguments: {
-                        markerID: {
-                            type: ArgumentType.NUMBER,
+                        MARKER_ID: {
+                            type: ArgumentType.STRING,
                             menu: 'markerIDMenuWithoutAny'
                         }
                     }
@@ -146,11 +172,11 @@ class Scratch3Tuio {
                     blockType: BlockType.REPORTER,
                     text: formatMessage({
                         id: 'tuio.getMarkerX',
-                        default: 'Marker [markerID] X coordinate',
+                        default: 'Marker [MARKER_ID] X coordinate',
                         description: 'returns X coordinate of Marker [markerID]'
                     }),
                     arguments: {
-                        markerID: {
+                        MARKER_ID: {
                             type: ArgumentType.NUMBER,
                             menu: 'markerIDMenuWithoutAny'
                         }
@@ -161,11 +187,11 @@ class Scratch3Tuio {
                     blockType: BlockType.REPORTER,
                     text: formatMessage({
                         id: 'tuio.getMarkerY',
-                        default: 'Marker [markerID] Y coordinate',
+                        default: 'Marker [MARKER_ID] Y coordinate',
                         description: 'returns Y coordinate of Marker [markerID]'
                     }),
                     arguments: {
-                        markerID: {
+                        MARKER_ID: {
                             type: ArgumentType.NUMBER,
                             menu: 'markerIDMenuWithoutAny'
                         }
@@ -176,11 +202,11 @@ class Scratch3Tuio {
                     blockType: BlockType.REPORTER,
                     text: formatMessage({
                         id: 'tuio.getMarkerAngle',
-                        default: 'Marker [markerID] rotation angle',
+                        default: 'Marker [MARKER_ID] rotation angle',
                         description: 'returns rotation angle of Marker [markerID]'
                     }),
                     arguments: {
-                        markerID: {
+                        MARKER_ID: {
                             type: ArgumentType.NUMBER,
                             menu: 'markerIDMenuWithoutAny'
                         }
@@ -191,11 +217,11 @@ class Scratch3Tuio {
                     blockType: BlockType.REPORTER,
                     text: formatMessage({
                         id: 'tuio.getMarkerXSpeed',
-                        default: 'Marker [markerID] X Speed',
+                        default: 'Marker [MARKER_ID] X Speed',
                         description: 'returns X Speed of Marker [markerID]'
                     }),
                     arguments: {
-                        markerID: {
+                        MARKER_ID: {
                             type: ArgumentType.NUMBER,
                             menu: 'markerIDMenuWithoutAny'
                         }
@@ -206,11 +232,11 @@ class Scratch3Tuio {
                     blockType: BlockType.REPORTER,
                     text: formatMessage({
                         id: 'tuio.getMarkerYSpeed',
-                        default: 'Marker [markerID] Y Speed',
+                        default: 'Marker [MARKER_ID] Y Speed',
                         description: 'returns Y Speed of Marker [markerID]'
                     }),
                     arguments: {
-                        markerID: {
+                        MARKER_ID: {
                             type: ArgumentType.NUMBER,
                             menu: 'markerIDMenuWithoutAny'
                         }
@@ -221,30 +247,29 @@ class Scratch3Tuio {
                     blockType: BlockType.REPORTER,
                     text: formatMessage({
                         id: 'tuio.getMarkerAngleSpeed',
-                        default: 'Marker [markerID] angular velocity',
+                        default: 'Marker [MARKER_ID] angular velocity',
                         description: 'returns angular velocity of Marker [markerID]'
                     }),
                     arguments: {
-                        markerID: {
+                        MARKER_ID: {
                             type: ArgumentType.NUMBER,
                             menu: 'markerIDMenuWithoutAny'
                         }
                     }
-                }*/
+                }
             ],
             menus: {
                 markerIDMenuWithAny: ['1', '2', '3', '4', 'any'],
                 markerIDMenuWithoutAny: ['1', '2', '3', '4']
-
             }
         };
     }
 
     connect () {
-        if (this.isConnected) {
+        if (isConnected) {
             return;
         }
-        this.client.connect();
+        client.connect();
     }
     
     isConnected () {
@@ -254,10 +279,29 @@ class Scratch3Tuio {
     whenMarkerWithIDEnters (args) {
         const isNotEmpty = markersEntered.length > 0;
         if (isNotEmpty) {
+            if (args.MARKER_ID === 'any') {
+                return true;
+            }
             const id = markersEntered[0];
-            const markerId = Cast.toNumber(args.markerID);
+            const markerId = Cast.toNumber(args.MARKER_ID);
             if (id === markerId) {
                 markersEntered.pop();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    whenMarkerWithIDExits (args) {
+        const isNotEmpty = markersExited.length > 0;
+        if (isNotEmpty) {
+            if (args.MARKER_ID === 'any') {
+                return true;
+            }
+            const id = markersExited[0];
+            const markerId = Cast.toNumber(args.MARKER_ID);
+            if (id === markerId) {
+                markersExited.pop();
                 return true;
             }
         }
@@ -270,39 +314,73 @@ class Scratch3Tuio {
         }
         return null;
     }
-/*
-    whenMarkerWithIDExits () {
-        return false;
+
+    getLastMarkerExited () {
+        if (aMarkerHasExited) {
+            return lastMarkerExited;
+        }
+        return null;
     }
 
-    isMarkerWithIDPresent () {
-        return false;
+    isMarkerWithIDPresent (args) {
+        const markerId = Cast.toNumber(args.MARKER_ID);
+        return markerMap.has(markerId);
     }
 
-    getMarkerX () {
+    getMarkerX (args) {
+        const markerID = Cast.toNumber(args.MARKER_ID);
+        const m = markerMap.get(markerID);
+        if (m) {
+            return m.x;
+        }
         return 0;
     }
 
-    getMarkerY () {
+    getMarkerY (args) {
+        const markerID = Cast.toNumber(args.MARKER_ID);
+        const m = markerMap.get(markerID);
+        if (m) {
+            return m.y;
+        }
         return 0;
     }
 
-    getMarkerAngle () {
+    getMarkerAngle (args) {
+        const markerID = Cast.toNumber(args.MARKER_ID);
+        const m = markerMap.get(markerID);
+        if (m) {
+            return m.angle;
+        }
         return 0;
     }
 
-    getMarkerXSpeed () {
+    getMarkerXSpeed (args) {
+        const markerID = Cast.toNumber(args.MARKER_ID);
+        const m = markerMap.get(markerID);
+        if (m) {
+            return m.xspeed;
+        }
         return 0;
     }
 
-    getMarkerYSpeed () {
+    getMarkerYSpeed (args) {
+        const markerID = Cast.toNumber(args.MARKER_ID);
+        const m = markerMap.get(markerID);
+        if (m) {
+            return m.yspeed;
+        }
         return 0;
     }
 
-    getMarkerAngleSpeed () {
+    getMarkerAngleSpeed (args) {
+        const markerID = Cast.toNumber(args.MARKER_ID);
+        const m = markerMap.get(markerID);
+        if (m) {
+            return m.angularSpeed;
+        }
         return 0;
     }
-    */
+    
 }
 
 module.exports = Scratch3Tuio;
