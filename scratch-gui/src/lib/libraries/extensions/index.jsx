@@ -46,8 +46,8 @@ import gdxforInsetIconURL from './gdxfor/gdxfor-small.svg';
 import gdxforConnectionIconURL from './gdxfor/gdxfor-illustration.svg';
 import gdxforConnectionSmallIconURL from './gdxfor/gdxfor-small.svg';
 
-import tuioIconURL from './tuio/tuio.png';
-import tuioInsetIconURL from './tuio/tuio-small.png';
+import tuioIconURL from './tuio/tuio-new.png';
+import tuioInsetIconURL from './tuio/tuio-small-new.svg';
 
 export default [
     
