@@ -55,16 +55,28 @@ client.on('connect', () => {
 });
 
 client.on('addTuioObject', marker => {
+
     const id = marker.symbolId;
+    log.log(new Date().toISOString()+' - test_aggiuntivi - original code - enters id: '+id)
+
     markerMap.set(id, _makeMarkerObject(marker));
     lastMarkerEntered = id;
+    log.log(new Date().toISOString()+' - test_aggiuntivi - original code - lastMarkerEntered: '+lastMarkerEntered)
+
     markersEntered.push(id);
+    log.log(new Date().toISOString()+' - test_aggiuntivi - original code - markersEntered after push: ['+markersEntered+']')
+        
     setTimeout(() => {
-        markersEntered.pop();
+        log.log(new Date().toISOString()+' - test_aggiuntivi - original code - pop id: '+markersEntered.pop())
+        log.log(new Date().toISOString()+' - test_aggiuntivi - original code - markersEntered after pop: ['+markersEntered+']')
     }, 400);
+
     aMarkerHasEntered = true;
+    log.log(new Date().toISOString()+' - test_aggiuntivi - original code - aMarkerHasEntered: true')
+    
     setTimeout(() => {
         aMarkerHasEntered = false;
+        log.log(new Date().toISOString()+' - test_aggiuntivi - original code - aMarkerHasEntered: false')
     }, 1000);
 });
 
@@ -112,6 +124,16 @@ class Scratch3Tuio {
             id: 'tuio',
             name: 'Tuio',
             blocks: [
+                {
+                    opcode: 'test_aggiuntivi',
+                    blockType: BlockType.COMMAND,
+                    text: formatMessage({
+                        id: 'tuio.test_aggiuntivi',
+                        default: 'test_aggiuntivi',
+                        description: 'test_aggiuntivi'
+                    }),
+                    arguments: {}
+                },
                 {
                     opcode: 'connect',
                     blockType: BlockType.COMMAND,
@@ -271,21 +293,35 @@ class Scratch3Tuio {
         }
         client.connect();
     }
+
+    test_aggiuntivi () {
+        test_aggiuntivi()
+    }
     
     isConnected () {
         return isConnected;
     }
 
     whenMarkerWithIDEnters (args) {
+        //log.log(new Date().toISOString()+' - test_aggiuntivi - whenMarkerWithIDEnters called')
+
         const isNotEmpty = markersEntered.length > 0;
+        //log.log(new Date().toISOString()+' - test_aggiuntivi - isNotEmpty: '+isNotEmpty)
+
         if (isNotEmpty) {
             if (args.MARKER_ID === 'any') {
+                log.log(new Date().toISOString()+' - test_aggiuntivi - if interno '+args.MARKER_ID+' - return true')
                 return true;
             }
             const id = markersEntered[0];
+            log.log(new Date().toISOString()+' - test_aggiuntivi - if interno '+args.MARKER_ID+' - id in array[0] : '+id)
+
             const markerId = Cast.toNumber(args.MARKER_ID);
+            
             if (id === markerId) {
-                markersEntered.pop();
+                log.log(new Date().toISOString()+' - test_aggiuntivi - if interno '+args.MARKER_ID+' - markersEntered actual: ['+markersEntered+']')
+                log.log(new Date().toISOString()+' - test_aggiuntivi - if interno '+args.MARKER_ID+' - pop id: '+markersEntered.pop())
+                log.log(new Date().toISOString()+' - test_aggiuntivi - if interno '+args.MARKER_ID+' - markersEntered final: ['+markersEntered+']')
                 return true;
             }
         }
@@ -384,3 +420,42 @@ class Scratch3Tuio {
 }
 
 module.exports = Scratch3Tuio;
+
+/*
+*/
+
+function inject_marker(id) {
+    log.log(new Date().toISOString()+' - test_aggiuntivi - simulates id: '+id)
+    
+    lastMarkerEntered = id;
+    log.log(new Date().toISOString()+' - test_aggiuntivi - lastMarkerEntered: '+lastMarkerEntered)
+
+    markersEntered.push(id);
+    log.log(new Date().toISOString()+' - test_aggiuntivi - markersEntered after injection: ['+markersEntered+']')
+
+    setTimeout(() => {
+        log.log(new Date().toISOString()+' - test_aggiuntivi - pop id: '+markersEntered.pop())
+        log.log(new Date().toISOString()+' - test_aggiuntivi - markersEntered after pop: ['+markersEntered+']')
+    }, 400);
+
+    aMarkerHasEntered = true;
+    log.log(new Date().toISOString()+' - test_aggiuntivi - aMarkerHasEntered: true')
+
+    setTimeout(() => {
+        log.log(new Date().toISOString()+' - test_aggiuntivi - aMarkerHasEntered: false')
+        aMarkerHasEntered = false;
+    }, 1000);
+}
+
+function test_aggiuntivi() {
+    log.log(new Date().toISOString()+' - test_aggiuntivi - main - begin');
+    /* simulates two markers entering quickly */
+
+    inject_marker(1);
+    
+    setTimeout(() => {
+        inject_marker(2);
+    }, 15);
+    
+    log.log(new Date().toISOString()+' - test_aggiuntivi - main - end');
+}
