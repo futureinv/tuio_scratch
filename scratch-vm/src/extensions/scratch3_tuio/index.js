@@ -26,7 +26,7 @@ formatMessage.setup({
 
 // console.log(formatMessage.setup().locale);
 
-const TuioClient = require('tuio-client');
+const {TuioClient} = require('tuio-client');
 
 let isConnected = false;
 const markersEntered = new Array();
@@ -41,11 +41,11 @@ const _makeMarkerObject = function (marker) {
     const x = marker.xPos;
     const y = marker.yPos;
     const angle = marker.angle;
-    const xspeed = marker.xSpeed;
-    const yspeed = marker.ySpeed;
+    const xSpeed = marker.xSpeed;
+    const ySpeed = marker.ySpeed;
     const angularSpeed = marker.rotationSpeed;
     const id = marker.symbolId;
-    return {id: id, x: x, y: y, angle: angle, xspeed: xspeed, yspeed: yspeed, angularSpeed: angularSpeed};
+    return {id: id, x: x, y: y, angle: angle, xSpeed: xSpeed, ySpeed: ySpeed, angularSpeed: angularSpeed};
 };
 
 const client = new TuioClient({host: 'ws://localhost:8080'});
@@ -57,26 +57,26 @@ client.on('connect', () => {
 client.on('addTuioObject', marker => {
 
     const id = marker.symbolId;
-    log.log(new Date().toISOString()+' - test_aggiuntivi - original code - enters id: '+id)
+    log.log('${new Date().toISOString()} - enters id: ${id}');
 
     markerMap.set(id, _makeMarkerObject(marker));
     lastMarkerEntered = id;
-    log.log(new Date().toISOString()+' - test_aggiuntivi - original code - lastMarkerEntered: '+lastMarkerEntered)
+    log.log('${new Date().toISOString()} - lastMarkerEntered: ${lastMarkerEntered}');
 
     markersEntered.push(id);
-    log.log(new Date().toISOString()+' - test_aggiuntivi - original code - markersEntered after push: ['+markersEntered+']')
+    log.log('${new Date().toISOString()} - markersEntered after push: [${markersEntered}]');
         
     setTimeout(() => {
-        log.log(new Date().toISOString()+' - test_aggiuntivi - original code - pop id: '+markersEntered.pop())
-        log.log(new Date().toISOString()+' - test_aggiuntivi - original code - markersEntered after pop: ['+markersEntered+']')
+        log.log('${new Date().toISOString()} - pop id: ${markersEntered.pop()}');
+        log.log('${new Date().toISOString()} - markersEntered after pop: [${markersEntered}]');
     }, 400);
 
     aMarkerHasEntered = true;
-    log.log(new Date().toISOString()+' - test_aggiuntivi - original code - aMarkerHasEntered: true')
+    log.log('${new Date().toISOString()} - aMarkerHasEntered: true');
     
     setTimeout(() => {
         aMarkerHasEntered = false;
-        log.log(new Date().toISOString()+' - test_aggiuntivi - original code - aMarkerHasEntered: false')
+        log.log('${new Date().toISOString()} - aMarkerHasEntered: false');
     }, 1000);
 });
 
@@ -88,6 +88,7 @@ client.on('updateTuioObject', marker => {
 client.on('removeTuioObject', marker => {
     const id = marker.symbolId;
     markerMap.delete(id);
+    markersEntered.splice(markersEntered.indexOf(id), 1);
     lastMarkerExited = id;
     markersExited.push(id);
     setTimeout(() => {
@@ -294,34 +295,26 @@ class Scratch3Tuio {
         client.connect();
     }
 
-    test_aggiuntivi () {
-        test_aggiuntivi()
-    }
-    
     isConnected () {
         return isConnected;
     }
 
     whenMarkerWithIDEnters (args) {
-        //log.log(new Date().toISOString()+' - test_aggiuntivi - whenMarkerWithIDEnters called')
-
         const isNotEmpty = markersEntered.length > 0;
-        //log.log(new Date().toISOString()+' - test_aggiuntivi - isNotEmpty: '+isNotEmpty)
-
         if (isNotEmpty) {
             if (args.MARKER_ID === 'any') {
-                log.log(new Date().toISOString()+' - test_aggiuntivi - if interno '+args.MARKER_ID+' - return true')
+                log.log('${new Date().toISOString()} - if int ${args.MARKER_ID} - return true');
                 return true;
             }
             const id = markersEntered[0];
-            log.log(new Date().toISOString()+' - test_aggiuntivi - if interno '+args.MARKER_ID+' - id in array[0] : '+id)
+            log.log('${new Date().toISOString()} - if int ${args.MARKER_ID} - id in array[0] : ${id}');
 
             const markerId = Cast.toNumber(args.MARKER_ID);
             
             if (id === markerId) {
-                log.log(new Date().toISOString()+' - test_aggiuntivi - if interno '+args.MARKER_ID+' - markersEntered actual: ['+markersEntered+']')
-                log.log(new Date().toISOString()+' - test_aggiuntivi - if interno '+args.MARKER_ID+' - pop id: '+markersEntered.pop())
-                log.log(new Date().toISOString()+' - test_aggiuntivi - if interno '+args.MARKER_ID+' - markersEntered final: ['+markersEntered+']')
+                log.log('${new Date().toISOString()} - if int ${args.MARKER_ID} - markersEntered: [${markersEntered}]');
+                log.log('${new Date().toISOString()} - if int ${args.MARKER_ID} - pop id: ${markersEntered.pop()}');
+                log.log('${new Date().toISOString()} - if int ${args.MARKER_ID} - markersEntered: [${markersEntered}]');
                 return true;
             }
         }
@@ -394,7 +387,7 @@ class Scratch3Tuio {
         const markerID = Cast.toNumber(args.MARKER_ID);
         const m = markerMap.get(markerID);
         if (m) {
-            return m.xspeed;
+            return m.xSpeed;
         }
         return 0;
     }
@@ -403,7 +396,7 @@ class Scratch3Tuio {
         const markerID = Cast.toNumber(args.MARKER_ID);
         const m = markerMap.get(markerID);
         if (m) {
-            return m.yspeed;
+            return m.ySpeed;
         }
         return 0;
     }
@@ -419,43 +412,4 @@ class Scratch3Tuio {
     
 }
 
-module.exports = Scratch3Tuio;
-
-/*
-*/
-
-function inject_marker(id) {
-    log.log(new Date().toISOString()+' - test_aggiuntivi - simulates id: '+id)
-    
-    lastMarkerEntered = id;
-    log.log(new Date().toISOString()+' - test_aggiuntivi - lastMarkerEntered: '+lastMarkerEntered)
-
-    markersEntered.push(id);
-    log.log(new Date().toISOString()+' - test_aggiuntivi - markersEntered after injection: ['+markersEntered+']')
-
-    setTimeout(() => {
-        log.log(new Date().toISOString()+' - test_aggiuntivi - pop id: '+markersEntered.pop())
-        log.log(new Date().toISOString()+' - test_aggiuntivi - markersEntered after pop: ['+markersEntered+']')
-    }, 400);
-
-    aMarkerHasEntered = true;
-    log.log(new Date().toISOString()+' - test_aggiuntivi - aMarkerHasEntered: true')
-
-    setTimeout(() => {
-        log.log(new Date().toISOString()+' - test_aggiuntivi - aMarkerHasEntered: false')
-        aMarkerHasEntered = false;
-    }, 1000);
-}
-
-function test_aggiuntivi() {
-    log.log(new Date().toISOString()+' - test_aggiuntivi - main - begin');
-    /* simulates two markers entering quickly */
-
-    inject_marker(1);
-    
-    setTimeout(() => {
-        inject_marker(2);
-    }, 15);
-    
-    log.log(new Date().toISOString()+' - test_aggiuntivi - main - end');
-}
+module.exports = {Scratch3Tuio, _makeMarkerObject};
