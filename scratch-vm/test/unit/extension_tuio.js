@@ -22,9 +22,24 @@ const addTestMarker = function (markerID) {
     tuio.client.objectAdded(marker);
 };
 
+const updateTestMarker = function (markerID, args) {
+    const marker = new TuioObject({
+        si: 1,
+        sym: markerID,
+        xp: 0,
+        yp: 0,
+        a: 0
+    });
+    for (const key in args) {
+        marker[key] = args[key];
+    }
+    tuio.client.currentTime = new TuioTime();
+    tuio.client.objectDefault(marker);
+};
+
 const removeTestMarker = function (markerID) {
     const marker = new TuioObject({
-        si: 3,
+        si: 1,
         sym: markerID,
         xp: 0,
         yp: 0,
@@ -66,7 +81,26 @@ test('adding a marker sets the corresponding hat block to true', t => {
     addTestMarker(2);
     t.ok(tuio.whenMarkerWithIDEnters({MARKER_ID: '2'}));
     removeTestMarker(2);
-    t.end();
+    setTimeout(() => t.end(), 500);
+});
+
+test('hat block with any fires for any marker', t => {
+    t.notOk(tuio.whenMarkerWithIDEnters({MARKER_ID: 'any'}));
+    t.notOk(tuio.whenMarkerWithIDExits({MARKER_ID: 'any'}));
+    addTestMarker(3);
+    t.ok(tuio.whenMarkerWithIDEnters({MARKER_ID: 'any'}));
+    t.notOk(tuio.whenMarkerWithIDExits({MARKER_ID: 'any'}));
+    removeTestMarker(3);
+    t.ok(tuio.whenMarkerWithIDExits({MARKER_ID: 'any'}));
+    setTimeout(() => t.end(), 500);
+});
+
+test('removing a marker sets the corresponding hat block to true', t => {
+    addTestMarker(5);
+    t.notOk(tuio.whenMarkerWithIDExits({MARKER_ID: '5'}));
+    removeTestMarker(5);
+    t.ok(tuio.whenMarkerWithIDExits({MARKER_ID: '5'}));
+    setTimeout(() => t.end(), 500);
 });
 
 test('adding a marker makes it present for Scratch', t => {
@@ -74,17 +108,15 @@ test('adding a marker makes it present for Scratch', t => {
     addTestMarker(1);
     t.ok(tuio.isMarkerWithIDPresent({MARKER_ID: '1'}));
     removeTestMarker(1);
-    t.end();
+    setTimeout(() => t.end(), 500);
 });
 
-test('bug: the push/pop bug generating the critical run is avoided', t => {
-    addTestMarker(3);
-    addTestMarker(4);
-    t.ok(tuio.whenMarkerWithIDEnters({MARKER_ID: '3'}));
-    t.ok(tuio.whenMarkerWithIDEnters({MARKER_ID: '4'}));
-    removeTestMarker(3);
-    removeTestMarker(4);
-    t.end();
+test('removing a marker makes it absent for Scratch', t => {
+    addTestMarker(1);
+    t.ok(tuio.isMarkerWithIDPresent({MARKER_ID: '1'}));
+    removeTestMarker(1);
+    t.notOk(tuio.isMarkerWithIDPresent({MARKER_ID: '1'}));
+    setTimeout(() => t.end(), 500);
 });
 
 test('Tuio extension has 11 blocks', t => {
@@ -98,5 +130,59 @@ test('Tuio extension has 2 menus', t => {
     const infoObject = tuio.getInfo();
     const menus = infoObject.menus;
     t.equal(Object.keys(menus).length, 2);
+    t.end();
+});
+
+test('coordinates getters returns correct values for existing markers', t => {
+    addTestMarker(9);
+    updateTestMarker(9, {xPos: 0.9, yPos: 0.1, angle: 2});
+    t.equal(tuio.getMarkerX({MARKER_ID: '9'}), 0.9);
+    t.equal(tuio.getMarkerY({MARKER_ID: '9'}), 0.1);
+    t.equal(tuio.getMarkerAngle({MARKER_ID: '9'}), 2);
+    removeTestMarker(9);
+    setTimeout(() => t.end(), 500);
+});
+
+test('coordinates getters returns zero values for missing markers', t => {
+    t.equal(tuio.getMarkerX({MARKER_ID: '7'}), 0);
+    t.equal(tuio.getMarkerY({MARKER_ID: '7'}), 0);
+    t.equal(tuio.getMarkerAngle({MARKER_ID: '7'}), 0);
+    t.end();
+});
+
+test('speed getters returns correct values for existing markers', t => {
+    addTestMarker(9);
+    updateTestMarker(9, {xSpeed: 0.7, ySpeed: 0.3, rotationSpeed: 1});
+    t.equal(tuio.getMarkerXSpeed({MARKER_ID: '9'}), 0.7);
+    t.equal(tuio.getMarkerYSpeed({MARKER_ID: '9'}), 0.3);
+    t.equal(tuio.getMarkerAngularSpeed({MARKER_ID: '9'}), 1);
+    removeTestMarker(9);
+    setTimeout(() => t.end(), 500);
+});
+
+test('speed getters returns zero values for missing markers', t => {
+    t.equal(tuio.getMarkerXSpeed({MARKER_ID: '8'}), 0);
+    t.equal(tuio.getMarkerYSpeed({MARKER_ID: '8'}), 0);
+    t.equal(tuio.getMarkerAngularSpeed({MARKER_ID: '8'}), 0);
+    t.end();
+});
+
+// Failing tests until we fix known issue with push/pop
+
+test('bug: the push/pop bug generating the critical run is avoided', t => {
+    addTestMarker(3);
+    addTestMarker(4);
+    t.ok(tuio.whenMarkerWithIDEnters({MARKER_ID: '3'}));
+    t.ok(tuio.whenMarkerWithIDEnters({MARKER_ID: '4'}));
+    removeTestMarker(3);
+    removeTestMarker(4);
+    t.end();
+});
+
+test('bug: hat block with id removes the value in the array for the hat with any', t => {
+    addTestMarker(3);
+    t.ok(tuio.whenMarkerWithIDEnters({MARKER_ID: '3'}));
+    t.ok(tuio.whenMarkerWithIDEnters({MARKER_ID: 'any'}));
+    removeTestMarker(3);
     t.end();
 });
