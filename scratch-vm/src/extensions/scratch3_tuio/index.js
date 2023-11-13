@@ -1,5 +1,6 @@
 const ArgumentType = require('../../extension-support/argument-type');
 const BlockType = require('../../extension-support/block-type');
+const TargetType = require('../../extension-support/target-type');
 const Cast = require('../../util/cast');
 const log = require('../../util/log');
 
@@ -189,6 +190,26 @@ class Scratch3Tuio {
                     }
                 },
                 {
+                    opcode: 'followMarkerWithID',
+                    blockType: BlockType.COMMAND,
+                    text: formatMessage({
+                        id: 'tuio.followMarker',
+                        default: 'follow marker [MARKER_ID] [FOLLOW_TYPE]',
+                        description: 'follow position and/or angle of marker '
+                    }),
+                    arguments: {
+                        FOLLOW_TYPE: {
+                            type: ArgumentType.STRING,
+                            menu: 'followTypes'
+                        },
+                        MARKER_ID: {
+                            type: ArgumentType.STRING,
+                            menu: 'markerIDMenuWithoutAny'
+                        }
+                    },
+                    filter: [TargetType.SPRITE]
+                },
+                {
                     opcode: 'getMarkerX',
                     blockType: BlockType.REPORTER,
                     text: formatMessage({
@@ -281,7 +302,8 @@ class Scratch3Tuio {
             ],
             menus: {
                 markerIDMenuWithAny: ['1', '2', '3', '4', 'any'],
-                markerIDMenuWithoutAny: ['1', '2', '3', '4']
+                markerIDMenuWithoutAny: ['1', '2', '3', '4'],
+                followTypes: ['(1) position', '(2) angle', '(3) position and angle']
             }
         };
     }
@@ -295,6 +317,21 @@ class Scratch3Tuio {
 
     isConnected () {
         return isConnected;
+    }
+
+    rescaleX (rawX) {
+        const rescaledX = (rawX - 0.5) * 480;
+        return rescaledX;
+    }
+
+    rescaleY (rawY) {
+        const rescaledY = (0.5 - rawY) * 360;
+        return rescaledY;
+    }
+
+    rescaleAngle (rawAngle) {
+        const rescaledAngle = rawAngle / Math.PI * 180;
+        return rescaledAngle;
     }
 
     whenMarkerWithIDEnters (args) {
@@ -338,6 +375,21 @@ class Scratch3Tuio {
     isMarkerWithIDPresent (args) {
         const markerId = Cast.toNumber(args.MARKER_ID);
         return markerMap.has(markerId);
+    }
+
+    followMarkerWithID (args, util) {
+        const markerID = Cast.toNumber(args.MARKER_ID);
+        const followType = args.FOLLOW_TYPE;
+        const m = markerMap.get(markerID);
+        if (m) {
+            if (followType === '(1) position' || followType === '(3) position and angle'){
+                util.target.setXY(this.rescaleX(m.x), this.rescaleY(m.y), false);
+            }
+            if (followType === '(2) angle' || followType === '(3) position and angle'){
+                util.target.setDirection(this.rescaleAngle(m.angle));
+            }
+        }
+        return;
     }
 
     getMarkerX (args) {
