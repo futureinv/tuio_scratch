@@ -27,26 +27,24 @@ formatMessage.setup({
 
 // console.log(formatMessage.setup().locale);
 
-const TuioClient = require('tuio-client');
+const {TuioClient} = require('tuio-client');
 
 let isConnected = false;
 const markersEntered = new Array();
 const markersExited = new Array();
 const markerMap = new Map();
-let lastMarkerEntered = null;
 let aMarkerHasEntered = false;
-let lastMarkerExited = null;
 let aMarkerHasExited = false;
 
 const _makeMarkerObject = function (marker) {
     const x = marker.xPos;
     const y = marker.yPos;
     const angle = marker.angle;
-    const xspeed = marker.xSpeed;
-    const yspeed = marker.ySpeed;
+    const xSpeed = marker.xSpeed;
+    const ySpeed = marker.ySpeed;
     const angularSpeed = marker.rotationSpeed;
     const id = marker.symbolId;
-    return {id: id, x: x, y: y, angle: angle, xspeed: xspeed, yspeed: yspeed, angularSpeed: angularSpeed};
+    return {id: id, x: x, y: y, angle: angle, xSpeed: xSpeed, ySpeed: ySpeed, angularSpeed: angularSpeed};
 };
 
 const client = new TuioClient({host: 'ws://localhost:8080'});
@@ -56,28 +54,40 @@ client.on('connect', () => {
 });
 
 client.on('addTuioObject', marker => {
+
     const id = marker.symbolId;
+    log.log(`${new Date().toISOString()} - enters id: ${id}`);
+
     markerMap.set(id, _makeMarkerObject(marker));
-    lastMarkerEntered = id;
+    
     markersEntered.push(id);
+    log.log(`${new Date().toISOString()} - markersEntered after push: [${markersEntered}]`);
+        
     setTimeout(() => {
-        markersEntered.pop();
+        log.log(`${new Date().toISOString()} - pop id: ${markersEntered.pop()}`);
+        log.log(`${new Date().toISOString()} - markersEntered after pop: [${markersEntered}]`);
     }, 400);
+
     aMarkerHasEntered = true;
+    log.log(`${new Date().toISOString()} - aMarkerHasEntered: ${aMarkerHasEntered}`);
+    
     setTimeout(() => {
         aMarkerHasEntered = false;
+        log.log(`${new Date().toISOString()} - aMarkerHasEntered: ${aMarkerHasEntered}`);
     }, 1000);
 });
 
 client.on('updateTuioObject', marker => {
     const id = marker.symbolId;
+    log.log(`${new Date().toISOString()} - updating ${id}`);
+    log.log(`${new Date().toISOString()} - marker.xp: ${marker.xPos}`);
     markerMap.set(id, _makeMarkerObject(marker));
 });
 
 client.on('removeTuioObject', marker => {
     const id = marker.symbolId;
     markerMap.delete(id);
-    lastMarkerExited = id;
+    markersEntered.splice(markersEntered.indexOf(id), 1);
     markersExited.push(id);
     setTimeout(() => {
         markersExited.pop();
@@ -85,6 +95,7 @@ client.on('removeTuioObject', marker => {
     aMarkerHasExited = true;
     setTimeout(() => {
         aMarkerHasExited = false;
+        log.log(`${new Date().toISOString()} - aMarkerHasEntered: ${aMarkerHasExited}`);
     }, 1000);
 });
 
@@ -113,6 +124,16 @@ class Scratch3Tuio {
             id: 'tuio',
             name: 'Tuio',
             blocks: [
+                {
+                    opcode: 'test_aggiuntivi',
+                    blockType: BlockType.COMMAND,
+                    text: formatMessage({
+                        id: 'tuio.test_aggiuntivi',
+                        default: 'test_aggiuntivi',
+                        description: 'test_aggiuntivi'
+                    }),
+                    arguments: {}
+                },
                 {
                     opcode: 'connect',
                     blockType: BlockType.COMMAND,
@@ -264,7 +285,7 @@ class Scratch3Tuio {
                     }
                 },
                 {
-                    opcode: 'getMarkerAngleSpeed',
+                    opcode: 'getMarkerAngularSpeed',
                     blockType: BlockType.REPORTER,
                     text: formatMessage({
                         id: 'tuio.getMarkerAngleSpeed',
@@ -293,7 +314,7 @@ class Scratch3Tuio {
         }
         client.connect();
     }
-    
+
     isConnected () {
         return isConnected;
     }
@@ -317,12 +338,18 @@ class Scratch3Tuio {
         const isNotEmpty = markersEntered.length > 0;
         if (isNotEmpty) {
             if (args.MARKER_ID === 'any') {
+                log.log(`${new Date().toISOString()} - if int ${args.MARKER_ID} - return true`);
                 return true;
             }
             const id = markersEntered[0];
+            log.log(`${new Date().toISOString()} - if int ${args.MARKER_ID} - id in array[0] : ${id}`);
+
             const markerId = Cast.toNumber(args.MARKER_ID);
+            
             if (id === markerId) {
-                markersEntered.pop();
+                log.log(`${new Date().toISOString()} - if int ${args.MARKER_ID} - markersEntered: [${markersEntered}]`);
+                log.log(`${new Date().toISOString()} - if int ${args.MARKER_ID} - pop id: ${markersEntered.pop()}`);
+                log.log(`${new Date().toISOString()} - if int ${args.MARKER_ID} - markersEntered: [${markersEntered}]`);
                 return true;
             }
         }
@@ -343,20 +370,6 @@ class Scratch3Tuio {
             }
         }
         return false;
-    }
-
-    getLastMarkerEntered () {
-        if (aMarkerHasEntered) {
-            return lastMarkerEntered;
-        }
-        return null;
-    }
-
-    getLastMarkerExited () {
-        if (aMarkerHasExited) {
-            return lastMarkerExited;
-        }
-        return null;
     }
 
     isMarkerWithIDPresent (args) {
@@ -410,7 +423,7 @@ class Scratch3Tuio {
         const markerID = Cast.toNumber(args.MARKER_ID);
         const m = markerMap.get(markerID);
         if (m) {
-            return m.xspeed;
+            return m.xSpeed;
         }
         return 0;
     }
@@ -419,12 +432,12 @@ class Scratch3Tuio {
         const markerID = Cast.toNumber(args.MARKER_ID);
         const m = markerMap.get(markerID);
         if (m) {
-            return m.yspeed;
+            return m.ySpeed;
         }
         return 0;
     }
 
-    getMarkerAngleSpeed (args) {
+    getMarkerAngularSpeed (args) {
         const markerID = Cast.toNumber(args.MARKER_ID);
         const m = markerMap.get(markerID);
         if (m) {
@@ -435,4 +448,4 @@ class Scratch3Tuio {
     
 }
 
-module.exports = Scratch3Tuio;
+module.exports = {Scratch3Tuio, _makeMarkerObject};
