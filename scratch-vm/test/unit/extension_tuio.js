@@ -122,7 +122,7 @@ test('removing a marker makes it absent for Scratch', t => {
 test('Tuio extension has 11 blocks', t => {
     const infoObject = tuio.getInfo();
     const blocks = infoObject.blocks;
-    t.equal(blocks.length, 12);
+    t.equal(blocks.length, 11);
     t.end();
 });
 

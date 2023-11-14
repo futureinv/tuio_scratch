@@ -125,16 +125,6 @@ class Scratch3Tuio {
             name: 'Tuio',
             blocks: [
                 {
-                    opcode: 'test_aggiuntivi',
-                    blockType: BlockType.COMMAND,
-                    text: formatMessage({
-                        id: 'tuio.test_aggiuntivi',
-                        default: 'test_aggiuntivi',
-                        description: 'test_aggiuntivi'
-                    }),
-                    arguments: {}
-                },
-                {
                     opcode: 'connect',
                     blockType: BlockType.COMMAND,
                     text: formatMessage({
