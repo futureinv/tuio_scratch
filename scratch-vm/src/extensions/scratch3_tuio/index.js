@@ -35,6 +35,31 @@ const markersExited = new Array();
 const markerMap = new Map();
 let aMarkerHasEntered = false;
 let aMarkerHasExited = false;
+const sleepingTime = 600;
+
+const _initVariables = function () {
+    aMarkerHasEntered = false;
+    aMarkerHasExited = false;
+    markersEntered.length = 0;
+    markersExited.length = 0;
+    markerMap.clear();
+};
+
+const _removeMarker = function (m) {
+    const id = m.id;
+    log.log(`${new Date().toISOString()} - really exits id: ${id}`);
+    markerMap.delete(id);
+    markersExited.push(id);
+    log.log(`${new Date().toISOString()} - markersExited after push: [${markersExited}]`);
+    setTimeout(() => {
+        markersExited.shift();
+    }, 400);
+    aMarkerHasExited = true;
+    setTimeout(() => {
+        aMarkerHasExited = false;
+        log.log(`${new Date().toISOString()} - aMarkerHasExited: ${aMarkerHasExited}`);
+    }, 1000);
+};
 
 const _makeMarkerObject = function (marker) {
     const x = marker.xPos;
@@ -44,7 +69,17 @@ const _makeMarkerObject = function (marker) {
     const ySpeed = marker.ySpeed;
     const angularSpeed = marker.rotationSpeed;
     const id = marker.symbolId;
-    return {id: id, x: x, y: y, angle: angle, xSpeed: xSpeed, ySpeed: ySpeed, angularSpeed: angularSpeed};
+    const condition = 'active';
+    return {
+        id: id,
+        condition: condition,
+        x: x,
+        y: y,
+        angle: angle,
+        xSpeed: xSpeed,
+        ySpeed: ySpeed,
+        angularSpeed: angularSpeed
+    };
 };
 
 const client = new TuioClient({host: 'ws://localhost:8080'});
@@ -57,52 +92,65 @@ client.on('addTuioObject', marker => {
 
     const id = marker.symbolId;
     log.log(`${new Date().toISOString()} - enters id: ${id}`);
+    if (markerMap.has(id)) {
+        const m = markerMap.get(id);
+        log.log(`${new Date().toISOString()} - ${id} was sleeping`);
+        m.condition = 'active';
+        m.sleepingSince = null;
+    } else {
+        markerMap.set(id, _makeMarkerObject(marker));
+        markersEntered.push(id);
+        log.log(`${new Date().toISOString()} - markersEntered after push: [${markersEntered}]`);
 
-    markerMap.set(id, _makeMarkerObject(marker));
-    
-    markersEntered.push(id);
-    log.log(`${new Date().toISOString()} - markersEntered after push: [${markersEntered}]`);
-        
-    setTimeout(() => {
-        log.log(`${new Date().toISOString()} - pop id: ${markersEntered.pop()}`);
-        log.log(`${new Date().toISOString()} - markersEntered after pop: [${markersEntered}]`);
-    }, 400);
+        setTimeout(() => {
+            log.log(`${new Date().toISOString()} - shift id: ${markersEntered.shift()}`);
+            log.log(`${new Date().toISOString()} - markersEntered after shift: [${markersEntered}]`);
+        }, 400);
 
-    aMarkerHasEntered = true;
-    log.log(`${new Date().toISOString()} - aMarkerHasEntered: ${aMarkerHasEntered}`);
-    
-    setTimeout(() => {
-        aMarkerHasEntered = false;
+        aMarkerHasEntered = true;
         log.log(`${new Date().toISOString()} - aMarkerHasEntered: ${aMarkerHasEntered}`);
-    }, 1000);
+
+        setTimeout(() => {
+            aMarkerHasEntered = false;
+            log.log(`${new Date().toISOString()} - aMarkerHasEntered: ${aMarkerHasEntered}`);
+        }, 1000);
+    }
+
 });
 
 client.on('updateTuioObject', marker => {
     const id = marker.symbolId;
-    log.log(`${new Date().toISOString()} - updating ${id}`);
-    log.log(`${new Date().toISOString()} - marker.xp: ${marker.xPos}`);
     markerMap.set(id, _makeMarkerObject(marker));
 });
 
 client.on('removeTuioObject', marker => {
     const id = marker.symbolId;
-    markerMap.delete(id);
-    markersEntered.splice(markersEntered.indexOf(id), 1);
-    markersExited.push(id);
-    setTimeout(() => {
-        markersExited.pop();
-    }, 400);
-    aMarkerHasExited = true;
-    setTimeout(() => {
-        aMarkerHasExited = false;
-        log.log(`${new Date().toISOString()} - aMarkerHasEntered: ${aMarkerHasExited}`);
-    }, 1000);
+    log.log(`${new Date().toISOString()} - : ${id} disappears`);
+    // markersEntered.splice(markersEntered.indexOf(id), 1);
+    const m = markerMap.get(id);
+    if (marker.condition === 'killed') {
+        _removeMarker(m);
+    } else if (m.condition === 'active') {
+        m.condition = 'sleeping';
+        m.sleepingSince = Date.now();
+        log.log(`${new Date().toISOString()} - : ${id} sent to sleep`);
+        setTimeout(() => {
+            log.log(`${new Date().toISOString()} - fires timeout for id: ${m.id}`);
+            if (m.condition === 'sleeping') {
+                const exitDueDate = m.sleepingSince + sleepingTime;
+                log.log(`${new Date().toISOString()} - : ${exitDueDate} exit due date vs ${Date.now()}`);
+                if (Date.now() >= exitDueDate) {
+                    _removeMarker(m);
+                }
+            }
+        }, sleepingTime);
+    }
 });
 
 
 class Scratch3Tuio {
 
-    constructor (runtime){
+    constructor (runtime) {
         this.runtime = runtime;
         this.client = client;
 
@@ -118,7 +166,7 @@ class Scratch3Tuio {
         //    this.frameToggle = !this.frameToggle;
         // }, this.runtime.currentStepTime);
     }
-    
+
     getInfo () {
         return {
             id: 'tuio',
@@ -325,20 +373,23 @@ class Scratch3Tuio {
     }
 
     whenMarkerWithIDEnters (args) {
-        const isNotEmpty = markersEntered.length > 0;
-        if (isNotEmpty) {
-            if (args.MARKER_ID === 'any') {
-                log.log(`${new Date().toISOString()} - if int ${args.MARKER_ID} - return true`);
+        if (args.MARKER_ID === 'any') {
+            if (aMarkerHasEntered) {
+                aMarkerHasEntered = false;
                 return true;
             }
+            return false;
+        }
+        const isNotEmpty = markersEntered.length > 0;
+        if (isNotEmpty) {
             const id = markersEntered[0];
             log.log(`${new Date().toISOString()} - if int ${args.MARKER_ID} - id in array[0] : ${id}`);
 
             const markerId = Cast.toNumber(args.MARKER_ID);
-            
+
             if (id === markerId) {
                 log.log(`${new Date().toISOString()} - if int ${args.MARKER_ID} - markersEntered: [${markersEntered}]`);
-                log.log(`${new Date().toISOString()} - if int ${args.MARKER_ID} - pop id: ${markersEntered.pop()}`);
+                log.log(`${new Date().toISOString()} - if int ${args.MARKER_ID} - shift id: ${markersEntered.shift()}`);
                 log.log(`${new Date().toISOString()} - if int ${args.MARKER_ID} - markersEntered: [${markersEntered}]`);
                 return true;
             }
@@ -347,15 +398,22 @@ class Scratch3Tuio {
     }
 
     whenMarkerWithIDExits (args) {
-        const isNotEmpty = markersExited.length > 0;
-        if (isNotEmpty) {
-            if (args.MARKER_ID === 'any') {
+        if (args.MARKER_ID === 'any') {
+            if (aMarkerHasExited) {
+                aMarkerHasExited = false;
                 return true;
             }
+            return false;
+        }
+        const isNotEmpty = markersExited.length > 0;
+        if (isNotEmpty) {
             const id = markersExited[0];
+            log.log(`${new Date().toISOString()} - exitif int ${args.MARKER_ID} - id in array[0] : ${id}`);
             const markerId = Cast.toNumber(args.MARKER_ID);
             if (id === markerId) {
-                markersExited.pop();
+                log.log(`${new Date().toISOString()} - exitif ${args.MARKER_ID} - markersExited: [${markersExited}]`);
+                log.log(`${new Date().toISOString()} - exitif ${args.MARKER_ID} - shift id: ${markersEntered.shift()}`);
+                log.log(`${new Date().toISOString()} - exitif ${args.MARKER_ID} - markersExited: [${markersExited}]`);
                 return true;
             }
         }
@@ -372,10 +430,10 @@ class Scratch3Tuio {
         const followType = args.FOLLOW_TYPE;
         const m = markerMap.get(markerID);
         if (m) {
-            if (followType === '(1) position' || followType === '(3) position and angle'){
+            if (followType === '(1) position' || followType === '(3) position and angle') {
                 util.target.setXY(this.rescaleX(m.x), this.rescaleY(m.y), false);
             }
-            if (followType === '(2) angle' || followType === '(3) position and angle'){
+            if (followType === '(2) angle' || followType === '(3) position and angle') {
                 util.target.setDirection(this.rescaleAngle(m.angle));
             }
         }
@@ -435,7 +493,6 @@ class Scratch3Tuio {
         }
         return 0;
     }
-    
 }
 
-module.exports = {Scratch3Tuio, _makeMarkerObject};
+module.exports = {Scratch3Tuio, _makeMarkerObject, _initVariables};
