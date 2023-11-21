@@ -45,6 +45,11 @@ const _initVariables = function () {
     markerMap.clear();
 };
 
+const _sanitizeNumberValue = function (value) {
+    if (typeof value !== 'number' || Number.isNaN(value)) value = 0;
+    return value;
+};
+
 const _removeMarker = function (m) {
     const id = m.id;
     log.log(`${new Date().toISOString()} - really exits id: ${id}`);
@@ -444,7 +449,7 @@ class Scratch3Tuio {
         const markerID = Cast.toNumber(args.MARKER_ID);
         const m = markerMap.get(markerID);
         if (m) {
-            return m.x;
+            return _sanitizeNumberValue(m.x);
         }
         return 0;
     }
@@ -453,7 +458,7 @@ class Scratch3Tuio {
         const markerID = Cast.toNumber(args.MARKER_ID);
         const m = markerMap.get(markerID);
         if (m) {
-            return m.y;
+            return _sanitizeNumberValue(m.y);
         }
         return 0;
     }
@@ -462,7 +467,7 @@ class Scratch3Tuio {
         const markerID = Cast.toNumber(args.MARKER_ID);
         const m = markerMap.get(markerID);
         if (m) {
-            return m.angle;
+            return _sanitizeNumberValue(m.angle);
         }
         return 0;
     }
@@ -471,7 +476,7 @@ class Scratch3Tuio {
         const markerID = Cast.toNumber(args.MARKER_ID);
         const m = markerMap.get(markerID);
         if (m) {
-            return m.xSpeed;
+            return _sanitizeNumberValue(m.xSpeed);
         }
         return 0;
     }
@@ -480,7 +485,7 @@ class Scratch3Tuio {
         const markerID = Cast.toNumber(args.MARKER_ID);
         const m = markerMap.get(markerID);
         if (m) {
-            return m.ySpeed;
+            return _sanitizeNumberValue(m.ySpeed);
         }
         return 0;
     }
@@ -489,7 +494,7 @@ class Scratch3Tuio {
         const markerID = Cast.toNumber(args.MARKER_ID);
         const m = markerMap.get(markerID);
         if (m) {
-            return m.angularSpeed;
+            return _sanitizeNumberValue(m.angularSpeed);
         }
         return 0;
     }

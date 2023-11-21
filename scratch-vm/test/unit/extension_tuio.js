@@ -254,6 +254,14 @@ test('rescaling of Angle coordinates works correctly', t => {
     t.end();
 });
 
+test('if a speed is NaN, scratch block will return 0', t => {
+    addTestMarker(15);
+    updateTestMarker(15, {xSpeed: NaN});
+    t.equal(tuio.getMarkerXSpeed({MARKER_ID: '15'}), 0);
+    removeTestMarker(15, true);
+    t.end();
+});
+
 /* test('follow marker', t => {
     const rt = new Runtime();
     const motion = new Motion(rt);
