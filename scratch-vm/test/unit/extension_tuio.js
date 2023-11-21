@@ -5,36 +5,10 @@ const _makeMarkerObject = require('../../src/extensions/scratch3_tuio/index.js')
 const _initVariables = require('../../src/extensions/scratch3_tuio/index.js')._initVariables;
 const {TuioTime, TuioObject} = require('../../../tuio-client');
 
-/* const Motion = require('../../src/blocks/scratch3_motion');
 const Runtime = require('../../src/engine/runtime');
 const Sprite = require('../../src/sprites/sprite.js');
 const RenderedTarget = require('../../src/sprites/rendered-target.js');
-*/
-/* const util = {
-    target: {
-        currentCostume: 0, // Internally, current costume is 0 indexed
-        getCostumes: function () {
-            return this.sprite.costumes;
-        },
-        sprite: {
-            costumes: [
-                {name: 'first name'},
-                {name: 'second name'},
-                {name: 'third name'}
-            ]
-        },
-        _customState: {},
-        getCustomState: () => util.target._customState
-    }
-};
 
-const fakeRuntime = {
-    getTargetForStage: () => util.target, // Just return the dummy target above.
-    on: () => {} // Stub out listener methods used in constructor.
-};
-const motion = new Motion(fakeRuntime);
-
-*/
 const tuio = new Tuio();
 
 const addTestMarker = function (markerID) {
@@ -262,24 +236,60 @@ test('if a speed is NaN, scratch block will return 0', t => {
     t.end();
 });
 
-/* test('follow marker', t => {
+test('follow marker position only', t => {
     const rt = new Runtime();
-    const motion = new Motion(rt);
     const sprite = new Sprite(null, rt);
     const target = new RenderedTarget(sprite, rt);
     const util = {target};
     addTestMarker(9);
-    updateTestMarker(9, {xPos: 0.9, yPos: 0.1, angle: 2});
-    tuio.followMarkerWithID({MARKER_ID: '9'}, util);
-    
-    t.equal(motion.getX({}, util), 192);
+    updateTestMarker(9, {xPos: 0.9, yPos: 0.1, angle: Math.Pi});
+    tuio.followMarkerWithID({MARKER_ID: '9', FOLLOW_TYPE: '(1) position'}, util);
+    t.equal(target.x, 192);
+    t.equal(target.y, 144);
+    t.equal(target.direction, 90);
     removeTestMarker(9, true);
     t.teardown(() => {
         _initVariables();
     });
     t.end();
 });
-*/
+
+
+test('follow marker angle only', t => {
+    const rt = new Runtime();
+    const sprite = new Sprite(null, rt);
+    const target = new RenderedTarget(sprite, rt);
+    const util = {target};
+    addTestMarker(9);
+    updateTestMarker(9, {xPos: 0.9, yPos: 0.1, angle: Math.PI});
+    tuio.followMarkerWithID({MARKER_ID: '9', FOLLOW_TYPE: '(2) angle'}, util);
+    t.equal(target.x, 0);
+    t.equal(target.y, 0);
+    t.equal(target.direction, 180);
+    removeTestMarker(9, true);
+    t.teardown(() => {
+        _initVariables();
+    });
+    t.end();
+});
+
+test('follow marker position and angle', t => {
+    const rt = new Runtime();
+    const sprite = new Sprite(null, rt);
+    const target = new RenderedTarget(sprite, rt);
+    const util = {target};
+    addTestMarker(9);
+    updateTestMarker(9, {xPos: 0.9, yPos: 0.1, angle: Math.PI});
+    tuio.followMarkerWithID({MARKER_ID: '9', FOLLOW_TYPE: '(3) position and angle'}, util);
+    t.equal(target.x, 192);
+    t.equal(target.y, 144);
+    t.equal(target.direction, 180);
+    removeTestMarker(9, true);
+    t.teardown(() => {
+        _initVariables();
+    });
+    t.end();
+});
 
 // tests on sleeping
 
