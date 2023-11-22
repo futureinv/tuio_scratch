@@ -2,7 +2,7 @@ const ArgumentType = require('../../extension-support/argument-type');
 const BlockType = require('../../extension-support/block-type');
 const TargetType = require('../../extension-support/target-type');
 const Cast = require('../../util/cast');
-const log = require('../../util/log');
+// const log = require('../../util/log');
 
 const formatMessage = require('format-message');
 // https://github.com/xcratch/xcx-example/blob/main/src/block/translations.json
@@ -52,17 +52,17 @@ const _sanitizeNumberValue = function (value) {
 
 const _removeMarker = function (m) {
     const id = m.id;
-    log.log(`${new Date().toISOString()} - really exits id: ${id}`);
+    // log.log(`${new Date().toISOString()} - really exits id: ${id}`);
     markerMap.delete(id);
     markersExited.push(id);
-    log.log(`${new Date().toISOString()} - markersExited after push: [${markersExited}]`);
+    // log.log(`${new Date().toISOString()} - markersExited after push: [${markersExited}]`);
     setTimeout(() => {
         markersExited.shift();
     }, 400);
     aMarkerHasExited = true;
     setTimeout(() => {
         aMarkerHasExited = false;
-        log.log(`${new Date().toISOString()} - aMarkerHasExited: ${aMarkerHasExited}`);
+        // log.log(`${new Date().toISOString()} - aMarkerHasExited: ${aMarkerHasExited}`);
     }, 1000);
 };
 
@@ -90,34 +90,35 @@ const _makeMarkerObject = function (marker) {
 const client = new TuioClient({host: 'ws://localhost:8080'});
 client.on('connect', () => {
     isConnected = true;
-    log.log('yeah, connected!');
+    // log.log('yeah, connected!');
 });
 
 client.on('addTuioObject', marker => {
 
     const id = marker.symbolId;
-    log.log(`${new Date().toISOString()} - enters id: ${id}`);
+    // log.log(`${new Date().toISOString()} - enters id: ${id}`);
     if (markerMap.has(id)) {
         const m = markerMap.get(id);
-        log.log(`${new Date().toISOString()} - ${id} was sleeping`);
+        // log.log(`${new Date().toISOString()} - ${id} was sleeping`);
         m.condition = 'active';
         m.sleepingSince = null;
     } else {
         markerMap.set(id, _makeMarkerObject(marker));
         markersEntered.push(id);
-        log.log(`${new Date().toISOString()} - markersEntered after push: [${markersEntered}]`);
+        // log.log(`${new Date().toISOString()} - markersEntered after push: [${markersEntered}]`);
 
         setTimeout(() => {
-            log.log(`${new Date().toISOString()} - shift id: ${markersEntered.shift()}`);
-            log.log(`${new Date().toISOString()} - markersEntered after shift: [${markersEntered}]`);
+            // log.log(`${new Date().toISOString()} - shift id: ${markersEntered.shift()}`);
+            markersEntered.shift();
+            // log.log(`${new Date().toISOString()} - markersEntered after shift: [${markersEntered}]`);
         }, 400);
 
         aMarkerHasEntered = true;
-        log.log(`${new Date().toISOString()} - aMarkerHasEntered: ${aMarkerHasEntered}`);
+        // log.log(`${new Date().toISOString()} - aMarkerHasEntered: ${aMarkerHasEntered}`);
 
         setTimeout(() => {
             aMarkerHasEntered = false;
-            log.log(`${new Date().toISOString()} - aMarkerHasEntered: ${aMarkerHasEntered}`);
+            // log.log(`${new Date().toISOString()} - aMarkerHasEntered: ${aMarkerHasEntered}`);
         }, 1000);
     }
 
@@ -130,7 +131,7 @@ client.on('updateTuioObject', marker => {
 
 client.on('removeTuioObject', marker => {
     const id = marker.symbolId;
-    log.log(`${new Date().toISOString()} - : ${id} disappears`);
+    // log.log(`${new Date().toISOString()} - : ${id} disappears`);
     // markersEntered.splice(markersEntered.indexOf(id), 1);
     const m = markerMap.get(id);
     if (marker.condition === 'killed') {
@@ -138,12 +139,12 @@ client.on('removeTuioObject', marker => {
     } else if (m.condition === 'active') {
         m.condition = 'sleeping';
         m.sleepingSince = Date.now();
-        log.log(`${new Date().toISOString()} - : ${id} sent to sleep`);
+        // log.log(`${new Date().toISOString()} - : ${id} sent to sleep`);
         setTimeout(() => {
-            log.log(`${new Date().toISOString()} - fires timeout for id: ${m.id}`);
+            // log.log(`${new Date().toISOString()} - fires timeout for id: ${m.id}`);
             if (m.condition === 'sleeping') {
                 const exitDueDate = m.sleepingSince + sleepingTime;
-                log.log(`${new Date().toISOString()} - : ${exitDueDate} exit due date vs ${Date.now()}`);
+                // log.log(`${new Date().toISOString()} - : ${exitDueDate} exit due date vs ${Date.now()}`);
                 if (Date.now() >= exitDueDate) {
                     _removeMarker(m);
                 }
@@ -388,14 +389,15 @@ class Scratch3Tuio {
         const isNotEmpty = markersEntered.length > 0;
         if (isNotEmpty) {
             const id = markersEntered[0];
-            log.log(`${new Date().toISOString()} - if int ${args.MARKER_ID} - id in array[0] : ${id}`);
+            // log.log(`${new Date().toISOString()} - if int ${args.MARKER_ID} - id in array[0] : ${id}`);
 
             const markerId = Cast.toNumber(args.MARKER_ID);
 
             if (id === markerId) {
-                log.log(`${new Date().toISOString()} - if int ${args.MARKER_ID} - markersEntered: [${markersEntered}]`);
-                log.log(`${new Date().toISOString()} - if int ${args.MARKER_ID} - shift id: ${markersEntered.shift()}`);
-                log.log(`${new Date().toISOString()} - if int ${args.MARKER_ID} - markersEntered: [${markersEntered}]`);
+                // log.log(`${new Date().toISOString()} - if int ${args.MARKER_ID} - mrkEntered: [${markersEntered}]`);
+                // log.log(`${new Date().toISOString()} - if int ${args.MARKER_ID} - shift id: ${}`);
+                markersEntered.shift();
+                // log.log(`${new Date().toISOString()} - if int ${args.MARKER_ID} - mrkEntered: [${markersEntered}]`);
                 return true;
             }
         }
@@ -413,12 +415,13 @@ class Scratch3Tuio {
         const isNotEmpty = markersExited.length > 0;
         if (isNotEmpty) {
             const id = markersExited[0];
-            log.log(`${new Date().toISOString()} - exitif int ${args.MARKER_ID} - id in array[0] : ${id}`);
+            // log.log(`${new Date().toISOString()} - exitif int ${args.MARKER_ID} - id in array[0] : ${id}`);
             const markerId = Cast.toNumber(args.MARKER_ID);
             if (id === markerId) {
-                log.log(`${new Date().toISOString()} - exitif ${args.MARKER_ID} - markersExited: [${markersExited}]`);
-                log.log(`${new Date().toISOString()} - exitif ${args.MARKER_ID} - shift id: ${markersEntered.shift()}`);
-                log.log(`${new Date().toISOString()} - exitif ${args.MARKER_ID} - markersExited: [${markersExited}]`);
+                // log.log(`${new Date().toISOString()} - exitif ${args.MARKER_ID} - mrkExited: [${markersExited}]`);
+                // log.log(`${new Date().toISOString()} - exitif ${args.MARKER_ID} - shift id: ${}`);
+                markersExited.shift();
+                // log.log(`${new Date().toISOString()} - exitif ${args.MARKER_ID} - mrkExited: [${markersExited}]`);
                 return true;
             }
         }
