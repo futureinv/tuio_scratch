@@ -3,11 +3,14 @@ const test = require('tap').test;
 const Tuio = require('../../src/extensions/scratch3_tuio/index.js').Scratch3Tuio;
 const _makeMarkerObject = require('../../src/extensions/scratch3_tuio/index.js')._makeMarkerObject;
 const _initVariables = require('../../src/extensions/scratch3_tuio/index.js')._initVariables;
+const FollowType = require('../../src/extensions/scratch3_tuio/index.js').FollowType;
+
 const {TuioTime, TuioObject} = require('../../../tuio-client');
 
 const Runtime = require('../../src/engine/runtime');
 const Sprite = require('../../src/sprites/sprite.js');
 const RenderedTarget = require('../../src/sprites/rendered-target.js');
+const formatMessage = require('format-message');
 
 const tuio = new Tuio();
 
@@ -142,10 +145,27 @@ test('Tuio extension has 11 blocks', t => {
     t.end();
 });
 
-test('Tuio extension has 2 menus', t => {
+test('Tuio extension has 3 menus', t => {
     const infoObject = tuio.getInfo();
     const menus = infoObject.menus;
     t.equal(Object.keys(menus).length, 3);
+    t.end();
+});
+
+test('follow type menu has 3 elements', t => {
+    const infoObject = tuio.getInfo();
+    const menus = infoObject.menus;
+    const followTypeMenu = menus.followTypes;
+    t.equal(followTypeMenu.length, 3);
+    t.end();
+});
+
+test('markerID menus differ by one element', t => {
+    const infoObject = tuio.getInfo();
+    const menus = infoObject.menus;
+    const withAny = menus.markerIDMenuWithAny;
+    const withoutAny = menus.markerIDMenuWithoutAny;
+    t.equal(withAny.length - withoutAny.length, 1);
     t.end();
 });
 
@@ -243,7 +263,7 @@ test('follow marker position only', t => {
     const util = {target};
     addTestMarker(9);
     updateTestMarker(9, {xPos: 0.9, yPos: 0.1, angle: Math.Pi});
-    tuio.followMarkerWithID({MARKER_ID: '9', FOLLOW_TYPE: '(1) position'}, util);
+    tuio.followMarkerWithID({MARKER_ID: '9', FOLLOW_TYPE: FollowType.POSITION}, util);
     t.equal(target.x, 192);
     t.equal(target.y, 144);
     t.equal(target.direction, 90);
@@ -262,7 +282,7 @@ test('follow marker angle only', t => {
     const util = {target};
     addTestMarker(9);
     updateTestMarker(9, {xPos: 0.9, yPos: 0.1, angle: Math.PI});
-    tuio.followMarkerWithID({MARKER_ID: '9', FOLLOW_TYPE: '(2) angle'}, util);
+    tuio.followMarkerWithID({MARKER_ID: '9', FOLLOW_TYPE: FollowType.ANGLE}, util);
     t.equal(target.x, 0);
     t.equal(target.y, 0);
     t.equal(target.direction, 180);
@@ -280,7 +300,7 @@ test('follow marker position and angle', t => {
     const util = {target};
     addTestMarker(9);
     updateTestMarker(9, {xPos: 0.9, yPos: 0.1, angle: Math.PI});
-    tuio.followMarkerWithID({MARKER_ID: '9', FOLLOW_TYPE: '(3) position and angle'}, util);
+    tuio.followMarkerWithID({MARKER_ID: '9', FOLLOW_TYPE: FollowType.BOTH}, util);
     t.equal(target.x, 192);
     t.equal(target.y, 144);
     t.equal(target.direction, 180);
@@ -370,5 +390,18 @@ test('bug: hat block with id removes the value in the array for the hat with any
     t.teardown(() => {
         _initVariables();
     });
+    t.end();
+});
+
+test('changing locale translates blocks', t => {
+    const infoObject = tuio.getInfo();
+    const blocks = infoObject.blocks;
+    const connectBlock = blocks[0];
+    t.equal(connectBlock.text, 'connect TUIO');
+    formatMessage.setup({locale: 'it'});
+    const infoObjectIT = tuio.getInfo();
+    const blocksIT = infoObjectIT.blocks;
+    const connectBlockIT = blocksIT[0];
+    t.equal(connectBlockIT.text, 'connetti a TUIO');
     t.end();
 });

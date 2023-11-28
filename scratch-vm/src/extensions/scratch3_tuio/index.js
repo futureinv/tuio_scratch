@@ -2,30 +2,10 @@ const ArgumentType = require('../../extension-support/argument-type');
 const BlockType = require('../../extension-support/block-type');
 const TargetType = require('../../extension-support/target-type');
 const Cast = require('../../util/cast');
-// const log = require('../../util/log');
+const log = require('../../util/log');
 
 const formatMessage = require('format-message');
 // https://github.com/xcratch/xcx-example/blob/main/src/block/translations.json
-const transl = {
-    hr: {
-        'tuio.connect': 'Connect TUIO HR'
-    },
-    it: {
-        'tuio.connect': 'Connetti a TUIO'
-    },
-    en: {
-        'tuio.connect': 'Connect TUIO'
-    },
-    fr: {
-        'tuio.connect': 'Connect TUIO FR'
-    }
-};
-
-formatMessage.setup({
-    translations: transl
-});
-
-// console.log(formatMessage.setup().locale);
 
 const {TuioClient} = require('tuio-client');
 
@@ -36,6 +16,81 @@ const markerMap = new Map();
 let aMarkerHasEntered = false;
 let aMarkerHasExited = false;
 const sleepingTime = 600;
+const highestMarkerID = 4;
+
+/**
+ * Enum for follow type parameter values.
+ * @readonly
+ * @enum {string}
+ */
+const FollowType = {
+    POSITION: 'position',
+    ANGLE: 'angle',
+    BOTH: 'position and angle'
+};
+
+const AnyMarker = 'any';
+
+const _translate = function (msg) {
+    const translations = {
+        it: {
+            'tuio.connect': 'connetti a TUIO',
+            'tuio.whenMarkerWithIDEnters': 'quando entra il Marker [MARKER_ID]',
+            'tuio.whenMarkerWithIDExits': 'quando esce il Marker [MARKER_ID]',
+            'tuio.isMarkerWithIDPresent': 'il Marker [MARKER_ID] è presente',
+            'tuio.followMarker': 'segui [FOLLOW_TYPE] del Marker [MARKER_ID]',
+            'tuio.getMarkerX': 'coordinata X del Marker [MARKER_ID]',
+            'tuio.getMarkerY': 'coordinata Y del Marker [MARKER_ID]',
+            'tuio.getMarkerAngle': 'angolo del Marker [MARKER_ID]',
+            'tuio.getMarkerXSpeed': 'velocità X del Marker [MARKER_ID]',
+            'tuio.getMarkerYSpeed': 'velocità Y del Marker [MARKER_ID]',
+            'tuio.getMarkerAngularSpeed': 'velocità angolare del Marker [MARKER_ID]',
+            'tuio.followType.position': '(1) posizione',
+            'tuio.followType.angle': '(2) angolo',
+            'tuio.followType.both': '(3) posizione e angolo',
+            'tuio.markerID.any': 'qualsiasi'
+        }
+    };
+    const locale = formatMessage.setup().locale || 'en';
+    if (locale in translations) {
+        return translations[locale][msg.id] || msg.default;
+    }
+    return msg.default;
+};
+
+/**
+     * Initialize color parameters menu with localized strings
+     * @returns {array} of the localized text and values for each menu element
+     * @private
+     */
+const _initFollowTypes = function () {
+    return [
+        {
+            text: _translate({
+                id: 'tuio.followType.position',
+                default: 'position',
+                description: 'menu item to enable following the postion'
+            }),
+            value: FollowType.POSITION
+        },
+        {
+            text: _translate({
+                id: 'tuio.followType.angle',
+                default: 'angle',
+                description: 'menu item to enable following the angle'
+            }),
+            value: FollowType.ANGLE
+        },
+        {
+            text: _translate({
+                id: 'tuio.followType.both',
+                default: 'position and angle',
+                description: 'menu item to enable following both position and angle'
+            }),
+            value: FollowType.BOTH
+        }
+    ];
+};
 
 const _initVariables = function () {
     aMarkerHasEntered = false;
@@ -43,6 +98,26 @@ const _initVariables = function () {
     markersEntered.length = 0;
     markersExited.length = 0;
     markerMap.clear();
+};
+
+const _createMarkerIDArray = function (withAny) {
+    const markerIDs = new Array();
+    if (withAny) {
+        markerIDs.push(
+            {
+                text: _translate({
+                    id: 'tuio.markerID.any',
+                    default: 'any',
+                    description: 'describes any marker'
+                }),
+                value: AnyMarker
+            }
+        );
+    }
+    for (let i = 0; i <= highestMarkerID; i++) {
+        markerIDs.push(i.toString());
+    }
+    return markerIDs;
 };
 
 const _sanitizeNumberValue = function (value) {
@@ -171,6 +246,7 @@ class Scratch3Tuio {
         // setInterval(() => {
         //    this.frameToggle = !this.frameToggle;
         // }, this.runtime.currentStepTime);
+        this.markerIDs = _createMarkerIDArray();
     }
 
     getInfo () {
@@ -181,7 +257,7 @@ class Scratch3Tuio {
                 {
                     opcode: 'connect',
                     blockType: BlockType.COMMAND,
-                    text: formatMessage({
+                    text: _translate({
                         id: 'tuio.connect',
                         default: 'connect TUIO',
                         description: 'connect to TUIO server'
@@ -191,7 +267,7 @@ class Scratch3Tuio {
                 {
                     opcode: 'whenMarkerWithIDEnters',
                     blockType: BlockType.HAT,
-                    text: formatMessage({
+                    text: _translate({
                         id: 'tuio.whenMarkerWithIDEnters',
                         default: 'when Marker [MARKER_ID] enters',
                         description: 'fires when marker markerID enters'
@@ -206,7 +282,7 @@ class Scratch3Tuio {
                 {
                     opcode: 'whenMarkerWithIDExits',
                     blockType: BlockType.HAT,
-                    text: formatMessage({
+                    text: _translate({
                         id: 'tuio.whenMarkerWithIDExits',
                         default: 'when Marker [MARKER_ID] exits',
                         description: 'fires when marker markerID exits'
@@ -221,7 +297,7 @@ class Scratch3Tuio {
                 {
                     opcode: 'isMarkerWithIDPresent',
                     blockType: BlockType.BOOLEAN,
-                    text: formatMessage({
+                    text: _translate({
                         id: 'tuio.isMarkerWithIDPresent',
                         default: 'Marker [MARKER_ID] is present',
                         description: 'checks if Marker [markerID] is present'
@@ -236,7 +312,7 @@ class Scratch3Tuio {
                 {
                     opcode: 'followMarkerWithID',
                     blockType: BlockType.COMMAND,
-                    text: formatMessage({
+                    text: _translate({
                         id: 'tuio.followMarker',
                         default: 'follow marker [MARKER_ID] [FOLLOW_TYPE]',
                         description: 'follow position and/or angle of marker '
@@ -256,7 +332,7 @@ class Scratch3Tuio {
                 {
                     opcode: 'getMarkerX',
                     blockType: BlockType.REPORTER,
-                    text: formatMessage({
+                    text: _translate({
                         id: 'tuio.getMarkerX',
                         default: 'Marker [MARKER_ID] X coordinate',
                         description: 'returns X coordinate of Marker [markerID]'
@@ -271,7 +347,7 @@ class Scratch3Tuio {
                 {
                     opcode: 'getMarkerY',
                     blockType: BlockType.REPORTER,
-                    text: formatMessage({
+                    text: _translate({
                         id: 'tuio.getMarkerY',
                         default: 'Marker [MARKER_ID] Y coordinate',
                         description: 'returns Y coordinate of Marker [markerID]'
@@ -286,7 +362,7 @@ class Scratch3Tuio {
                 {
                     opcode: 'getMarkerAngle',
                     blockType: BlockType.REPORTER,
-                    text: formatMessage({
+                    text: _translate({
                         id: 'tuio.getMarkerAngle',
                         default: 'Marker [MARKER_ID] rotation angle',
                         description: 'returns rotation angle of Marker [markerID]'
@@ -301,7 +377,7 @@ class Scratch3Tuio {
                 {
                     opcode: 'getMarkerXSpeed',
                     blockType: BlockType.REPORTER,
-                    text: formatMessage({
+                    text: _translate({
                         id: 'tuio.getMarkerXSpeed',
                         default: 'Marker [MARKER_ID] X Speed',
                         description: 'returns X Speed of Marker [markerID]'
@@ -316,7 +392,7 @@ class Scratch3Tuio {
                 {
                     opcode: 'getMarkerYSpeed',
                     blockType: BlockType.REPORTER,
-                    text: formatMessage({
+                    text: _translate({
                         id: 'tuio.getMarkerYSpeed',
                         default: 'Marker [MARKER_ID] Y Speed',
                         description: 'returns Y Speed of Marker [markerID]'
@@ -331,8 +407,8 @@ class Scratch3Tuio {
                 {
                     opcode: 'getMarkerAngularSpeed',
                     blockType: BlockType.REPORTER,
-                    text: formatMessage({
-                        id: 'tuio.getMarkerAngleSpeed',
+                    text: _translate({
+                        id: 'tuio.getMarkerAngularSpeed',
                         default: 'Marker [MARKER_ID] angular velocity',
                         description: 'returns angular velocity of Marker [markerID]'
                     }),
@@ -345,9 +421,9 @@ class Scratch3Tuio {
                 }
             ],
             menus: {
-                markerIDMenuWithAny: ['1', '2', '3', '4', 'any'],
-                markerIDMenuWithoutAny: ['1', '2', '3', '4'],
-                followTypes: ['(1) position', '(2) angle', '(3) position and angle']
+                markerIDMenuWithoutAny: _createMarkerIDArray(false),
+                markerIDMenuWithAny: _createMarkerIDArray(true),
+                followTypes: _initFollowTypes()
             }
         };
     }
@@ -379,7 +455,7 @@ class Scratch3Tuio {
     }
 
     whenMarkerWithIDEnters (args) {
-        if (args.MARKER_ID === 'any') {
+        if (args.MARKER_ID === AnyMarker) {
             if (aMarkerHasEntered) {
                 aMarkerHasEntered = false;
                 return true;
@@ -405,7 +481,7 @@ class Scratch3Tuio {
     }
 
     whenMarkerWithIDExits (args) {
-        if (args.MARKER_ID === 'any') {
+        if (args.MARKER_ID === AnyMarker) {
             if (aMarkerHasExited) {
                 aMarkerHasExited = false;
                 return true;
@@ -438,10 +514,10 @@ class Scratch3Tuio {
         const followType = args.FOLLOW_TYPE;
         const m = markerMap.get(markerID);
         if (m) {
-            if (followType === '(1) position' || followType === '(3) position and angle') {
+            if (followType === FollowType.POSITION || followType === FollowType.BOTH) {
                 util.target.setXY(this.rescaleX(m.x), this.rescaleY(m.y), false);
             }
-            if (followType === '(2) angle' || followType === '(3) position and angle') {
+            if (followType === FollowType.ANGLE || followType === FollowType.BOTH) {
                 util.target.setDirection(this.rescaleAngle(m.angle));
             }
         }
@@ -503,4 +579,4 @@ class Scratch3Tuio {
     }
 }
 
-module.exports = {Scratch3Tuio, _makeMarkerObject, _initVariables};
+module.exports = {Scratch3Tuio, FollowType, _makeMarkerObject, _initVariables};
