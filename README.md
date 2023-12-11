@@ -25,7 +25,7 @@ Scratch4TUIO è un'estensione di Scratch che consente l'utilizzo di dati TUIO tr
 - Scarica l'installer di NodeJS da [qui](https://nodejs.org/download/release/v18.19.0/node-v18.19.0-x64.msi). Una volta scaricato fai doppio click per installare: per mandare avanti l'installazione è sufficiente cliccare sempre su Next, ma nella seconda schermata è necessario selezionare "I accept the terms in the license Agreement". L'installazione può richiedere qualche minuto e il sistema potrebbe chiedere di inserire la password di amministratore.
 Installazione di Reactivision
 - Scarica ReacTIVision da [questo link](http://prdownloads.sourceforge.net/reactivision/reacTIVision-1.5.1-win64.zip?download). Scompatta lo Zip.
-- Scarica l'estensione scratch ...
+- Scarica [l'estensione scratch](https://github.com/futureinv/tuio_scratch/releases/download/v1.0.0/v1.0.0_win64.zip) e scompatta lo zip.
 
 ## Come usare l'estensione
 - Nella cartella in cui hai scaricato reacTIVision fai partire `reacTIVision.exe`
