@@ -1,5 +1,4 @@
 # Scratch4TUIO
-(in realtà il nome è già utilizzato da https://github.com/caesarion/scratch4tuio che è la vecchia estensione per ScratchX, non compatibile con Scratc 3.
 TUIO, come si può leggere sul [sito di riferimento](https://www.tuio.org/), è un protocollo di comunicazione per superfici multitouch. Il protocollo TUIO consente quidi la trasmissione di una descrizione astratta, solo la posizione per i cursori o posizione e direzione per i markers, tramite superfici interattive. 
 Questo protocollo codifica i dati da un'applicazione tracker (ad esempio basata sulla visione artificiale) e li invia a qualsiasi applicazione client in grado di decodificare il protocollo.
 
