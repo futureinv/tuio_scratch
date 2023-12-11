@@ -52,7 +52,7 @@ Installazione di Reactivision
 With scratch4TUIO extension blocks, you can get x and y position and orientation angle of the following any fiducial markers:
 
 ## Licenza
-Distribuito con licenza . Vedi il file `LICENSE.txt` per ulteriori informazioni.
+Distribuito con licenza BSD 3-Clause "New" or "Revised" License. Vedi il file `LICENSE.txt` per ulteriori informazioni.
 
 ## Ringraziamenti
 - [scratch-tuio-sandbox](https://github.com/parsodyl/scratch-tuio-sandbox)
