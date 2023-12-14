@@ -2,7 +2,7 @@ const ArgumentType = require('../../extension-support/argument-type');
 const BlockType = require('../../extension-support/block-type');
 const TargetType = require('../../extension-support/target-type');
 const Cast = require('../../util/cast');
-const log = require('../../util/log');
+// const log = require('../../util/log');
 
 const formatMessage = require('format-message');
 // https://github.com/xcratch/xcx-example/blob/main/src/block/translations.json
