@@ -29,26 +29,24 @@ Installazione di Reactivision
 ## Come usare l'estensione
 - Nella cartella in cui hai scaricato reacTIVision fai partire `reacTIVision.exe`
 - Nella cartella in cui hai scaricato l'estensione fai partire `server.bat`
-- Apri nel tuo browser preferito l'estensione scratch, che puoi trovare [qui]()
+- Apri nel tuo browser preferito l'estensione scratch, che puoi trovare [qui](https://futureinv.github.io/)
 
 ## Esempi d'uso
 
-1. Click "Add Extension" button(Folder with "+" mark icon).
+1. Clicca il pulsante "Aggiungi estensione" in basso a sinistra.
 <img src="" width="400" />
 
-2. Select "scratch4TUIO" extension.
+2. Seleziona "scratch_TUIO".
 <img src="" width="400" />
 
-3. You can use scratch4TUIO blocks.
+3. Adesso puoi utilizzare i blocchi dell'estensione.
 <img src="" width="400" />
 
-4. Make a code like below.
+4. Ad esempio puoi combinare i blocchi in questo modo.
 <img src="" width="400" />
 
-5. you can move the cat moving the marker 1.
+5. E puoi muovere il gatto con il marker 1.
 <img src="" width="400" />
-
-With scratch_TUIO extension blocks, you can get x and y position and orientation angle of the following any fiducial markers:
 
 ## Licenza
 Distribuito con licenza BSD 3-Clause "New" or "Revised" License. Vedi il file `LICENSE.txt` per ulteriori informazioni.
