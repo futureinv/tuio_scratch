@@ -1,8 +1,8 @@
-# Scratch4TUIO
+# Scratch_TUIO
 TUIO, come si può leggere sul [sito di riferimento](https://www.tuio.org/), è un protocollo di comunicazione per superfici multitouch. Il protocollo TUIO consente quidi la trasmissione di una descrizione astratta, solo la posizione per i cursori o posizione e direzione per i markers, tramite superfici interattive. 
 Questo protocollo codifica i dati da un'applicazione tracker (ad esempio basata sulla visione artificiale) e li invia a qualsiasi applicazione client in grado di decodificare il protocollo.
 
-Scratch4TUIO è un'estensione di Scratch che consente l'utilizzo di dati TUIO tramite un client server, per produrre una nuova modalità di interazioine
+Scratch_TUIO è un'estensione di Scratch che consente l'utilizzo di dati TUIO tramite un client server, per produrre una nuova modalità di interazioine
 
 ## Requisiti
 
@@ -25,12 +25,11 @@ Scratch4TUIO è un'estensione di Scratch che consente l'utilizzo di dati TUIO tr
 - Scarica l'installer di NodeJS da [qui](https://nodejs.org/download/release/v18.19.0/node-v18.19.0-x64.msi). Una volta scaricato fai doppio click per installare: per mandare avanti l'installazione è sufficiente cliccare sempre su Next, ma nella seconda schermata è necessario selezionare "I accept the terms in the license Agreement". L'installazione può richiedere qualche minuto e il sistema potrebbe chiedere di inserire la password di amministratore.
 Installazione di Reactivision
 - Scarica ReacTIVision da [questo link](http://prdownloads.sourceforge.net/reactivision/reacTIVision-1.5.1-win64.zip?download). Scompatta lo Zip.
-- Scarica [l'estensione scratch](https://github.com/futureinv/tuio_scratch/releases/download/v1.0.0/v1.0.0_win64.zip) e scompatta lo zip.
 
 ## Come usare l'estensione
 - Nella cartella in cui hai scaricato reacTIVision fai partire `reacTIVision.exe`
 - Nella cartella in cui hai scaricato l'estensione fai partire `server.bat`
-- Nella stessa cartella lancia `scratch.html`
+- Apri nel tuo browser preferito l'estensione scratch, che puoi trovare [qui]()
 
 ## Esempi d'uso
 
@@ -49,7 +48,7 @@ Installazione di Reactivision
 5. you can move the cat moving the marker 1.
 <img src="" width="400" />
 
-With scratch4TUIO extension blocks, you can get x and y position and orientation angle of the following any fiducial markers:
+With scratch_TUIO extension blocks, you can get x and y position and orientation angle of the following any fiducial markers:
 
 ## Licenza
 Distribuito con licenza BSD 3-Clause "New" or "Revised" License. Vedi il file `LICENSE.txt` per ulteriori informazioni.
