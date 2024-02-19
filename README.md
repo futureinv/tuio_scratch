@@ -42,10 +42,7 @@ Installazione di Reactivision
 3. Adesso puoi utilizzare i blocchi dell'estensione.
 <img src="https://github.com/futureinv/tuio_scratch/blob/main/images/tre.PNG" width="400" />
 
-4. Ad esempio puoi combinare i blocchi in questo modo.
-<img src="https://github.com/futureinv/tuio_scratch/blob/main/images/quattro.PNG" width="400" />
-
-5. E puoi muovere il gatto con il marker 1.
+4. Ad esempio puoi combinare i blocchi in questo modo e far muovere il gatto con il marker 1
 <img src="https://github.com/futureinv/tuio_scratch/blob/main/images/quattro.PNG" width="400" />
 
 ## Licenza
