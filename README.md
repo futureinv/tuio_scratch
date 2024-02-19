@@ -34,19 +34,19 @@ Installazione di Reactivision
 ## Esempi d'uso
 
 1. Clicca il pulsante "Aggiungi estensione" in basso a sinistra.
-<img src="" width="400" />
+<img src="https://github.com/futureinv/tuio_scratch/blob/main/images/uno.PNG" width="400" />
 
 2. Seleziona "scratch_TUIO".
-<img src="" width="400" />
+<img src="https://github.com/futureinv/tuio_scratch/blob/main/images/due.PNG" width="400" />
 
 3. Adesso puoi utilizzare i blocchi dell'estensione.
-<img src="" width="400" />
+<img src="https://github.com/futureinv/tuio_scratch/blob/main/images/tre.PNG" width="400" />
 
 4. Ad esempio puoi combinare i blocchi in questo modo.
-<img src="" width="400" />
+<img src="https://github.com/futureinv/tuio_scratch/blob/main/images/quattro.PNG" width="400" />
 
 5. E puoi muovere il gatto con il marker 1.
-<img src="" width="400" />
+<img src="https://github.com/futureinv/tuio_scratch/blob/main/images/quattro.PNG" width="400" />
 
 ## Licenza
 Distribuito con licenza BSD 3-Clause "New" or "Revised" License. Vedi il file `LICENSE.txt` per ulteriori informazioni.
