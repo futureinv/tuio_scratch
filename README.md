@@ -54,7 +54,7 @@ Assicurarsi di selezionare il numero del Marker che si sta utilizzando nel menù
 
 ### Controllare la rotazione dello Sprite 
 Assicurarsi di selezionare il numero del Marker che si sta utilizzando nel menù a tendina
-<img src="https://github.com/futureinv/videomapping/blob/main/readmeImages/Interface.jpg" width="400" />
+<img src="https://github.com/futureinv/videomapping/blob/main/readmeImages/Interface.jpg" width="400/>
 
 ### Tracciare una linea colorata
 
