@@ -67,6 +67,12 @@ Nel caso in cui dovesse continuare a comparire una linea colorata anche dopo ave
 
 ### Creare una pallina che rimabalza
 Applicare il primo codice sullo Sprite controllato dal Marker.
+
+
+
+
+
+
 <img src="https://github.com/futureinv/tuio_scratch/blob/main/readme_img/posizione.jpg" width="400" />
 
 Selezionare poi la palla o l'oggetto da far rimbalzare.
