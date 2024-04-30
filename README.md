@@ -50,7 +50,7 @@ Distribuito con licenza BSD 3-Clause "New" or "Revised" License. Vedi il file `L
 
 ## Ringraziamenti
 - [scratch-tuio-sandbox](https://github.com/parsodyl/scratch-tuio-sandbox)
-
+https://github.com/futureinv/tuio_scratch/assets/153513974/3371d48f-0345-4f25-ae80-228c48e50652
 ## Ulteriori informazioni tecniche (per sviluppatori)
 
 ### Dipendenze
@@ -72,7 +72,7 @@ cd tuio-server && yarn install
 ## Esecuzione
 ```
 
-https://github.com/futureinv/tuio_scratch/assets/153513974/3371d48f-0345-4f25-ae80-228c48e50652
+
 
 
 cd scratch-gui && yarn start &
