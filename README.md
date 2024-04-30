@@ -46,31 +46,31 @@ Installazione di Reactivision
 
 4. IMPORTANTE
 Affinchè i comandi dell'estensione funzionino, c'è bisogno di stabilire un collegamento con il server. Questo comando deve essere sempre presente.
-<img src="https://github.com/futureinv/tuio_scratch/blob/main/readme_img/connect.jpg" width="500" />
+<img src="https://github.com/futureinv/tuio_scratch/blob/main/readme_img/connect.jpg" width="300" />
 
 ### Controllare il movimento dello Sprite 
 Assicurarsi di selezionare il numero del Marker che si sta utilizzando nel menù a tendina.
-<img src="https://github.com/futureinv/tuio_scratch/blob/main/readme_img/posizione.jpg" width="500" />
+<img src="https://github.com/futureinv/tuio_scratch/blob/main/readme_img/posizione.jpg" width="400" />
 
 ### Controllare la rotazione dello Sprite 
 Assicurarsi di selezionare il numero del Marker che si sta utilizzando nel menù a tendina
-<img src="https://github.com/futureinv/videomapping/blob/main/readmeImages/Interface.jpg" width="500" />
+<img src="https://github.com/futureinv/videomapping/blob/main/readmeImages/Interface.jpg" width="400" />
 
 ### Tracciare una linea colorata
 
-<img src="https://github.com/futureinv/tuio_scratch/blob/main/readme_img/matitaColorata.jpg" width="500" />
+<img src="https://github.com/futureinv/tuio_scratch/blob/main/readme_img/matitaColorata.jpg" width="400" />
 Nel caso in cui dovesse continuare a comparire una linea colorata anche dopo aver eliminato il codice, cliccare sul comando "penna su" nella lista dei comandi.
 <img src="https://github.com/futureinv/tuio_scratch/blob/main/readme_img/pulisci.jpg" /> 
 
 ### Cambiare lo sfondo
-<img src="https://github.com/futureinv/videomapping/blob/main/readmeImages/Interface.jpg" width="500" />
+<img src="https://github.com/futureinv/videomapping/blob/main/readmeImages/Interface.jpg" width="400" />
 
 ### Creare una pallina che rimabalza
 Selezionaare lo sprite.
-<img src="https://github.com/futureinv/tuio_scratch/blob/main/readme_img/posizione.jpg" width="500" />
+<img src="https://github.com/futureinv/tuio_scratch/blob/main/readme_img/posizione.jpg" width="400" />
 
 Selezionare poi la palla.
-<img src="https://github.com/futureinv/tuio_scratch/blob/main/readme_img/rimbalzo2.jpg" width="500" />
+<img src="https://github.com/futureinv/tuio_scratch/blob/main/readme_img/rimbalzo2.jpg" width="400" />
 
 
 ## Licenza
