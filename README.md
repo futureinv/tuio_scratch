@@ -54,8 +54,8 @@ Assicurarsi di selezionare il numero del Marker che si sta utilizzando nel menù
 
 ### Controllare la rotazione dello Sprite 
 Da questo mnenù a tendina è possibile decidere se controllare la posizione o la rotazione dello SPrite tramite il Marker.
-<img src="https://github.com/futureinv/tuio_scratch/blob/main/readme_img/rotazione.jpg" width="400/>
 
+<img src="https://github.com/futureinv/tuio_scratch/blob/main/readme_img/rotazione.jpg" width="300" />
 ### Tracciare una linea colorata
 
 <img src="https://github.com/futureinv/tuio_scratch/blob/main/readme_img/matitaColorata.jpg" width="400" />
