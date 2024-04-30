@@ -71,6 +71,10 @@ cd tuio-server && yarn install
 
 ## Esecuzione
 ```
+
+https://github.com/futureinv/tuio_scratch/assets/153513974/3371d48f-0345-4f25-ae80-228c48e50652
+
+
 cd scratch-gui && yarn start &
 node ../tuio-server/index.js &
 cd ../tuio-simulator && java -jar TuioSimulator.jar
