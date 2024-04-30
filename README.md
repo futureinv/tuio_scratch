@@ -53,8 +53,8 @@ Assicurarsi di selezionare il numero del Marker che si sta utilizzando nel menù
 <img src="https://github.com/futureinv/tuio_scratch/blob/main/readme_img/posizione.jpg" width="400" />
 
 ### Controllare la rotazione dello Sprite 
-Assicurarsi di selezionare il numero del Marker che si sta utilizzando nel menù a tendina
-<img src="https://github.com/futureinv/videomapping/blob/main/readmeImages/Interface.jpg" width="400/>
+Da questo mnenù a tendina è possibile decidere se controllare la posizione o la rotazione dello SPrite tramite il Marker.
+<img src="https://github.com/futureinv/tuio_scratch/blob/main/readme_img/rotazione.jpg" width="400/>
 
 ### Tracciare una linea colorata
 
@@ -66,10 +66,10 @@ Nel caso in cui dovesse continuare a comparire una linea colorata anche dopo ave
 <img src="https://github.com/futureinv/videomapping/blob/main/readmeImages/Interface.jpg" width="400" />
 
 ### Creare una pallina che rimabalza
-Selezionaare lo sprite.
+1- Selezionaare lo sprite.
 <img src="https://github.com/futureinv/tuio_scratch/blob/main/readme_img/posizione.jpg" width="400" />
 
-Selezionare poi la palla.
+2- Selezionare poi la palla.
 <img src="https://github.com/futureinv/tuio_scratch/blob/main/readme_img/rimbalzo2.jpg" width="400" />
 
 
