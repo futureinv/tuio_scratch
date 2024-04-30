@@ -33,6 +33,8 @@ Installazione di Reactivision
 
 ## Esempi d'uso
 
+
+### Importare i blocchi dell'estensione
 1. Clicca il pulsante "Aggiungi estensione" in basso a sinistra.
 <img src="https://github.com/futureinv/tuio_scratch/blob/main/images/uno.PNG" width="400" />
 
@@ -42,8 +44,19 @@ Installazione di Reactivision
 3. Adesso puoi utilizzare i blocchi dell'estensione.
 <img src="https://github.com/futureinv/tuio_scratch/blob/main/images/tre.PNG" width="400" />
 
-4. Ad esempio puoi combinare i blocchi in questo modo e far muovere il gatto con il marker 1
-<img src="https://github.com/futureinv/tuio_scratch/blob/main/images/quattro.PNG" width="400" />
+4. IMPORTANTE
+Affinchè i comandi dell'estensione funzionino, c'è bisogno di stabilire un collegamento con il server. Questo comando deve essere sempre presente.
+
+
+### Controllare il movimento dello Sprite 
+Assicurarsi di selezionare il numero del Marker che si sta utilizzando nel menù a tendina.
+### Controllare la rotazione dello Sprite 
+Assicurarsi di selezionare il numero del Marker che si sta utilizzando nel menù a tendina
+### Tracciare una linea colorata
+Nel caso in cui dovesse continuare a comparire una linea colorata anche dopo aver eliminato il codice, cliccare sul comando "penna su" nella lista dei comandi.
+### Cambiare lo sfondo
+### Creare una pallina che rimabalza
+
 
 ## Licenza
 Distribuito con licenza BSD 3-Clause "New" or "Revised" License. Vedi il file `LICENSE.txt` per ulteriori informazioni.
