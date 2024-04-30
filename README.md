@@ -60,18 +60,19 @@ Da questo mnenù a tendina è possibile decidere se controllare la posizione o l
 
 <img src="https://github.com/futureinv/tuio_scratch/blob/main/readme_img/matitaColorata.jpg" width="400" />
 Nel caso in cui dovesse continuare a comparire una linea colorata anche dopo aver eliminato il codice, cliccare sul comando "penna su" nella lista dei comandi.
-<img src="https://github.com/futureinv/tuio_scratch/blob/main/readme_img/pulisci.jpg" /> 
+<img src="https://github.com/futureinv/tuio_scratch/blob/main/readme_img/pulisci.jpg" width="300" /> 
 
 ### Cambiare lo sfondo
-<img src="https://github.com/futureinv/videomapping/blob/main/readmeImages/Interface.jpg" width="400" />
+<img src="https://github.com/futureinv/tuio_scratch/blob/main/readme_img/sfondo.jpg" width="400" />
 
 ### Creare una pallina che rimabalza
-1- Selezionaare lo sprite.
+
 <img src="https://github.com/futureinv/tuio_scratch/blob/main/readme_img/posizione.jpg" width="400" />
+Applicare il primo codice sullo Sprite controllato dal Marker.
 
-2- Selezionare poi la palla.
+
 <img src="https://github.com/futureinv/tuio_scratch/blob/main/readme_img/rimbalzo2.jpg" width="400" />
-
+Selezionare poi la palla o l'oggetto da far rimbalzare.
 
 ## Licenza
 Distribuito con licenza BSD 3-Clause "New" or "Revised" License. Vedi il file `LICENSE.txt` per ulteriori informazioni.
