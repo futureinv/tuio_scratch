@@ -102,10 +102,6 @@ cd tuio-server && yarn install
 
 ## Esecuzione
 ```
-
-
-
-
 cd scratch-gui && yarn start &
 node ../tuio-server/index.js &
 cd ../tuio-simulator && java -jar TuioSimulator.jar
