@@ -36,14 +36,14 @@ Installazione di Reactivision
 
 ### Importare i blocchi dell'estensione
 1. Clicca il pulsante "Aggiungi estensione" in basso a sinistra.
-<img src="https://github.com/futureinv/tuio_scratch/blob/main/readme_img/aggiungi.jpg" width="400" />
+<img src="https://github.com/futureinv/tuio_scratch/blob/main/readme_img/aggiungi.jpg" width="300" />
 
 
 2. Seleziona "scratch_TUIO".
 <img src="https://github.com/futureinv/tuio_scratch/blob/main/readme_img/estensione.jpg" width="400" />
 
 3. Adesso puoi utilizzare i blocchi dell'estensione.
-<img src="https://github.com/futureinv/tuio_scratch/blob/main/readme_img/blocchiTuio.jpg" width="400" />
+<img src="https://github.com/futureinv/tuio_scratch/blob/main/readme_img/blocchiTuio.jpg" width="300" />
 
 4. IMPORTANTE
 Affinchè i comandi dell'estensione funzionino, c'è bisogno di stabilire un collegamento con il server. Questo comando deve essere sempre presente.
