@@ -7,7 +7,9 @@ import tuioFollowCondition1 from './steps/tuioFollowCondition1.jpg';
 import tuioFollowCondition2 from './steps/tuioFollowCondition2.jpg';
 import tuioFollowReactivision from './steps/tuioFollowReactivision.jpg';
 import tuioFollowSelectMarker from './steps/tuioFollowSelectMarker.jpg';
+import tuioFollowLoop from './steps/tuioFollowLoop.gif';
 import tuioFollowFinalCode from './steps/tuioFollowFinalCode.jpg';
+import tuioFollowTest from './steps/tuioFollowTest.gif';
 
 // Tuio Pencil
 import tuioPencilCondition1 from './steps/tuioPencilCondition1.jpg';
@@ -229,7 +231,9 @@ const enImages = {
     tuioFollowCondition2: tuioFollowCondition2,
     tuioFollowReactivision: tuioFollowReactivision,
     tuioFollowSelectMarker: tuioFollowSelectMarker,
+    tuioFollowLoop: tuioFollowLoop,
     tuioFollowFinalCode: tuioFollowFinalCode,
+    tuioFollowTest: tuioFollowTest,
 
     // Tuio Pencil
     tuioPencilCondition1: tuioPencilCondition1,

@@ -5,10 +5,10 @@ import {FormattedMessage} from 'react-intl';
 // translated in thumbnails.
 
 // Tuio Ti seguo
-import tuioFollow from './thumbnails/getting-started.jpg';
+import tuioFollow from './thumbnails/tuioFollow.jpg';
 
 // Tuio Matita
-import tuioPencil from './thumbnails/getting-started.jpg';
+import tuioPencil from './thumbnails/tuioPencil.jpg';
 
 // Intro
 import libraryIntro from './thumbnails/getting-started.jpg';
@@ -104,7 +104,7 @@ export default {
         }, {
             title: (
                 <FormattedMessage
-                    defaultMessage="Apri Reactivision"
+                    defaultMessage="Apri ReacTIVision"
                     description="Step name for 'Apri Reactivision' step"
                     id="gui.howtos.tuio-follow.reactivision"
                 />
@@ -113,7 +113,7 @@ export default {
         }, {
             title: (
                 <FormattedMessage
-                    defaultMessage="Condizione 1"
+                    defaultMessage="Condizione 1: Per far si che lo sprite segua il movimento del marker"
                     description="Step name for 'Condizione 1' step"
                     id="gui.howtos.tuio-follow.condition1"
                 />
@@ -122,7 +122,7 @@ export default {
         }, {
             title: (
                 <FormattedMessage
-                    defaultMessage="Condizione 2"
+                    defaultMessage="Condizione 2: Per far in modo che lo sprite sparisca quando non è presente il marker"
                     description="Step name for 'Condizione 2' step"
                     id="gui.howtos.tuio-follow.condition2"
                 />
@@ -131,12 +131,21 @@ export default {
         }, {
             title: (
                 <FormattedMessage
-                    defaultMessage="Seleziona il marker"
+                    defaultMessage="Seleziona il numero corrispondente del marker in uso dal menù a tendina"
                     description="Step name for 'Seleziona il marker' step"
                     id="gui.howtos.tuio-follow.selectmarker"
                 />
             ),
             image: 'tuioFollowSelectMarker'
+        }, {
+            title: (
+                <FormattedMessage
+                    defaultMessage="Per sempre: Per far si che lo sprite segua continuamente la posizione del marker"
+                    description="Step name for 'Loop' step"
+                    id="gui.howtos.tuio-follow.loop"
+                />
+            ),
+            image: 'tuioFollowLoop'
         }, {
             title: (
                 <FormattedMessage
@@ -147,8 +156,17 @@ export default {
             ),
             image: 'tuioFollowFinalCode'
         }, {
+            title: (
+                <FormattedMessage
+                    defaultMessage="Risultato finale"
+                    description="Step name for 'Loop' step"
+                    id="gui.howtos.tuio-follow.test"
+                />
+            ),
+            image: 'tuioFollowTest'
+        }, {
             deckIds: [
-                'add-a-backdrop',
+                'tuio-pencil',
                 'add-sprite'
             ]
         }
@@ -168,21 +186,12 @@ export default {
         steps: [{
             title: (
                 <FormattedMessage
-                    defaultMessage="..."
-                    description="Step name for '...' step"
+                    defaultMessage="Partendo dal codice realizzato nel tutorial “Ti seguo”"
+                    description="Step name for 'Previously' step"
                     id="gui.howtos.tuio-pencil.previously"
                 />
             ),
-            image: 'tuioPreviously'
-        }, {
-            title: (
-                <FormattedMessage
-                    defaultMessage="Connettiti a Tuio"
-                    description="Step name for 'Connettiti a Tuio' step"
-                    id="gui.howtos.tuio-pencil.connect"
-                />
-            ),
-            image: 'tuioConnect'
+            image: 'tuioFollowFinalCode'
         }, {
             title: (
                 <FormattedMessage
@@ -195,7 +204,7 @@ export default {
         }, {
             title: (
                 <FormattedMessage
-                    defaultMessage="Condizione 1"
+                    defaultMessage="Condizione 1: Per creare una linea colorata che segua il movimento del marker"
                     description="Step name for 'Condizione 1' step"
                     id="gui.howtos.tuio-pencil.condition1"
                 />
@@ -204,7 +213,7 @@ export default {
         }, {
             title: (
                 <FormattedMessage
-                    defaultMessage="Condizione 2"
+                    defaultMessage="Condizione 2: Per cancellare la traccia quando il marker esce"
                     description="Step name for 'Condizione 2' step"
                     id="gui.howtos.tuio-pencil.condition2"
                 />
@@ -213,7 +222,7 @@ export default {
         }, {
             title: (
                 <FormattedMessage
-                    defaultMessage="Loop"
+                    defaultMessage="Per sempre: Per far si che lo sprite segua continuamente la posizione del marker"
                     description="Step name for 'Loop' step"
                     id="gui.howtos.tuio-pencil.loop"
                 />
@@ -231,7 +240,7 @@ export default {
         }, {
             title: (
                 <FormattedMessage
-                    defaultMessage="Test"
+                    defaultMessage="Risultato finale"
                     description="Step name for 'Test' step"
                     id="gui.howtos.tuio-pencil.test"
                 />
