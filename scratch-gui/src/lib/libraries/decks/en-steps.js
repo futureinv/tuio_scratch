@@ -1,3 +1,22 @@
+// Tuio Common
+import tuioLoadExtension from './steps/tuioLoadExtension.en.gif';
+import tuioConnect from './steps/tuioConnect.jpg';
+
+// Tuio Follow
+import tuioFollowCondition1 from './steps/tuioFollowCondition1.jpg';
+import tuioFollowCondition2 from './steps/tuioFollowCondition2.jpg';
+import tuioFollowReactivision from './steps/tuioFollowReactivision.jpg';
+import tuioFollowSelectMarker from './steps/tuioFollowSelectMarker.jpg';
+import tuioFollowFinalCode from './steps/tuioFollowFinalCode.jpg';
+
+// Tuio Pencil
+import tuioPencilCondition1 from './steps/tuioPencilCondition1.jpg';
+import tuioPencilCondition2 from './steps/tuioPencilCondition2.jpg';
+import tuioPencilLoop from './steps/tuioPencilLoop.gif';
+import tuioPencilFinalCode from './steps/tuioPencilFinalCode.jpg';
+import tuioPencilTest from './steps/tuioPencilTest.gif';
+import tuioPencilPen from './steps/tuioPencilPen.png';
+
 // Intro
 import introMove from './steps/intro-1-move.en.gif';
 import introSay from './steps/intro-2-say.en.gif';
@@ -200,6 +219,26 @@ import talesDanceMoves from './steps/talking-12-dance-moves.en.png';
 import talesAskAnswer from './steps/talking-13-ask-and-answer.en.png';
 
 const enImages = {
+
+    // Tuio Common
+    tuioLoadExtension: tuioLoadExtension,
+    tuioConnect: tuioConnect,
+
+    // Tuio Follow
+    tuioFollowCondition1: tuioFollowCondition1,
+    tuioFollowCondition2: tuioFollowCondition2,
+    tuioFollowReactivision: tuioFollowReactivision,
+    tuioFollowSelectMarker: tuioFollowSelectMarker,
+    tuioFollowFinalCode: tuioFollowFinalCode,
+
+    // Tuio Pencil
+    tuioPencilCondition1: tuioPencilCondition1,
+    tuioPencilCondition2: tuioPencilCondition2,
+    tuioPencilLoop: tuioPencilLoop,
+    tuioPencilFinalCode: tuioPencilFinalCode,
+    tuioPencilTest: tuioPencilTest,
+    tuioPencilPen: tuioPencilPen,
+
     // Intro
     introMove: introMove,
     introSay: introSay,

@@ -3,6 +3,13 @@ import {FormattedMessage} from 'react-intl';
 
 // Tutorial thumbnails: Avoid using any text that would need to be
 // translated in thumbnails.
+
+// Tuio Ti seguo
+import tuioFollow from './thumbnails/getting-started.jpg';
+
+// Tuio Matita
+import tuioPencil from './thumbnails/getting-started.jpg';
+
 // Intro
 import libraryIntro from './thumbnails/getting-started.jpg';
 
@@ -66,6 +73,179 @@ import moveArrowKeysThumb from './thumbnails/move-arrow-keys.jpg';
 import spinThumb from './thumbnails/spin.jpg';
 
 export default {
+    'tuio-follow': {
+        name: (
+            <FormattedMessage
+                defaultMessage="Ti seguo"
+                description="Name for the 'Ti seguo' how-to"
+                id="gui.howtos.tuio-follow.name"
+            />
+        ),
+        tags: ['help', 'tuio', 'reactivision', 'follow'],
+        img: tuioFollow,
+        steps: [{
+            title: (
+                <FormattedMessage
+                    defaultMessage="Carica l'estensione"
+                    description="Step name for 'Carica l'estensione' step"
+                    id="gui.howtos.tuio-follow.extension"
+                />
+            ),
+            image: 'tuioLoadExtension'
+        }, {
+            title: (
+                <FormattedMessage
+                    defaultMessage="Connettiti a Tuio"
+                    description="Step name for 'Connettiti a Tuio' step"
+                    id="gui.howtos.tuio-follow.connect"
+                />
+            ),
+            image: 'tuioConnect'
+        }, {
+            title: (
+                <FormattedMessage
+                    defaultMessage="Apri Reactivision"
+                    description="Step name for 'Apri Reactivision' step"
+                    id="gui.howtos.tuio-follow.reactivision"
+                />
+            ),
+            image: 'tuioFollowReactivision'
+        }, {
+            title: (
+                <FormattedMessage
+                    defaultMessage="Condizione 1"
+                    description="Step name for 'Condizione 1' step"
+                    id="gui.howtos.tuio-follow.condition1"
+                />
+            ),
+            image: 'tuioFollowCondition1'
+        }, {
+            title: (
+                <FormattedMessage
+                    defaultMessage="Condizione 2"
+                    description="Step name for 'Condizione 2' step"
+                    id="gui.howtos.tuio-follow.condition2"
+                />
+            ),
+            image: 'tuioFollowCondition2'
+        }, {
+            title: (
+                <FormattedMessage
+                    defaultMessage="Seleziona il marker"
+                    description="Step name for 'Seleziona il marker' step"
+                    id="gui.howtos.tuio-follow.selectmarker"
+                />
+            ),
+            image: 'tuioFollowSelectMarker'
+        }, {
+            title: (
+                <FormattedMessage
+                    defaultMessage="Codice completo"
+                    description="Step name for 'Codice Completo' step"
+                    id="gui.howtos.tuio-follow.finalCode"
+                />
+            ),
+            image: 'tuioFollowFinalCode'
+        }, {
+            deckIds: [
+                'add-a-backdrop',
+                'add-sprite'
+            ]
+        }
+        ],
+        urlId: 'tuioFollow'
+    },
+    'tuio-pencil': {
+        name: (
+            <FormattedMessage
+                defaultMessage="Sono una matita"
+                description="Name for the 'Sono una matita' how-to"
+                id="gui.howtos.tuio-pencil.name"
+            />
+        ),
+        tags: ['help', 'tuio', 'reactivision', 'pencil'],
+        img: tuioPencil,
+        steps: [{
+            title: (
+                <FormattedMessage
+                    defaultMessage="..."
+                    description="Step name for '...' step"
+                    id="gui.howtos.tuio-pencil.previously"
+                />
+            ),
+            image: 'tuioPreviously'
+        }, {
+            title: (
+                <FormattedMessage
+                    defaultMessage="Connettiti a Tuio"
+                    description="Step name for 'Connettiti a Tuio' step"
+                    id="gui.howtos.tuio-pencil.connect"
+                />
+            ),
+            image: 'tuioConnect'
+        }, {
+            title: (
+                <FormattedMessage
+                    defaultMessage="Carica l'estensione penna"
+                    description="Step name for 'Carica l'estensione penna' step"
+                    id="gui.howtos.tuio-pencil.pen"
+                />
+            ),
+            image: 'tuioPencilPen'
+        }, {
+            title: (
+                <FormattedMessage
+                    defaultMessage="Condizione 1"
+                    description="Step name for 'Condizione 1' step"
+                    id="gui.howtos.tuio-pencil.condition1"
+                />
+            ),
+            image: 'tuioPencilCondition1'
+        }, {
+            title: (
+                <FormattedMessage
+                    defaultMessage="Condizione 2"
+                    description="Step name for 'Condizione 2' step"
+                    id="gui.howtos.tuio-pencil.condition2"
+                />
+            ),
+            image: 'tuioPencilCondition2'
+        }, {
+            title: (
+                <FormattedMessage
+                    defaultMessage="Loop"
+                    description="Step name for 'Loop' step"
+                    id="gui.howtos.tuio-pencil.loop"
+                />
+            ),
+            image: 'tuioPencilLoop'
+        }, {
+            title: (
+                <FormattedMessage
+                    defaultMessage="Codice completo"
+                    description="Step name for 'Codice Completo' step"
+                    id="gui.howtos.tuio-pencil.finalCode"
+                />
+            ),
+            image: 'tuioPencilFinalCode'
+        }, {
+            title: (
+                <FormattedMessage
+                    defaultMessage="Test"
+                    description="Step name for 'Test' step"
+                    id="gui.howtos.tuio-pencil.test"
+                />
+            ),
+            image: 'tuioPencilTest'
+        }, {
+            deckIds: [
+                'tuio-follow',
+                'add-sprite'
+            ]
+        }
+        ],
+        urlId: 'tuioFollow'
+    },
 
     'intro-move-sayhello': {
         name: (

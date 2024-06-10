@@ -8,7 +8,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/scratchfoundation/scratch-vm.git",
-    "sha": "802d211f95e7de77be75eca50927a6e876476dc1"
+    "sha": "440317cc98910efe98ebbfff120ba5cc2410d77f"
   },
   "main": "./dist/node/scratch-vm.js",
   "browser": "./src/index.js",
