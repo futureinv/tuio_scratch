@@ -16,7 +16,7 @@ const markerMap = new Map();
 let aMarkerHasEntered = false;
 let aMarkerHasExited = false;
 const sleepingTime = 600;
-const highestMarkerID = 4;
+const highestMarkerID = 10;
 
 /**
  * Enum for follow type parameter values.
