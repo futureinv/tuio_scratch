@@ -122,7 +122,7 @@ export default {
         }, {
             title: (
                 <FormattedMessage
-                    defaultMessage="Condizione 2: Per far in modo che lo sprite sparisca quando non è presente il marker"
+                    defaultMessage="Condizione 2: Per far sparire lo sprite se non è presente il marker"
                     description="Step name for 'Condizione 2' step"
                     id="gui.howtos.tuio-follow.condition2"
                 />

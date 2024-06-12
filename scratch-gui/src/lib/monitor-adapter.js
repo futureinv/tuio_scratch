@@ -27,6 +27,13 @@ export default function ({id, spriteName, opcode, params, value, vm}) {
         label = `${spriteName}: ${label}`;
     }
 
+    // Replace parameters if present
+    if (params) {
+        for (const par in params) {
+            label = label.replace(`[${par}]`, params[par]);
+        }
+    }
+
     // If value is a number, round it to six decimal places
     if (typeof value === 'number') {
         value = Number(value.toFixed(6));

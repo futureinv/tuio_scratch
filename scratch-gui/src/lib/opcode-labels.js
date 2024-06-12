@@ -1,6 +1,7 @@
 import {defineMessages} from 'react-intl';
 
 const messages = defineMessages({
+    // Motion
     motion_direction: {
         defaultMessage: 'direction',
         description: 'Label for the direction monitor when shown on the stage',
