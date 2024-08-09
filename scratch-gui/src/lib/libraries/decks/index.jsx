@@ -10,6 +10,9 @@ import tuioFollow from './thumbnails/tuioFollow.jpg';
 // Tuio Matita
 import tuioPencil from './thumbnails/tuioPencil.jpg';
 
+// Tuio Bounce
+// import tuioBounce from './thumbnails/tuioFollow.jpg';
+
 // Intro
 import libraryIntro from './thumbnails/getting-started.jpg';
 
@@ -167,7 +170,7 @@ export default {
         }, {
             deckIds: [
                 'tuio-pencil',
-                'add-sprite'
+                'tuio-bounce'
             ]
         }
         ],
@@ -249,13 +252,85 @@ export default {
         }, {
             deckIds: [
                 'tuio-follow',
-                'add-sprite'
+                'tuio-bounce'
             ]
         }
         ],
         urlId: 'tuioFollow'
     },
-
+    'tuio-bounce': {
+        name: (
+            <FormattedMessage
+                defaultMessage="Rimbalzo"
+                description="Name for the 'Rimbalzo' how-to"
+                id="gui.howtos.tuio-bounce.name"
+            />
+        ),
+        tags: ['help', 'tuio', 'reactivision', 'bounce'],
+        img: libraryIntro,
+        steps: [{
+            title: (
+                <FormattedMessage
+                    defaultMessage="Scegli due sprite: un personaggio e un oggetto da far rimbalzare"
+                    description="Step name for 'Scegli due sprite' step"
+                    id="gui.howtos.tuio-bounce.sprites"
+                />
+            ),
+            image: 'tuioBounceSprites'
+        }, {
+            title: (
+                <FormattedMessage
+                    defaultMessage="Riproduci il codice del tutorial 'Ti seguo' per muovere il personaggio"
+                    description="Step name for 'Riproduci il codice' step"
+                    id="gui.howtos.tuio-bounce.follow"
+                />
+            ),
+            image: 'tuioBounceFollow'
+        }, {
+            title: (
+                <FormattedMessage
+                    defaultMessage="Condizione 1: per far spostare e ruotare l'oggetto"
+                    description="Step name for 'Condizione 1"
+                    id="gui.howtos.tuio-bounce.condition1"
+                />
+            ),
+            image: 'tuioBounceCondition1'
+        }, {
+            title: (
+                <FormattedMessage
+                    defaultMessage="Condizione 2: per far rimbalzare l'oggetto sui bordi dello schermo"
+                    description="Step name for 'Condizione 2' step"
+                    id="gui.howtos.tuio-bounce.condition2"
+                />
+            ),
+            image: 'tuioBounceCondition2'
+        }, {
+            title: (
+                <FormattedMessage
+                    defaultMessage="Condizione 3: per far rimbalzare l'oggetto quando tocca il personaggio"
+                    description="Step name for 'Condizione 3' step"
+                    id="gui.howtos.tuio-bounce.condition3"
+                />
+            ),
+            image: 'tuioBounceCondition3'
+        }, {
+            title: (
+                <FormattedMessage
+                    defaultMessage="Risultato finale"
+                    description="Step name for 'Finale' step"
+                    id="gui.howtos.tuio-bounce.test"
+                />
+            ),
+            image: 'tuioBounceTest'
+        }, {
+            deckIds: [
+                'tuio-pencil',
+                'tuio-follow'
+            ]
+        }
+        ],
+        urlId: 'tuioBounce'
+    },
     'intro-move-sayhello': {
         name: (
             <FormattedMessage

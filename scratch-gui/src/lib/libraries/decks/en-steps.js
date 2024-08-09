@@ -19,6 +19,15 @@ import tuioPencilFinalCode from './steps/tuioPencilFinalCode.jpg';
 import tuioPencilTest from './steps/tuioPencilTest.gif';
 import tuioPencilPen from './steps/tuioPencilPen.png';
 
+// Tuio Bounce
+import tuioBounceSprites from './steps/tuioBounceSprites.gif';
+import tuioBounceFollow from './steps/tuioBounceFollow.png';
+import tuioBounceCondition1 from './steps/tuioBounceCondition1.png';
+import tuioBounceCondition2 from './steps/tuioBounceCondition2.png';
+import tuioBounceCondition3 from './steps/tuioBounceCondition3.png';
+import tuioBounceTest from './steps/tuioBounceTest.gif';
+
+
 // Intro
 import introMove from './steps/intro-1-move.en.gif';
 import introSay from './steps/intro-2-say.en.gif';
@@ -243,6 +252,14 @@ const enImages = {
     tuioPencilTest: tuioPencilTest,
     tuioPencilPen: tuioPencilPen,
 
+    // Tuio Bounce
+    tuioBounceSprites: tuioBounceSprites,
+    tuioBounceFollow: tuioBounceFollow,
+    tuioBounceCondition1: tuioBounceCondition1,
+    tuioBounceCondition2: tuioBounceCondition2,
+    tuioBounceCondition3: tuioBounceCondition3,
+    tuioBounceTest: tuioBounceTest,
+    
     // Intro
     introMove: introMove,
     introSay: introSay,
