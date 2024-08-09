@@ -3,7 +3,7 @@ const test = require('tap').test;
 const Tuio = require('../../src/extensions/scratch3_tuio/index.js').Scratch3Tuio;
 const _makeMarkerObject = require('../../src/extensions/scratch3_tuio/index.js')._makeMarkerObject;
 const _initVariables = require('../../src/extensions/scratch3_tuio/index.js')._initVariables;
-const FollowType = require('../../src/extensions/scratch3_tuio/index.js').FollowType;
+const ReachType = require('../../src/extensions/scratch3_tuio/index.js').ReachType;
 
 const {TuioTime, TuioObject} = require('../../../tuio-client');
 
@@ -152,11 +152,11 @@ test('Tuio extension has 3 menus', t => {
     t.end();
 });
 
-test('follow type menu has 3 elements', t => {
+test('reach type menu has 3 elements', t => {
     const infoObject = tuio.getInfo();
     const menus = infoObject.menus;
-    const followTypeMenu = menus.followTypes;
-    t.equal(followTypeMenu.length, 3);
+    const reachTypeMenu = menus.reachTypes;
+    t.equal(reachTypeMenu.length, 3);
     t.end();
 });
 
@@ -256,14 +256,14 @@ test('if a speed is NaN, scratch block will return 0', t => {
     t.end();
 });
 
-test('follow marker position only', t => {
+test('reach marker position only', t => {
     const rt = new Runtime();
     const sprite = new Sprite(null, rt);
     const target = new RenderedTarget(sprite, rt);
     const util = {target};
     addTestMarker(9);
     updateTestMarker(9, {xPos: 0.9, yPos: 0.1, angle: Math.Pi});
-    tuio.followMarkerWithID({MARKER_ID: '9', FOLLOW_TYPE: FollowType.POSITION}, util);
+    tuio.reachMarkerWithID({MARKER_ID: '9', REACH_TYPE: ReachType.POSITION}, util);
     t.equal(target.x, 192);
     t.equal(target.y, 144);
     t.equal(target.direction, 90);
@@ -275,14 +275,14 @@ test('follow marker position only', t => {
 });
 
 
-test('follow marker angle only', t => {
+test('reach marker angle only', t => {
     const rt = new Runtime();
     const sprite = new Sprite(null, rt);
     const target = new RenderedTarget(sprite, rt);
     const util = {target};
     addTestMarker(9);
     updateTestMarker(9, {xPos: 0.9, yPos: 0.1, angle: Math.PI});
-    tuio.followMarkerWithID({MARKER_ID: '9', FOLLOW_TYPE: FollowType.ANGLE}, util);
+    tuio.reachMarkerWithID({MARKER_ID: '9', REACH_TYPE: ReachType.ANGLE}, util);
     t.equal(target.x, 0);
     t.equal(target.y, 0);
     t.equal(target.direction, 180);
@@ -293,14 +293,14 @@ test('follow marker angle only', t => {
     t.end();
 });
 
-test('follow marker position and angle', t => {
+test('reach marker position and angle', t => {
     const rt = new Runtime();
     const sprite = new Sprite(null, rt);
     const target = new RenderedTarget(sprite, rt);
     const util = {target};
     addTestMarker(9);
     updateTestMarker(9, {xPos: 0.9, yPos: 0.1, angle: Math.PI});
-    tuio.followMarkerWithID({MARKER_ID: '9', FOLLOW_TYPE: FollowType.BOTH}, util);
+    tuio.reachMarkerWithID({MARKER_ID: '9', REACH_TYPE: ReachType.BOTH}, util);
     t.equal(target.x, 192);
     t.equal(target.y, 144);
     t.equal(target.direction, 180);

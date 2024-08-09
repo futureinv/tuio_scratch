@@ -19,11 +19,11 @@ const sleepingTime = 600;
 const highestMarkerID = 10;
 
 /**
- * Enum for follow type parameter values.
+ * Enum for reach type parameter values.
  * @readonly
  * @enum {string}
  */
-const FollowType = {
+const ReachType = {
     POSITION: 'position',
     ANGLE: 'angle',
     BOTH: 'position and angle'
@@ -38,16 +38,16 @@ const _translate = function (msg) {
             'tuio.whenMarkerWithIDEnters': 'quando entra il Marker [MARKER_ID]',
             'tuio.whenMarkerWithIDExits': 'quando esce il Marker [MARKER_ID]',
             'tuio.isMarkerWithIDPresent': 'il Marker [MARKER_ID] è presente',
-            'tuio.followMarker': 'segui [FOLLOW_TYPE] del Marker [MARKER_ID]',
+            'tuio.reachMarker': 'raggiungi [REACH_TYPE] del Marker [MARKER_ID]',
             'tuio.getMarkerX': 'coordinata X del Marker [MARKER_ID]',
             'tuio.getMarkerY': 'coordinata Y del Marker [MARKER_ID]',
             'tuio.getMarkerAngle': 'angolo del Marker [MARKER_ID]',
             'tuio.getMarkerXSpeed': 'velocità X del Marker [MARKER_ID]',
             'tuio.getMarkerYSpeed': 'velocità Y del Marker [MARKER_ID]',
             'tuio.getMarkerAngularSpeed': 'velocità angolare del Marker [MARKER_ID]',
-            'tuio.followType.position': '(1) posizione',
-            'tuio.followType.angle': '(2) angolo',
-            'tuio.followType.both': '(3) posizione e angolo',
+            'tuio.reachType.position': '(1) posizione',
+            'tuio.reachType.angle': '(2) angolo',
+            'tuio.reachType.both': '(3) posizione e angolo',
             'tuio.markerID.any': 'qualsiasi'
         }
     };
@@ -63,31 +63,31 @@ const _translate = function (msg) {
      * @returns {array} of the localized text and values for each menu element
      * @private
      */
-const _initFollowTypes = function () {
+const _initReachTypes = function () {
     return [
         {
             text: _translate({
-                id: 'tuio.followType.position',
+                id: 'tuio.reachType.position',
                 default: 'position',
-                description: 'menu item to enable following the postion'
+                description: 'menu item to enable reaching the position'
             }),
-            value: FollowType.POSITION
+            value: ReachType.POSITION
         },
         {
             text: _translate({
-                id: 'tuio.followType.angle',
+                id: 'tuio.reachType.angle',
                 default: 'angle',
-                description: 'menu item to enable following the angle'
+                description: 'menu item to enable reaching the angle'
             }),
-            value: FollowType.ANGLE
+            value: ReachType.ANGLE
         },
         {
             text: _translate({
-                id: 'tuio.followType.both',
+                id: 'tuio.reachType.both',
                 default: 'position and angle',
-                description: 'menu item to enable following both position and angle'
+                description: 'menu item to enable reaching both position and angle'
             }),
-            value: FollowType.BOTH
+            value: ReachType.BOTH
         }
     ];
 };
@@ -310,17 +310,17 @@ class Scratch3Tuio {
                     }
                 },
                 {
-                    opcode: 'followMarkerWithID',
+                    opcode: 'reachMarkerWithID',
                     blockType: BlockType.COMMAND,
                     text: _translate({
-                        id: 'tuio.followMarker',
-                        default: 'follow marker [MARKER_ID] [FOLLOW_TYPE]',
-                        description: 'follow position and/or angle of marker '
+                        id: 'tuio.reachMarker',
+                        default: 'reach marker [MARKER_ID] [REACH_TYPE]',
+                        description: 'reach position and/or angle of marker '
                     }),
                     arguments: {
-                        FOLLOW_TYPE: {
+                        REACH_TYPE: {
                             type: ArgumentType.STRING,
-                            menu: 'followTypes'
+                            menu: 'reachTypes'
                         },
                         MARKER_ID: {
                             type: ArgumentType.STRING,
@@ -423,7 +423,7 @@ class Scratch3Tuio {
             menus: {
                 markerIDMenuWithoutAny: _createMarkerIDArray(false),
                 markerIDMenuWithAny: _createMarkerIDArray(true),
-                followTypes: _initFollowTypes()
+                reachTypes: _initReachTypes()
             }
         };
     }
@@ -509,15 +509,15 @@ class Scratch3Tuio {
         return markerMap.has(markerId);
     }
 
-    followMarkerWithID (args, util) {
+    reachMarkerWithID (args, util) {
         const markerID = Cast.toNumber(args.MARKER_ID);
-        const followType = args.FOLLOW_TYPE;
+        const reachType = args.REACH_TYPE;
         const m = markerMap.get(markerID);
         if (m) {
-            if (followType === FollowType.POSITION || followType === FollowType.BOTH) {
+            if (reachType === ReachType.POSITION || reachType === ReachType.BOTH) {
                 util.target.setXY(this.rescaleX(m.x), this.rescaleY(m.y), false);
             }
-            if (followType === FollowType.ANGLE || followType === FollowType.BOTH) {
+            if (reachType === ReachType.ANGLE || reachType === ReachType.BOTH) {
                 util.target.setDirection(this.rescaleAngle(m.angle));
             }
         }
@@ -579,4 +579,4 @@ class Scratch3Tuio {
     }
 }
 
-module.exports = {Scratch3Tuio, FollowType, _makeMarkerObject, _initVariables};
+module.exports = {Scratch3Tuio, ReachType, _makeMarkerObject, _initVariables};
