@@ -27,6 +27,12 @@ import tuioBounceCondition2 from './steps/tuioBounceCondition2.png';
 import tuioBounceCondition3 from './steps/tuioBounceCondition3.png';
 import tuioBounceTest from './steps/tuioBounceTest.gif';
 
+// Tuio Change
+import tuioChangeMovement from './steps/tuioChangeMovement.jpg';
+import tuioChangeOption1 from './steps/tuioChangeOption1.png';
+import tuioChangeFinal1 from './steps/tuioChangeFinal1.gif';
+import tuioChangeOption2 from './steps/tuioChangeOption2.png';
+import tuioChangeFinal2 from './steps/tuioChangeFinal2.gif';
 
 // Intro
 import introMove from './steps/intro-1-move.en.gif';
@@ -259,6 +265,13 @@ const enImages = {
     tuioBounceCondition2: tuioBounceCondition2,
     tuioBounceCondition3: tuioBounceCondition3,
     tuioBounceTest: tuioBounceTest,
+
+    // Tuio Change
+    tuioChangeMovement,
+    tuioChangeOption1,
+    tuioChangeFinal1,
+    tuioChangeOption2,
+    tuioChangeFinal2,
     
     // Intro
     introMove: introMove,

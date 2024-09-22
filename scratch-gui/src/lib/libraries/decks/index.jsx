@@ -11,7 +11,10 @@ import tuioFollow from './thumbnails/tuioFollow.jpg';
 import tuioPencil from './thumbnails/tuioPencil.jpg';
 
 // Tuio Bounce
-// import tuioBounce from './thumbnails/tuioFollow.jpg';
+import tuioBounce from './thumbnails/tuioBounce.png';
+
+// TuioChange
+import tuioChange from './thumbnails/tuioChange.png';
 
 // Intro
 import libraryIntro from './thumbnails/getting-started.jpg';
@@ -267,7 +270,7 @@ export default {
             />
         ),
         tags: ['help', 'tuio', 'reactivision', 'bounce'],
-        img: libraryIntro,
+        img: tuioBounce,
         steps: [{
             title: (
                 <FormattedMessage
@@ -330,6 +333,70 @@ export default {
         }
         ],
         urlId: 'tuioBounce'
+    },
+    'tuio-change': {
+        name: (
+            <FormattedMessage
+                defaultMessage="Cambio aspetto"
+                description="Name for the 'Cambio aspetto' how-to"
+                id="gui.howtos.tuio-change.name"
+            />
+        ),
+        tags: ['help', 'tuio', 'reactivision', 'change'],
+        img: tuioChange,
+        steps: [{
+            title: (
+                <FormattedMessage
+                    defaultMessage="Il movimento del marker può controllare il valore una componente estetica o sonora."
+                    description="Step name for 'Il movimento del marker' step"
+                    id="gui.howtos.tuio-change.movement"
+                />
+            ),
+            image: 'tuioChangeMovement'
+        }, {
+            title: (
+                <FormattedMessage
+                    defaultMessage="Opzione 1: per cambiare la dimensione dello sprite muovendo il marker"
+                    description="Step name for 'Opzione 1' step"
+                    id="gui.howtos.tuio-change.option1"
+                />
+            ),
+            image: 'tuioChangeOption1'
+        }, {
+            title: (
+                <FormattedMessage
+                    defaultMessage="Risultato finale"
+                    description="Step name for 'Finale 1"
+                    id="gui.howtos.tuio-change.final1"
+                />
+            ),
+            image: 'tuioChangeFinal1'
+        }, {
+            title: (
+                <FormattedMessage
+                    defaultMessage="Opzione 2: per cambiare il colore dello sfondo muovendo il marker"
+                    description="Step name for 'Opzione 2' step"
+                    id="gui.howtos.tuio-change.option2"
+                />
+            ),
+            image: 'tuioChangeOption2'
+        }, {
+            title: (
+                <FormattedMessage
+                    defaultMessage="Risultato finale"
+                    description="Step name for 'Finale 2' step"
+                    id="gui.howtos.tuio-change.final2"
+                />
+            ),
+            image: 'tuioChangeFinal2'
+        }, {
+            deckIds: [
+                'tuio-pencil',
+                'tuio-follow'
+            ]
+        }
+        ],
+        urlId: 'tuioChange'
     },
     'intro-move-sayhello': {
         name: (
