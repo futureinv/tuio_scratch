@@ -1,7 +1,7 @@
 (English version below)
 # Scratch_TUIO
 
-TUIO, come si può leggere sul [sito di riferimento](https://www.tuio.org/), è un protocollo di comunicazione per superfici multitouch. Il protocollo TUIO consente quidi la trasmissione di una descrizione astratta, solo la posizione per i cursori o posizione e direzione per i markers, tramite superfici interattive. 
+TUIO, come si può leggere sul [sito di riferimento](https://www.tuio.org/), è un protocollo di comunicazione per superfici multitouch. Il protocollo TUIO consente la trasmissione di una descrizione astratta, come la posizione o la direzione di cursori o markers, tramite superfici interattive. 
 Questo protocollo codifica i dati da un'applicazione tracker (ad esempio basata sulla visione artificiale) e li invia a qualsiasi applicazione client in grado di decodificare il protocollo.
 
 Scratch_TUIO è un'estensione di Scratch che consente l'utilizzo di dati TUIO tramite un client server, per produrre una nuova modalità di interazioine
@@ -109,3 +109,12 @@ node ../tuio-server/index.js &
 cd ../tuio-simulator && java -jar TuioSimulator.jar
 ```
 Apri il browser a localhost:8601
+
+
+## English version
+
+# Scratch_TUIO
+TUIO is a communication protocol for multitouch surfaces, more information can be read on the [reference site](https://www.tuio.org/) . The TUIO protocol allows the transmission of an abstract description, such as the position or direction of sliders or markers, via interactive surfaces.
+This protocol encodes data from a tracker application (e.g., machine vision-based) and sends it to any client application that can decode the protocol.
+
+Scratch_TUIO is an extension to Scratch that allows TUIO data to be used via a client server, to produce a new mode of interazioine
