@@ -111,7 +111,9 @@ cd ../tuio-simulator && java -jar TuioSimulator.jar
 Apri il browser a localhost:8601
 
 
-English version:
+
+
+# English version:
 
 # Scratch_TUIO
 TUIO is a communication protocol for multitouch surfaces, more information can be read on the [reference site](https://www.tuio.org/) . The TUIO protocol allows the transmission of an abstract description, such as the position or direction of sliders or markers, via interactive surfaces.
@@ -119,4 +121,23 @@ This protocol encodes data from a tracker application (e.g., machine vision-base
 
 Scratch_TUIO is an extension to Scratch that allows TUIO data to be used via a client server, to produce a new mode of interazioine
 
-## requirements
+## technical requirements
+- OS
+  - Windows 8
+  - Windows 10
+  - MacOS
+  - iOS
+- Browser
+  - Chrome
+  - Safari(iOS)
+- server
+- additional software
+  - reactivision
+- simulator
+- webcam
+
+## Installation
+### Windows
+- Download the NodeJS installer from [here](https://nodejs.org/download/release/v18.19.0/node-v18.19.0-x64.msi). Once downloaded, double-click to install: to send the installation forward, always click Next; on the second screen you must select “I accept the terms in the license Agreement.” The installation may take a few minutes and the system may ask you to enter the administrator password.
+Installing Reactivision
+- Download ReacTIVision from [this link](http://prdownloads.sourceforge.net/reactivision/reacTIVision-1.5.1-win64.zip?download). Unzip the Zip.
