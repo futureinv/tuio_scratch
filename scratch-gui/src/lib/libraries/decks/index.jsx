@@ -5,7 +5,7 @@ import {FormattedMessage} from 'react-intl';
 // translated in thumbnails.
 
 // Tuio Ti seguo
-import tuioFollow from './thumbnails/tuioFollow.jpg';
+import tuioFollow from './thumbnails/tuioFollow.png';
 
 // Tuio Matita
 import tuioPencil from './thumbnails/tuioPencil.jpg';
