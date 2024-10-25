@@ -141,3 +141,9 @@ Scratch_TUIO is an extension to Scratch that allows TUIO data to be used via a c
 - Download the NodeJS installer from [here](https://nodejs.org/download/release/v18.19.0/node-v18.19.0-x64.msi). Once downloaded, double-click to install: to send the installation forward, always click Next; on the second screen you must select “I accept the terms in the license Agreement.” The installation may take a few minutes and the system may ask you to enter the administrator password.
 Installing Reactivision
 - Download ReacTIVision from [this link](http://prdownloads.sourceforge.net/reactivision/reacTIVision-1.5.1-win64.zip?download). Unzip the Zip.
+
+
+## How to use the extension
+- In the folder where you downloaded reacTIVision run `reacTIVision.exe`
+- In the folder where you downloaded the extension run `server.bat`
+- Open in your favorite browser the scratch extension, which you can find [here](https://futureinv.github.io/)
