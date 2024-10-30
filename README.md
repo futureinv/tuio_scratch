@@ -147,3 +147,88 @@ Installing Reactivision
 - In the folder where you downloaded reacTIVision run `reacTIVision.exe`
 - In the folder where you downloaded the extension run `server.bat`
 - Open in your favorite browser the scratch extension, which you can find [here](https://futureinv.github.io/)
+
+
+## Examples of use.
+
+
+### Import the extension blocks.
+1. Click the “Add Extension” button in the lower left corner.
+<img src=“https://github.com/futureinv/tuio_scratch/blob/main/readme_img/aggiungi.jpg” width=“300” />
+
+
+2. Select “scratch_TUIO.”
+<img src=“https://github.com/futureinv/tuio_scratch/blob/main/readme_img/estensione.jpg” width=“400” />
+
+3. Now you can use the extension blocks.
+<img src=“https://github.com/futureinv/tuio_scratch/blob/main/readme_img/blocchiTuio.jpg” width=“300” />
+
+4. IMPORTANT
+In order for the extension commands to work, you need to establish a connection with the server. This command must always be present.
+<img src=“https://github.com/futureinv/tuio_scratch/blob/main/readme_img/connect.jpg” width=“300” />
+
+Translated with DeepL.com (free version)
+
+
+### Check the movement of the Sprite. 
+Be sure to select the number of the Marker you are using in the drop-down menu.
+<img src=“https://github.com/futureinv/tuio_scratch/blob/main/readme_img/posizione.jpg” width=“400” />
+
+### Control the rotation of the Sprite. 
+From this drop-down mnenu you can decide whether to control the position or rotation of the SPrite by the Marker.
+
+<img src=“https://github.com/futureinv/tuio_scratch/blob/main/readme_img/rotazione.jpg” width=“300” />
+### Draw a colored line.
+
+<img src=“https://github.com/futureinv/tuio_scratch/blob/main/readme_img/matitaColorata.jpg” width=“400” />
+In case a colored line continues to appear even after deleting the code, click on the “pen on” command in the command list.
+<img src=“https://github.com/futureinv/tuio_scratch/blob/main/readme_img/pulisci.jpg” width=“300” /> 
+
+### Change the background
+<img src=“https://github.com/futureinv/tuio_scratch/blob/main/readme_img/sfondo.jpg” width=“500” />
+
+
+### Creare una pallina che rimabalza
+Applicare il primo codice sullo Sprite controllato dal Marker.
+
+<img src="https://github.com/futureinv/tuio_scratch/blob/main/readme_img/posizione.jpg" width="400" />
+
+Selezionare poi la palla o l'oggetto da far rimbalzare.
+
+
+<img src="https://github.com/futureinv/tuio_scratch/blob/main/readme_img/rimbalzo2.jpg" width="400" />
+
+## Licenza
+Distribuito con licenza BSD 3-Clause "New" or "Revised" License. Vedi il file `LICENSE.txt` per ulteriori informazioni.
+
+## Ringraziamenti
+- [scratch-tuio-sandbox](https://github.com/parsodyl/scratch-tuio-sandbox)
+https://github.com/futureinv/tuio_scratch/assets/153513974/3371d48f-0345-4f25-ae80-228c48e50652
+## Ulteriori informazioni tecniche (per sviluppatori)
+
+### Dipendenze
+- Node-LTS-Hydrogen 18.19.0
+- scratch-gui v. 3.0.5
+- scratch-vm v. 2.0.3
+
+### Prerequisiti
+- Yarn `npm install --global yarn`
+
+## Installazione
+```
+cd tuio-client && yarn install && yarn link
+cd scratch-vm && yarn link tuio-client && yarn install && yarn link
+cd scratch-gui && yarn link scratch-vm && yarn install
+cd tuio-server && yarn install
+```
+
+## Esecuzione
+```
+cd scratch-gui && yarn start &
+node ../tuio-server/index.js &
+cd ../tuio-simulator && java -jar TuioSimulator.jar
+```
+Apri il browser a localhost:8601
+
+
+
