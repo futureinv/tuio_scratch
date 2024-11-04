@@ -29,9 +29,9 @@ Installazione di Reactivision
 - Scarica ReacTIVision da [questo link](http://prdownloads.sourceforge.net/reactivision/reacTIVision-1.5.1-win64.zip?download). Scompatta lo Zip.
 
 ## Come usare l'estensione
-- Nella cartella in cui hai scaricato reacTIVision fai partire `reacTIVision.exe`
-- Nella cartella in cui hai scaricato l'estensione fai partire `release0\server\server.bat`
-- Apri nel tuo browser preferito l'estensione scratch, che puoi trovare [qui on-line](https://futureinv.github.io/), oppure qui, in locale, `release0\estensione\index.html`
+- Nella cartella reacTIVision fai partire `\tuio_scratch-main\tuio_scratch-main\reactivision\win64\reacTIVision.exe`
+- Nella cartella in cui hai scaricato l'estensione fai partire `\tuio_scratch-main\tuio_scratch-main\tuio-server\server.bat`
+- Apri nel tuo browser preferito l'estensione scratch, che puoi trovare [qui on-line](https://futureinv.github.io/), oppure qui, in locale, `index.html`
 
 ## Esempi d'uso
 
