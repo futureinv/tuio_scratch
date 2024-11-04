@@ -30,8 +30,8 @@ Installazione di Reactivision
 
 ## Come usare l'estensione
 - Nella cartella in cui hai scaricato reacTIVision fai partire `reacTIVision.exe`
-- Nella cartella in cui hai scaricato l'estensione fai partire `server.bat`
-- Apri nel tuo browser preferito l'estensione scratch, che puoi trovare [qui](https://futureinv.github.io/)
+- Nella cartella in cui hai scaricato l'estensione fai partire `release0\server\server.bat`
+- Apri nel tuo browser preferito l'estensione scratch, che puoi trovare [qui on-line](https://futureinv.github.io/), oppure qui, in locale, `release0\estensione\index.html`
 
 ## Esempi d'uso
 
