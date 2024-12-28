@@ -24,7 +24,7 @@ const builtinExtensions = {
     makeymakey: () => require('../extensions/scratch3_makeymakey'),
     boost: () => require('../extensions/scratch3_boost'),
     gdxfor: () => require('../extensions/scratch3_gdx_for'),
-    tuio: () => require('../extensions/scratch3_tuio').Scratch3Tuio
+    tuio_markers: () => require('../extensions/scratch3_tuio_markers').Scratch3TuioMarkers
 };
 
 /**

@@ -1,13 +1,13 @@
 const test = require('tap').test;
 // const TuioClient = require('../../../tuio-client').TuioClient;
-const Tuio = require('../../src/extensions/scratch3_tuio/index.js').Scratch3Tuio;
-const _makeMarkerObject = require('../../src/extensions/scratch3_tuio/index.js')._makeMarkerObject;
-const _initVariables = require('../../src/extensions/scratch3_tuio/index.js')._initVariables;
-const ReachType = require('../../src/extensions/scratch3_tuio/index.js').ReachType;
+const Tuio = require('../../src/extensions/scratch3_tuio_markers/index.js').Scratch3TuioMarkers;
+const _makeMarkerObject = require('../../src/extensions/scratch3_tuio_markers/index.js')._makeMarkerObject;
+const _initVariables = require('../../src/extensions/scratch3_tuio_markers/index.js')._initVariables;
+const ReachType = require('../../src/extensions/scratch3_tuio_markers/index.js').ReachType;
 
-const {TuioTime, TuioObject} = require('../../../tuio-client');
+const {TuioTime, TuioObject} = require('tuio-client');
 
-const Runtime = require('../../src/engine/runtime');
+const Runtime = require('../../src/engine/runtime.js');
 const Sprite = require('../../src/sprites/sprite.js');
 const RenderedTarget = require('../../src/sprites/rendered-target.js');
 const formatMessage = require('format-message');

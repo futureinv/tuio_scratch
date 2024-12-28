@@ -46,28 +46,28 @@ import gdxforInsetIconURL from './gdxfor/gdxfor-small.svg';
 import gdxforConnectionIconURL from './gdxfor/gdxfor-illustration.svg';
 import gdxforConnectionSmallIconURL from './gdxfor/gdxfor-small.svg';
 
-import tuioIconURL from './tuio/tuio.png';
-import tuioInsetIconURL from './tuio/tuio-inset.svg';
+import tuioMarkersIconURL from './tuio_markers/tuio.png';
+import tuioMarkersInsetIconURL from './tuio_markers/tuio-inset.svg';
 
 export default [
     
     {
         name: (
             <FormattedMessage
-                defaultMessage="Tuio"
-                description="Name for the 'Tuio' extension"
-                id="gui.extension.tuio.name"
+                defaultMessage="Tuio Markers"
+                description="Name for the 'Tuio Markers' extension"
+                id="gui.extension.tuio-markers.name"
             />
         ),
-        extensionId: 'tuio',
+        extensionId: 'tuio_markers',
         collaborator: 'Museo della Scienza e della Tecnica Leonardo Da Vinci',
-        iconURL: tuioIconURL,
-        insetIconURL: tuioInsetIconURL,
+        iconURL: tuioMarkersIconURL,
+        insetIconURL: tuioMarkersInsetIconURL,
         description: (
             <FormattedMessage
                 defaultMessage="Find markers in the room."
                 description="Description for the 'Tuio' extension"
-                id="gui.extension.tuio.description"
+                id="gui.extension.tuio-markers.description"
             />
         ),
         featured: true,

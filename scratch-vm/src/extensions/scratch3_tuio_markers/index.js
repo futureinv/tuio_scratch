@@ -229,7 +229,7 @@ client.on('removeTuioObject', marker => {
 });
 
 
-class Scratch3Tuio {
+class Scratch3TuioMarkers {
 
     constructor (runtime) {
         this.runtime = runtime;
@@ -579,4 +579,4 @@ class Scratch3Tuio {
     }
 }
 
-module.exports = {Scratch3Tuio, ReachType, _makeMarkerObject, _initVariables};
+module.exports = {Scratch3TuioMarkers, ReachType, _makeMarkerObject, _initVariables};
