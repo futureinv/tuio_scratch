@@ -251,8 +251,8 @@ class Scratch3TuioMarkers {
 
     getInfo () {
         return {
-            id: 'tuio',
-            name: 'Tuio',
+            id: 'tuiomarkers',
+            name: 'Tuio Markers',
             blocks: [
                 {
                     opcode: 'connect',

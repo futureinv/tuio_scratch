@@ -49,6 +49,9 @@ import gdxforConnectionSmallIconURL from './gdxfor/gdxfor-small.svg';
 import tuioMarkersIconURL from './tuio_markers/tuio.png';
 import tuioMarkersInsetIconURL from './tuio_markers/tuio-inset.svg';
 
+import tuioCursorsIconURL from './tuio_cursors/tuio-sandbox-illustration.png';
+import tuioCursorsInsetIconURL from './tuio_cursors/tuio-sandbox-small.png';
+
 export default [
     
     {
@@ -59,15 +62,37 @@ export default [
                 id="gui.extension.tuio-markers.name"
             />
         ),
-        extensionId: 'tuio_markers',
+        extensionId: 'tuiomarkers',
         collaborator: 'Museo della Scienza e della Tecnica Leonardo Da Vinci',
         iconURL: tuioMarkersIconURL,
         insetIconURL: tuioMarkersInsetIconURL,
         description: (
             <FormattedMessage
-                defaultMessage="Find markers in the room."
-                description="Description for the 'Tuio' extension"
+                defaultMessage="Find markers in the room"
+                description="Description for the 'Tuio Markers' extension"
                 id="gui.extension.tuio-markers.description"
+            />
+        ),
+        featured: true,
+        disabled: false
+    },
+    {
+        name: (
+            <FormattedMessage
+                defaultMessage="Tuio Cursors"
+                description="Name for the 'Tuio Cursors' extension"
+                id="gui.extension.tuio-cursors.name"
+            />
+        ),
+        extensionId: 'tuiocursors',
+        collaborator: 'Museo della Scienza e della Tecnica Leonardo Da Vinci',
+        iconURL: tuioCursorsIconURL,
+        insetIconURL: tuioCursorsInsetIconURL,
+        description: (
+            <FormattedMessage
+                defaultMessage="Trace cursors in the room"
+                description="Description for the 'Tuio Cursors' extension"
+                id="gui.extension.tuio-cursors.description"
             />
         ),
         featured: true,
