@@ -25,7 +25,7 @@ const builtinExtensions = {
     boost: () => require('../extensions/scratch3_boost'),
     gdxfor: () => require('../extensions/scratch3_gdx_for'),
     tuiomarkers: () => require('../extensions/scratch3_tuio_markers').Scratch3TuioMarkers,
-    tuiocursors: () => require('../extensions/scratch3_tuio_cursors')
+    tuiocursors: () => require('../extensions/scratch3_tuio_cursors').Scratch3TuioCursors
 };
 
 /**

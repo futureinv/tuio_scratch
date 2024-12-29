@@ -10,5 +10,6 @@ Tuio.Time = require('tuio-extended/src/TuioTime');
 const TuioClient = Tuio.Client;
 const TuioTime = Tuio.Time;
 const TuioObject = Tuio.Object;
+const TuioCursor = Tuio.Cursor;
 
-module.exports = {TuioClient, TuioTime, TuioObject};
+module.exports = {TuioClient, TuioTime, TuioObject, TuioCursor};

@@ -1,28 +1,56 @@
 const ArgumentType = require('../../extension-support/argument-type');
 const BlockType = require('../../extension-support/block-type');
+const TargetType = require('../../extension-support/target-type');
 const Cast = require('../../util/cast');
 const log = require('../../util/log');
+const formatMessage = require('format-message');
 
 const {TuioClient} = require('tuio-client');
 
 const cursorsEntered = new Array();
-
 const cursorsExited = new Array();
-
 const cursorMap = new Map();
-
 let lastCursorEntered = -1;
-
 let lastCursorExited = -1;
-
 let isConnected = false;
-
 let aCursorHasEntered = false;
-
 let aCursorHasExited = false;
 
-
 const client = new TuioClient({host: 'ws://localhost:8080'});
+
+const _translate = function (msg) {
+    const translations = {
+        it: {
+            'tuioCursors.connect': 'connetti a TUIO',
+            'tuioCursors.whenCursorWithIDEnters': 'quando entra il Cursore [CURSOR_ID]',
+            'tuioCursors.whenCursorWithIDExits': 'quando esce il Cursore [CURSOR_ID]',
+            'tuioCursors.isCursorWithIDPresent': 'il Cursore [CURSOR_ID] è presente',
+            'tuioCursors.reachCursor': 'raggiungi il Cursore [CURSOR_ID]',
+            'tuioCursors.getCursorX': 'coordinata X del Cursore [CURSOR_ID]',
+            'tuioCursors.getCursorY': 'coordinata Y del Cursore [CURSOR_ID]',
+            'tuioCursors.getCursorXSpeed': 'velocità X del Cursore [CURSOR_ID]',
+            'tuioCursors.getCursorYSpeed': 'velocità Y del Cursore [CURSOR_ID]'
+        }
+    };
+    const locale = formatMessage.setup().locale || 'en';
+    if (locale in translations) {
+        return translations[locale][msg.id] || msg.default;
+    }
+    return msg.default;
+};
+
+const _initVariables = function () {
+    aCursorHasEntered = false;
+    aCursorHasExited = false;
+    cursorsEntered.length = 0;
+    cursorsExited.length = 0;
+    cursorMap.clear();
+};
+
+const _sanitizeNumberValue = function (value) {
+    if (typeof value !== 'number' || Number.isNaN(value)) value = 0;
+    return value;
+};
 
 client.on('connect', () => {
     isConnected = true;
@@ -32,8 +60,17 @@ client.on('connect', () => {
 const _makeCursorObject = function (cursor) {
     const x = cursor.xPos;
     const y = cursor.yPos;
+    const xSpeed = cursor.xSpeed;
+    const ySpeed = cursor.ySpeed;
     const id = cursor.cursorId;
-    return {id: id, x: x, y: y};
+    return {
+        id: id,
+        x: x,
+        y: y,
+        xSpeed:
+        xSpeed,
+        ySpeed: ySpeed
+    };
 };
 
 client.on('addTuioCursor', cursor => {
@@ -42,7 +79,7 @@ client.on('addTuioCursor', cursor => {
     lastCursorEntered = id;
     cursorsEntered.push(id);
     setTimeout(() => {
-        cursorsEntered.pop();
+        cursorsEntered.shift();
     }, 400);
     aCursorHasEntered = true;
     setTimeout(() => {
@@ -59,7 +96,7 @@ client.on('removeTuioCursor', cursor => {
     lastCursorExited = id;
     cursorsExited.push(id);
     setTimeout(() => {
-        cursorsExited.pop();
+        cursorsExited.shift();
     }, 400);
     aCursorHasExited = true;
     setTimeout(() => {
@@ -70,6 +107,7 @@ client.on('removeTuioCursor', cursor => {
 class Scratch3TuioCursors {
     constructor (runtime) {
         this.runtime = runtime;
+        this.client = client;
 
         /**
          * A toggle that alternates true and false each frame, so that an
@@ -79,9 +117,9 @@ class Scratch3TuioCursors {
         this.frameToggle = false;
 
         // Set an interval that toggles the frameToggle every frame.
-        setInterval(() => {
-            this.frameToggle = !this.frameToggle;
-        }, this.runtime.currentStepTime);
+        // setInterval(() => {
+        //     this.frameToggle = !this.frameToggle;
+        // }, this.runtime.currentStepTime);
     }
 
     getInfo () {
@@ -96,57 +134,73 @@ class Scratch3TuioCursors {
                     arguments: {}
                 },
                 {
-                    opcode: 'getLastCursorEnteredId',
+                    opcode: 'getLastCursorEnteredID',
                     blockType: BlockType.REPORTER,
                     text: 'last cursor entered',
                     arguments: {}
                 },
                 {
-                    opcode: 'getLastCursorExitedId',
+                    opcode: 'getLastCursorExitedID',
                     blockType: BlockType.REPORTER,
                     text: 'last cursor exited',
                     arguments: {}
                 },
                 {
-                    opcode: 'whenACursorEntered',
+                    opcode: 'whenAnyCursorEnters',
                     blockType: BlockType.HAT,
                     text: 'when a cursor entered',
                     arguments: {}
                 },
                 {
-                    opcode: 'whenACursorExited',
+                    opcode: 'whenAnyCursorExits',
                     blockType: BlockType.HAT,
                     text: 'when a cursor exited',
                     arguments: {}
                 },
                 {
-                    opcode: 'whenCursorWithIdEntered',
+                    opcode: 'whenCursorWithIDEnters',
                     blockType: BlockType.HAT,
-                    text: 'when cursor [CURSOR_PARAM] entered',
+                    text: 'when cursor [CURSOR_ID] entered',
                     arguments: {
-                        CURSOR_PARAM: {
+                        CURSOR_ID: {
                             type: ArgumentType.NUMBER,
                             defaultValue: 0
                         }
                     }
                 },
                 {
-                    opcode: 'whenCursorWithIdExited',
+                    opcode: 'whenCursorWithIDExits',
                     blockType: BlockType.HAT,
-                    text: 'when cursor [CURSOR_PARAM] exited',
+                    text: 'when cursor [CURSOR_ID] exited',
                     arguments: {
-                        CURSOR_PARAM: {
+                        CURSOR_ID: {
                             type: ArgumentType.NUMBER,
                             defaultValue: 0
                         }
                     }
+                },
+                {
+                    opcode: 'reachCursorWithID',
+                    blockType: BlockType.COMMAND,
+                    text: _translate({
+                        id: 'tuioCursors.reachCursor',
+                        default: 'reach cursor [CURSOR_ID]',
+                        description: 'reach position of cursor '
+                    }),
+                    arguments: {
+                        CURSOR_ID: {
+                            type: ArgumentType.NUMBER,
+                            defaultValue: 0
+                        }
+                    },
+                    filter: [TargetType.SPRITE]
                 },
                 {
                     opcode: 'getCursorX',
                     blockType: BlockType.REPORTER,
-                    text: 'cursor [CURSOR_PARAM] x',
+                    text: 'cursor [CURSOR_ID] x',
                     arguments: {
-                        CURSOR_PARAM: {
+                        CURSOR_ID: {
                             type: ArgumentType.NUMBER,
                             defaultValue: 0
                         }
@@ -155,9 +209,31 @@ class Scratch3TuioCursors {
                 {
                     opcode: 'getCursorY',
                     blockType: BlockType.REPORTER,
-                    text: 'cursor [CURSOR_PARAM] y',
+                    text: 'cursor [CURSOR_ID] y',
                     arguments: {
-                        CURSOR_PARAM: {
+                        CURSOR_ID: {
+                            type: ArgumentType.NUMBER,
+                            defaultValue: 0
+                        }
+                    }
+                },
+                {
+                    opcode: 'getCursorXSpeed',
+                    blockType: BlockType.REPORTER,
+                    text: 'cursor [CURSOR_ID] x speed',
+                    arguments: {
+                        CURSOR_ID: {
+                            type: ArgumentType.NUMBER,
+                            defaultValue: 0
+                        }
+                    }
+                },
+                {
+                    opcode: 'getCursorYSpeed',
+                    blockType: BlockType.REPORTER,
+                    text: 'cursor [CURSOR_ID] y speed',
+                    arguments: {
+                        CURSOR_ID: {
                             type: ArgumentType.NUMBER,
                             defaultValue: 0
                         }
@@ -165,10 +241,10 @@ class Scratch3TuioCursors {
                 },
                 {
                     opcode: 'isCursorPresent',
-                    text: 'cursor [CURSOR_PARAM] present?',
+                    text: 'cursor [CURSOR_ID] present?',
                     blockType: BlockType.BOOLEAN,
                     arguments: {
-                        CURSOR_PARAM: {
+                        CURSOR_ID: {
                             type: ArgumentType.NUMBER,
                             defaultValue: 0
                         }
@@ -204,7 +280,21 @@ class Scratch3TuioCursors {
         client.connect();
     }
 
-    whenACursorEntered () {
+    isConnected () {
+        return isConnected;
+    }
+
+    rescaleX (rawX) {
+        const rescaledX = (rawX - 0.5) * 480;
+        return rescaledX;
+    }
+
+    rescaleY (rawY) {
+        const rescaledY = (0.5 - rawY) * 360;
+        return rescaledY;
+    }
+
+    whenAnyCursorEnters () {
         if (aCursorHasEntered) {
             aCursorHasEntered = false;
             return true;
@@ -212,7 +302,7 @@ class Scratch3TuioCursors {
         return false;
     }
 
-    whenACursorExited () {
+    whenAnyCursorExits () {
         if (aCursorHasExited) {
             aCursorHasExited = false;
             return true;
@@ -220,11 +310,11 @@ class Scratch3TuioCursors {
         return false;
     }
 
-    whenCursorWithIdEntered (args) {
+    whenCursorWithIDEnters (args) {
         const isNotEmpty = cursorsEntered.length > 0;
         if (isNotEmpty) {
             const id = cursorsEntered[0];
-            const cursorId = Cast.toNumber(args.CURSOR_PARAM);
+            const cursorId = Cast.toNumber(args.CURSOR_ID);
             if (id === cursorId) {
                 cursorsEntered.pop();
                 return true;
@@ -233,11 +323,11 @@ class Scratch3TuioCursors {
         return false;
     }
 
-    whenCursorWithIdExited (args) {
+    whenCursorWithIDExits (args) {
         const isNotEmpty = cursorsExited.length > 0;
         if (isNotEmpty) {
             const id = cursorsExited[0];
-            const cursorId = Cast.toNumber(args.CURSOR_PARAM);
+            const cursorId = Cast.toNumber(args.CURSOR_ID);
             if (id === cursorId) {
                 cursorsExited.pop();
                 return true;
@@ -246,16 +336,25 @@ class Scratch3TuioCursors {
         return false;
     }
 
-    getLastCursorEnteredId () {
+    getLastCursorEnteredID () {
         return lastCursorEntered;
     }
 
-    getLastCursorExitedId () {
+    getLastCursorExitedID () {
         return lastCursorExited;
     }
 
+    reachCursorWithID (args, util) {
+        const cursorID = Cast.toNumber(args.CURSOR_ID);
+        const c = cursorMap.get(cursorID);
+        if (c) {
+            util.target.setXY(this.rescaleX(c.x), this.rescaleY(c.y), false);
+        }
+        return;
+    }
+
     getCursorX (args) {
-        const cursorId = Cast.toNumber(args.CURSOR_PARAM);
+        const cursorId = Cast.toNumber(args.CURSOR_ID);
         const c = cursorMap.get(cursorId);
         if (c) {
             return c.x;
@@ -264,7 +363,7 @@ class Scratch3TuioCursors {
     }
 
     getCursorY (args) {
-        const cursorId = Cast.toNumber(args.CURSOR_PARAM);
+        const cursorId = Cast.toNumber(args.CURSOR_ID);
         const c = cursorMap.get(cursorId);
         if (c) {
             return c.y;
@@ -272,8 +371,26 @@ class Scratch3TuioCursors {
         return 0;
     }
 
+    getCursorXSpeed (args) {
+        const cursorId = Cast.toNumber(args.CURSOR_ID);
+        const c = cursorMap.get(cursorId);
+        if (c) {
+            return c.xSpeed;
+        }
+        return 0;
+    }
+
+    getCursorYSpeed (args) {
+        const cursorId = Cast.toNumber(args.CURSOR_ID);
+        const c = cursorMap.get(cursorId);
+        if (c) {
+            return c.ySpeed;
+        }
+        return 0;
+    }
+
     isCursorPresent (args) {
-        const cursorId = Cast.toNumber(args.CURSOR_PARAM);
+        const cursorId = Cast.toNumber(args.CURSOR_ID);
         return cursorMap.has(cursorId);
     }
 
@@ -292,4 +409,4 @@ class Scratch3TuioCursors {
     }
 }
 
-module.exports = Scratch3TuioCursors;
+module.exports = {Scratch3TuioCursors, _makeCursorObject, _initVariables};
