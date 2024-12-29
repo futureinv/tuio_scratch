@@ -3,7 +3,7 @@ const test = require('tap').test;
 const Tuio = require('../../src/extensions/scratch3_tuio_cursors/index.js').Scratch3TuioCursors;
 const _makeCursorObject = require('../../src/extensions/scratch3_tuio_cursors/index.js')._makeCursorObject;
 const _initVariables = require('../../src/extensions/scratch3_tuio_cursors/index.js')._initVariables;
-
+const log = require('../../src/util/log');
 const {TuioTime, TuioCursor} = require('tuio-client');
 
 const Runtime = require('../../src/engine/runtime.js');
@@ -13,10 +13,9 @@ const formatMessage = require('format-message');
 
 const tuio = new Tuio();
 
-const addTestCursor = function (cursorID) {
+const addTestCursor = function () {
     const cursor = new TuioCursor({
         si: 1,
-        ci: cursorID,
         xp: 0,
         yp: 0
     });
@@ -73,10 +72,10 @@ test('cursor object contains all data', t => {
 });
 
 test('adding a cursor sets the corresponding hat block to true', t => {
-    t.notOk(tuio.whenCursorWithIDEnters({CURSOR_ID: 2}));
-    addTestCursor(2);
-    t.ok(tuio.whenCursorWithIDEnters({CURSOR_ID: 2}));
-    removeTestCursor(2, true);
+    t.notOk(tuio.whenCursorWithIDEnters({CURSOR_ID: 0}));
+    addTestCursor();
+    t.ok(tuio.whenCursorWithIDEnters({CURSOR_ID: 0}));
+    removeTestCursor(0, true);
     t.teardown(() => {
         _initVariables();
     });
@@ -86,10 +85,10 @@ test('adding a cursor sets the corresponding hat block to true', t => {
 test('hat block with any fires for any cursor', t => {
     t.notOk(tuio.whenAnyCursorEnters());
     t.notOk(tuio.whenAnyCursorExits());
-    addTestCursor(3);
+    addTestCursor();
     t.ok(tuio.whenAnyCursorEnters());
     t.notOk(tuio.whenAnyCursorExits());
-    removeTestCursor(3, true);
+    removeTestCursor(0, true);
     t.ok(tuio.whenAnyCursorExits());
     t.teardown(() => {
         _initVariables();
@@ -98,10 +97,10 @@ test('hat block with any fires for any cursor', t => {
 });
 
 test('removing a cursor sets the corresponding hat block to true', t => {
-    addTestCursor(5);
-    t.notOk(tuio.whenCursorWithIDExits({CURSOR_ID: 5}));
-    removeTestCursor(5, true);
-    t.ok(tuio.whenCursorWithIDExits({CURSOR_ID: 5}));
+    addTestCursor();
+    t.notOk(tuio.whenCursorWithIDExits({CURSOR_ID: 0}));
+    removeTestCursor(0, true);
+    t.ok(tuio.whenCursorWithIDExits({CURSOR_ID: 0}));
     t.teardown(() => {
         _initVariables();
     });
@@ -109,10 +108,10 @@ test('removing a cursor sets the corresponding hat block to true', t => {
 });
 
 test('adding a cursor makes it present for Scratch', t => {
-    t.notOk(tuio.isCursorPresent({CURSOR_ID: 1}));
-    addTestCursor(1);
-    t.ok(tuio.isCursorPresent({CURSOR_ID: 1}));
-    removeTestCursor(1, true);
+    t.notOk(tuio.isCursorPresent({CURSOR_ID: 0}));
+    addTestCursor();
+    t.ok(tuio.isCursorPresent({CURSOR_ID: 0}));
+    removeTestCursor(0, true);
     t.teardown(() => {
         _initVariables();
     });
@@ -120,36 +119,36 @@ test('adding a cursor makes it present for Scratch', t => {
 });
 
 test('removing a cursor makes it absent for Scratch', t => {
-    addTestCursor(1);
-    t.ok(tuio.isCursorPresent({CURSOR_ID: 1}));
-    removeTestCursor(1, true);
-    t.notOk(tuio.isCursorPresent({CURSOR_ID: 1}));
+    addTestCursor();
+    t.ok(tuio.isCursorPresent({CURSOR_ID: 0}));
+    removeTestCursor(0, true);
+    t.notOk(tuio.isCursorPresent({CURSOR_ID: 0}));
     t.teardown(() => {
         _initVariables();
     });
     t.end();
 });
 
-test('Tuio extension has 11 blocks', t => {
+test('Tuio extension has 15 blocks', t => {
     const infoObject = tuio.getInfo();
     const blocks = infoObject.blocks;
-    t.equal(blocks.length, 11);
+    t.equal(blocks.length, 15);
     t.end();
 });
 
-test('Tuio extension has 3 menus', t => {
+test('Tuio extension has no menus', t => {
     const infoObject = tuio.getInfo();
     const menus = infoObject.menus;
-    t.equal(Object.keys(menus).length, 3);
+    t.equal(Object.keys(menus).length, 0);
     t.end();
 });
 
 test('coordinates getters returns correct values for existing cursors', t => {
-    addTestCursor(9);
-    updateTestCursor(9, {xPos: 0.9, yPos: 0.1});
-    t.equal(tuio.getCursorX({CURSOR_ID: 9}), 0.9);
-    t.equal(tuio.getCursorY({CURSOR_ID: 9}), 0.1);
-    removeTestCursor(9, true);
+    addTestCursor();
+    updateTestCursor(0, {xPos: 0.9, yPos: 0.1});
+    t.equal(tuio.getCursorX({CURSOR_ID: 0}), 0.9);
+    t.equal(tuio.getCursorY({CURSOR_ID: 0}), 0.1);
+    removeTestCursor(0, true);
     t.teardown(() => {
         _initVariables();
     });
@@ -163,11 +162,11 @@ test('coordinates getters returns zero values for missing cursors', t => {
 });
 
 test('speed getters returns correct values for existing cursors', t => {
-    addTestCursor(9);
-    updateTestCursor(9, {xSpeed: 0.7, ySpeed: 0.3});
-    t.equal(tuio.getCursorXSpeed({CURSOR_ID: 9}), 0.7);
-    t.equal(tuio.getCursorYSpeed({CURSOR_ID: 9}), 0.3);
-    removeTestCursor(9, true);
+    addTestCursor();
+    updateTestCursor(0, {xSpeed: 0.7, ySpeed: 0.3});
+    t.equal(tuio.getCursorXSpeed({CURSOR_ID: 0}), 0.7);
+    t.equal(tuio.getCursorYSpeed({CURSOR_ID: 0}), 0.3);
+    removeTestCursor(0, true);
     t.teardown(() => {
         _initVariables();
     });
@@ -207,10 +206,10 @@ test('rescaling of Y coordinates works correctly', t => {
 });
 
 test('if a speed is NaN, scratch block will return 0', t => {
-    addTestCursor(15);
-    updateTestCursor(15, {xSpeed: NaN});
-    t.equal(tuio.getCursorXSpeed({CURSOR_ID: 15}), 0);
-    removeTestCursor(15, true);
+    addTestCursor();
+    updateTestCursor(0, {xSpeed: NaN});
+    t.equal(tuio.getCursorXSpeed({CURSOR_ID: 0}), 0);
+    removeTestCursor(0, true);
     t.end();
 });
 
@@ -219,66 +218,25 @@ test('reach cursor position only', t => {
     const sprite = new Sprite(null, rt);
     const target = new RenderedTarget(sprite, rt);
     const util = {target};
-    addTestCursor(9);
-    updateTestCursor(9, {xPos: 0.9, yPos: 0.1});
-    tuio.reachCursorWithID({CURSOR_ID: 9}, util);
+    addTestCursor();
+    updateTestCursor(0, {xPos: 0.9, yPos: 0.1});
+    tuio.reachCursorWithID({CURSOR_ID: 0}, util);
     t.equal(target.x, 192);
     t.equal(target.y, 144);
-    removeTestCursor(9, true);
+    removeTestCursor(0, true);
     t.teardown(() => {
         _initVariables();
     });
     t.end();
 });
 
-// tests on sleeping
-
-test('removing a cursor make it sleeping', t => {
-    addTestCursor(1);
-    t.ok(tuio.isCursorPresent({CURSOR_ID: 1}));
-    removeTestCursor(1, false);
-    t.ok(tuio.isCursorPresent({CURSOR_ID: 1}));
-    t.notOk(tuio.whenCursorWithIDExits({CURSOR_ID: 1}));
-    setTimeout(() => {
-        t.ok(tuio.whenCursorWithIDExits({CURSOR_ID: 1}));
-    }, 800);
-
-    removeTestCursor(1, true);
-    t.teardown(() => {
-        _initVariables();
-    });
-    setTimeout(() => {
-        t.end();
-    }, 1500);
-});
-
-// Questo test fa un po' pena, perchè ho bisogno di simulare un po' di tempo tra una cosa e l'altra
-test('entering while sleeping', t => {
-    addTestCursor(10);
-    removeTestCursor(10, false);
-    setTimeout(() => {
-        addTestCursor(10);
-    }, 500);
-    setTimeout(() => {
-        t.notOk(tuio.whenCursorWithIDEnters({CURSOR_ID: 10}));
-        removeTestCursor(10, true);
-    }, 550);
-  
-    setTimeout(() => {
-        t.teardown(() => {
-            _initVariables();
-        });
-        t.end();
-    }, 1500);
-});
-
 test('bug: the push/pop bug generating the critical run is avoided', t => {
-    addTestCursor(3);
-    addTestCursor(4);
-    t.ok(tuio.whenCursorWithIDEnters({CURSOR_ID: 3}));
-    t.ok(tuio.whenCursorWithIDEnters({CURSOR_ID: 4}));
-    removeTestCursor(3, true);
-    removeTestCursor(4, true);
+    addTestCursor();
+    addTestCursor();
+    t.ok(tuio.whenCursorWithIDEnters({CURSOR_ID: 0}));
+    t.ok(tuio.whenCursorWithIDEnters({CURSOR_ID: 1}));
+    removeTestCursor(0, true);
+    removeTestCursor(1, true);
     t.teardown(() => {
         _initVariables();
     });
@@ -303,10 +261,10 @@ test('bug: the push/pop bug generating the critical run is avoided', t => {
 */
 
 test('bug: hat block with id removes the value in the array for the hat with any', t => {
-    addTestCursor(3);
-    t.ok(tuio.whenCursorWithIDEnters({CURSOR_ID: 3}));
+    addTestCursor();
+    t.ok(tuio.whenCursorWithIDEnters({CURSOR_ID: 0}));
     t.ok(tuio.whenAnyCursorEnters());
-    removeTestCursor(3, true);
+    removeTestCursor(0, true);
     t.teardown(() => {
         _initVariables();
     });

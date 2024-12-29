@@ -67,8 +67,7 @@ const _makeCursorObject = function (cursor) {
         id: id,
         x: x,
         y: y,
-        xSpeed:
-        xSpeed,
+        xSpeed: xSpeed,
         ySpeed: ySpeed
     };
 };
@@ -86,10 +85,12 @@ client.on('addTuioCursor', cursor => {
         aCursorHasEntered = false;
     }, 1000);
 });
+
 client.on('updateTuioCursor', cursor => {
     const id = cursor.cursorId;
     cursorMap.set(id, _makeCursorObject(cursor));
 });
+
 client.on('removeTuioCursor', cursor => {
     const id = cursor.cursorId;
     cursorMap.delete(id);
@@ -130,7 +131,11 @@ class Scratch3TuioCursors {
                 {
                     opcode: 'connect',
                     blockType: BlockType.COMMAND,
-                    text: 'connect TUIO',
+                    text: _translate({
+                        id: 'tuioCursors.connectXX',
+                        default: 'connect TUIO',
+                        description: 'connect to TUIO server'
+                    }),
                     arguments: {}
                 },
                 {
@@ -316,7 +321,7 @@ class Scratch3TuioCursors {
             const id = cursorsEntered[0];
             const cursorId = Cast.toNumber(args.CURSOR_ID);
             if (id === cursorId) {
-                cursorsEntered.pop();
+                cursorsEntered.shift();
                 return true;
             }
         }
@@ -329,7 +334,7 @@ class Scratch3TuioCursors {
             const id = cursorsExited[0];
             const cursorId = Cast.toNumber(args.CURSOR_ID);
             if (id === cursorId) {
-                cursorsExited.pop();
+                cursorsExited.shift();
                 return true;
             }
         }
@@ -357,7 +362,7 @@ class Scratch3TuioCursors {
         const cursorId = Cast.toNumber(args.CURSOR_ID);
         const c = cursorMap.get(cursorId);
         if (c) {
-            return c.x;
+            return _sanitizeNumberValue(c.x);
         }
         return 0;
     }
@@ -366,7 +371,7 @@ class Scratch3TuioCursors {
         const cursorId = Cast.toNumber(args.CURSOR_ID);
         const c = cursorMap.get(cursorId);
         if (c) {
-            return c.y;
+            return _sanitizeNumberValue(c.y);
         }
         return 0;
     }
@@ -375,7 +380,7 @@ class Scratch3TuioCursors {
         const cursorId = Cast.toNumber(args.CURSOR_ID);
         const c = cursorMap.get(cursorId);
         if (c) {
-            return c.xSpeed;
+            return _sanitizeNumberValue(c.xSpeed);
         }
         return 0;
     }
@@ -384,7 +389,7 @@ class Scratch3TuioCursors {
         const cursorId = Cast.toNumber(args.CURSOR_ID);
         const c = cursorMap.get(cursorId);
         if (c) {
-            return c.ySpeed;
+            return _sanitizeNumberValue(c.ySpeed);
         }
         return 0;
     }
