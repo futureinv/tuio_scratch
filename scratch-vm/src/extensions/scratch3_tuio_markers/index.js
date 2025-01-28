@@ -34,21 +34,21 @@ const AnyMarker = 'any';
 const _translate = function (msg) {
     const translations = {
         it: {
-            'tuio.connect': 'connetti a TUIO',
-            'tuio.whenMarkerWithIDEnters': 'quando entra il Marker [MARKER_ID]',
-            'tuio.whenMarkerWithIDExits': 'quando esce il Marker [MARKER_ID]',
-            'tuio.isMarkerWithIDPresent': 'il Marker [MARKER_ID] è presente',
-            'tuio.reachMarker': 'raggiungi [REACH_TYPE] del Marker [MARKER_ID]',
-            'tuio.getMarkerX': 'coordinata X del Marker [MARKER_ID]',
-            'tuio.getMarkerY': 'coordinata Y del Marker [MARKER_ID]',
-            'tuio.getMarkerAngle': 'angolo del Marker [MARKER_ID]',
-            'tuio.getMarkerXSpeed': 'velocità X del Marker [MARKER_ID]',
-            'tuio.getMarkerYSpeed': 'velocità Y del Marker [MARKER_ID]',
-            'tuio.getMarkerAngularSpeed': 'velocità angolare del Marker [MARKER_ID]',
-            'tuio.reachType.position': '(1) posizione',
-            'tuio.reachType.angle': '(2) angolo',
-            'tuio.reachType.both': '(3) posizione e angolo',
-            'tuio.markerID.any': 'qualsiasi'
+            'tuioMarkers.connect': 'connetti a TUIO',
+            'tuioMarkers.whenMarkerWithIDEnters': 'quando entra il Marker [MARKER_ID]',
+            'tuioMarkers.whenMarkerWithIDExits': 'quando esce il Marker [MARKER_ID]',
+            'tuioMarkers.isMarkerWithIDPresent': 'il Marker [MARKER_ID] è presente',
+            'tuioMarkers.reachMarker': 'raggiungi [REACH_TYPE] del Marker [MARKER_ID]',
+            'tuioMarkers.getMarkerX': 'coordinata X del Marker [MARKER_ID]',
+            'tuioMarkers.getMarkerY': 'coordinata Y del Marker [MARKER_ID]',
+            'tuioMarkers.getMarkerAngle': 'angolo del Marker [MARKER_ID]',
+            'tuioMarkers.getMarkerXSpeed': 'velocità X del Marker [MARKER_ID]',
+            'tuioMarkers.getMarkerYSpeed': 'velocità Y del Marker [MARKER_ID]',
+            'tuioMarkers.getMarkerAngularSpeed': 'velocità angolare del Marker [MARKER_ID]',
+            'tuioMarkers.reachType.position': '(1) posizione',
+            'tuioMarkers.reachType.angle': '(2) angolo',
+            'tuioMarkers.reachType.both': '(3) posizione e angolo',
+            'tuioMarkers.markerID.any': 'qualsiasi'
         }
     };
     const locale = formatMessage.setup().locale || 'en';
@@ -67,7 +67,7 @@ const _initReachTypes = function () {
     return [
         {
             text: _translate({
-                id: 'tuio.reachType.position',
+                id: 'tuioMarkers.reachType.position',
                 default: 'position',
                 description: 'menu item to enable reaching the position'
             }),
@@ -75,7 +75,7 @@ const _initReachTypes = function () {
         },
         {
             text: _translate({
-                id: 'tuio.reachType.angle',
+                id: 'tuioMarkers.reachType.angle',
                 default: 'angle',
                 description: 'menu item to enable reaching the angle'
             }),
@@ -83,7 +83,7 @@ const _initReachTypes = function () {
         },
         {
             text: _translate({
-                id: 'tuio.reachType.both',
+                id: 'tuioMarkers.reachType.both',
                 default: 'position and angle',
                 description: 'menu item to enable reaching both position and angle'
             }),
@@ -106,7 +106,7 @@ const _createMarkerIDArray = function (withAny) {
         markerIDs.push(
             {
                 text: _translate({
-                    id: 'tuio.markerID.any',
+                    id: 'tuioMarkers.markerID.any',
                     default: 'any',
                     description: 'describes any marker'
                 }),
@@ -258,7 +258,7 @@ class Scratch3TuioMarkers {
                     opcode: 'connect',
                     blockType: BlockType.COMMAND,
                     text: _translate({
-                        id: 'tuio.connect',
+                        id: 'tuioMarkers.connect',
                         default: 'connect TUIO',
                         description: 'connect to TUIO server'
                     }),
@@ -268,7 +268,7 @@ class Scratch3TuioMarkers {
                     opcode: 'whenMarkerWithIDEnters',
                     blockType: BlockType.HAT,
                     text: _translate({
-                        id: 'tuio.whenMarkerWithIDEnters',
+                        id: 'tuioMarkers.whenMarkerWithIDEnters',
                         default: 'when Marker [MARKER_ID] enters',
                         description: 'fires when marker markerID enters'
                     }),
@@ -283,7 +283,7 @@ class Scratch3TuioMarkers {
                     opcode: 'whenMarkerWithIDExits',
                     blockType: BlockType.HAT,
                     text: _translate({
-                        id: 'tuio.whenMarkerWithIDExits',
+                        id: 'tuioMarkers.whenMarkerWithIDExits',
                         default: 'when Marker [MARKER_ID] exits',
                         description: 'fires when marker markerID exits'
                     }),
@@ -298,7 +298,7 @@ class Scratch3TuioMarkers {
                     opcode: 'isMarkerWithIDPresent',
                     blockType: BlockType.BOOLEAN,
                     text: _translate({
-                        id: 'tuio.isMarkerWithIDPresent',
+                        id: 'tuioMarkers.isMarkerWithIDPresent',
                         default: 'Marker [MARKER_ID] is present',
                         description: 'checks if Marker [markerID] is present'
                     }),
@@ -313,7 +313,7 @@ class Scratch3TuioMarkers {
                     opcode: 'reachMarkerWithID',
                     blockType: BlockType.COMMAND,
                     text: _translate({
-                        id: 'tuio.reachMarker',
+                        id: 'tuioMarkers.reachMarker',
                         default: 'reach marker [MARKER_ID] [REACH_TYPE]',
                         description: 'reach position and/or angle of marker '
                     }),
@@ -333,7 +333,7 @@ class Scratch3TuioMarkers {
                     opcode: 'getMarkerX',
                     blockType: BlockType.REPORTER,
                     text: _translate({
-                        id: 'tuio.getMarkerX',
+                        id: 'tuioMarkers.getMarkerX',
                         default: 'Marker [MARKER_ID] X coordinate',
                         description: 'returns X coordinate of Marker [markerID]'
                     }),
@@ -348,7 +348,7 @@ class Scratch3TuioMarkers {
                     opcode: 'getMarkerY',
                     blockType: BlockType.REPORTER,
                     text: _translate({
-                        id: 'tuio.getMarkerY',
+                        id: 'tuioMarkers.getMarkerY',
                         default: 'Marker [MARKER_ID] Y coordinate',
                         description: 'returns Y coordinate of Marker [markerID]'
                     }),
@@ -363,7 +363,7 @@ class Scratch3TuioMarkers {
                     opcode: 'getMarkerAngle',
                     blockType: BlockType.REPORTER,
                     text: _translate({
-                        id: 'tuio.getMarkerAngle',
+                        id: 'tuioMarkers.getMarkerAngle',
                         default: 'Marker [MARKER_ID] rotation angle',
                         description: 'returns rotation angle of Marker [markerID]'
                     }),
@@ -378,7 +378,7 @@ class Scratch3TuioMarkers {
                     opcode: 'getMarkerXSpeed',
                     blockType: BlockType.REPORTER,
                     text: _translate({
-                        id: 'tuio.getMarkerXSpeed',
+                        id: 'tuioMarkers.getMarkerXSpeed',
                         default: 'Marker [MARKER_ID] X Speed',
                         description: 'returns X Speed of Marker [markerID]'
                     }),
@@ -393,7 +393,7 @@ class Scratch3TuioMarkers {
                     opcode: 'getMarkerYSpeed',
                     blockType: BlockType.REPORTER,
                     text: _translate({
-                        id: 'tuio.getMarkerYSpeed',
+                        id: 'tuioMarkers.getMarkerYSpeed',
                         default: 'Marker [MARKER_ID] Y Speed',
                         description: 'returns Y Speed of Marker [markerID]'
                     }),
@@ -408,7 +408,7 @@ class Scratch3TuioMarkers {
                     opcode: 'getMarkerAngularSpeed',
                     blockType: BlockType.REPORTER,
                     text: _translate({
-                        id: 'tuio.getMarkerAngularSpeed',
+                        id: 'tuioMarkers.getMarkerAngularSpeed',
                         default: 'Marker [MARKER_ID] angular velocity',
                         description: 'returns angular velocity of Marker [markerID]'
                     }),

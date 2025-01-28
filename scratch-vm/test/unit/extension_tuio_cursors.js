@@ -3,7 +3,7 @@ const test = require('tap').test;
 const Tuio = require('../../src/extensions/scratch3_tuio_cursors/index.js').Scratch3TuioCursors;
 const _makeCursorObject = require('../../src/extensions/scratch3_tuio_cursors/index.js')._makeCursorObject;
 const _initVariables = require('../../src/extensions/scratch3_tuio_cursors/index.js')._initVariables;
-const log = require('../../src/util/log');
+// const log = require('../../src/util/log');
 const {TuioTime, TuioCursor} = require('tuio-client');
 
 const Runtime = require('../../src/engine/runtime.js');

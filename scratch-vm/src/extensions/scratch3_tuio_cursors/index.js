@@ -22,14 +22,20 @@ const _translate = function (msg) {
     const translations = {
         it: {
             'tuioCursors.connect': 'connetti a TUIO',
+            'tuioCursors.lastEntered' : 'ultimo Cursore entrato',
+            'tuioCursors.lastExited' : 'ultimo Cursore uscito',
+            'tuioCursors.whenAnyCursorEnters': 'quando entra un Cursore',
+            'tuioCursors.whenAnyCursorExits': 'quando esce un Cursore',
             'tuioCursors.whenCursorWithIDEnters': 'quando entra il Cursore [CURSOR_ID]',
             'tuioCursors.whenCursorWithIDExits': 'quando esce il Cursore [CURSOR_ID]',
-            'tuioCursors.isCursorWithIDPresent': 'il Cursore [CURSOR_ID] è presente',
+            'tuioCursors.isCursorPresent': 'il Cursore [CURSOR_ID] è presente',
             'tuioCursors.reachCursor': 'raggiungi il Cursore [CURSOR_ID]',
             'tuioCursors.getCursorX': 'coordinata X del Cursore [CURSOR_ID]',
             'tuioCursors.getCursorY': 'coordinata Y del Cursore [CURSOR_ID]',
             'tuioCursors.getCursorXSpeed': 'velocità X del Cursore [CURSOR_ID]',
-            'tuioCursors.getCursorYSpeed': 'velocità Y del Cursore [CURSOR_ID]'
+            'tuioCursors.getCursorYSpeed': 'velocità Y del Cursore [CURSOR_ID]',
+            'tuioCursors.itemIndex': 'elemento [INDEX_PARAM] della lista dei cursori',
+            'tuioCursors.listLength': 'lunghezza della lista dei cursori'
         }
     };
     const locale = formatMessage.setup().locale || 'en';
@@ -132,7 +138,7 @@ class Scratch3TuioCursors {
                     opcode: 'connect',
                     blockType: BlockType.COMMAND,
                     text: _translate({
-                        id: 'tuioCursors.connectXX',
+                        id: 'tuioCursors.connect',
                         default: 'connect TUIO',
                         description: 'connect to TUIO server'
                     }),
@@ -141,31 +147,51 @@ class Scratch3TuioCursors {
                 {
                     opcode: 'getLastCursorEnteredID',
                     blockType: BlockType.REPORTER,
-                    text: 'last cursor entered',
+                    text: _translate({
+                        id: 'tuioCursors.lastEntered',
+                        default: 'last cursor entered',
+                        description: 'last cursor entered'
+                    }),
                     arguments: {}
                 },
                 {
                     opcode: 'getLastCursorExitedID',
                     blockType: BlockType.REPORTER,
-                    text: 'last cursor exited',
+                    text: _translate({
+                        id: 'tuioCursors.lastExited',
+                        default: 'last cursor exited',
+                        description: 'last cursor exited'
+                    }),
                     arguments: {}
                 },
                 {
                     opcode: 'whenAnyCursorEnters',
                     blockType: BlockType.HAT,
-                    text: 'when a cursor entered',
+                    text: _translate({
+                        id: 'tuioCursors.whenAnyCursorEnters',
+                        default: 'when a cursor enters',
+                        description: 'when a cursor enters'
+                    }),
                     arguments: {}
                 },
                 {
                     opcode: 'whenAnyCursorExits',
                     blockType: BlockType.HAT,
-                    text: 'when a cursor exited',
+                    text: _translate({
+                        id: 'tuioCursors.whenAnyCursorExits',
+                        default: 'when a cursor exits',
+                        description: 'when a cursor exits'
+                    }),
                     arguments: {}
                 },
                 {
                     opcode: 'whenCursorWithIDEnters',
                     blockType: BlockType.HAT,
-                    text: 'when cursor [CURSOR_ID] entered',
+                    text: _translate({
+                        id: 'tuioCursors.whenCursorWithIDEnters',
+                        default: 'when cursor [CURSOR_ID] enters',
+                        description: 'when cursor [CURSOR_ID] enters'
+                    }),
                     arguments: {
                         CURSOR_ID: {
                             type: ArgumentType.NUMBER,
@@ -176,7 +202,11 @@ class Scratch3TuioCursors {
                 {
                     opcode: 'whenCursorWithIDExits',
                     blockType: BlockType.HAT,
-                    text: 'when cursor [CURSOR_ID] exited',
+                    text: _translate({
+                        id: 'tuioCursors.whenCursorWithIDExits',
+                        default: 'when cursor [CURSOR_ID] exits',
+                        description: 'when cursor [CURSOR_ID] exited'
+                    }),
                     arguments: {
                         CURSOR_ID: {
                             type: ArgumentType.NUMBER,
@@ -190,7 +220,7 @@ class Scratch3TuioCursors {
                     text: _translate({
                         id: 'tuioCursors.reachCursor',
                         default: 'reach cursor [CURSOR_ID]',
-                        description: 'reach position of cursor '
+                        description: 'reach position of cursor'
                     }),
                     arguments: {
                         CURSOR_ID: {
@@ -203,7 +233,11 @@ class Scratch3TuioCursors {
                 {
                     opcode: 'getCursorX',
                     blockType: BlockType.REPORTER,
-                    text: 'cursor [CURSOR_ID] x',
+                    text: _translate({
+                        id: 'tuioCursors.getCursorX',
+                        default: 'cursor [CURSOR_ID] x',
+                        description: 'cursor [CURSOR_ID] x'
+                    }),
                     arguments: {
                         CURSOR_ID: {
                             type: ArgumentType.NUMBER,
@@ -214,7 +248,11 @@ class Scratch3TuioCursors {
                 {
                     opcode: 'getCursorY',
                     blockType: BlockType.REPORTER,
-                    text: 'cursor [CURSOR_ID] y',
+                    text: _translate({
+                        id: 'tuioCursors.getCursorY',
+                        default: 'cursor [CURSOR_ID] y',
+                        description: 'cursor [CURSOR_ID] y'
+                    }),
                     arguments: {
                         CURSOR_ID: {
                             type: ArgumentType.NUMBER,
@@ -225,7 +263,11 @@ class Scratch3TuioCursors {
                 {
                     opcode: 'getCursorXSpeed',
                     blockType: BlockType.REPORTER,
-                    text: 'cursor [CURSOR_ID] x speed',
+                    text: _translate({
+                        id: 'tuioCursors.getCursorXSpeed',
+                        default: 'cursor [CURSOR_ID] x speed',
+                        description: 'cursor [CURSOR_ID] x speed'
+                    }),
                     arguments: {
                         CURSOR_ID: {
                             type: ArgumentType.NUMBER,
@@ -236,7 +278,11 @@ class Scratch3TuioCursors {
                 {
                     opcode: 'getCursorYSpeed',
                     blockType: BlockType.REPORTER,
-                    text: 'cursor [CURSOR_ID] y speed',
+                    text: _translate({
+                        id: 'tuioCursors.getCursorYSpeed',
+                        default: 'cursor [CURSOR_ID] y speed',
+                        description: 'cursor [CURSOR_ID] y speed'
+                    }),
                     arguments: {
                         CURSOR_ID: {
                             type: ArgumentType.NUMBER,
@@ -246,7 +292,11 @@ class Scratch3TuioCursors {
                 },
                 {
                     opcode: 'isCursorPresent',
-                    text: 'cursor [CURSOR_ID] present?',
+                    text: _translate({
+                        id: 'tuioCursors.isCursorPresent',
+                        default: 'cursor [CURSOR_ID] present?',
+                        description: 'cursor [CURSOR_ID] present?'
+                    }),
                     blockType: BlockType.BOOLEAN,
                     arguments: {
                         CURSOR_ID: {
@@ -258,7 +308,11 @@ class Scratch3TuioCursors {
                 {
                     opcode: 'getCursorItem',
                     blockType: BlockType.REPORTER,
-                    text: 'item [INDEX_PARAM] in cursor list',
+                    text: _translate({
+                        id: 'tuioCursors.itemIndex',
+                        default: 'item [INDEX_PARAM] in cursor list',
+                        description: 'item [INDEX_PARAM] in cursor list'
+                    }),
                     arguments: {
                         INDEX_PARAM: {
                             type: ArgumentType.NUMBER,
@@ -269,7 +323,11 @@ class Scratch3TuioCursors {
                 {
                     opcode: 'getCursorCount',
                     blockType: BlockType.REPORTER,
-                    text: 'length of cursor list',
+                    text: _translate({
+                        id: 'tuioCursors.listLength',
+                        default: 'length of cursor list',
+                        description: 'length of cursor list'
+                    }),
                     arguments: {}
                 }
             ],
